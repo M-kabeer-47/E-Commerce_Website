@@ -80,7 +80,7 @@ async function fetchProduct(id) {
 const app = express();
 app.use(
   cors({
-    origin: "https://e-commerce-website-hzldz0138.vercel.app/", 
+    origin: "https://e-commerce-web-git-a9b238-muhammadkabeer2003-gmailcoms-projects.vercel.app/", 
     credentials: true, 
     allowedHeaders: ["Content-Type", "Authorization"],
     methods: ["GET", "POST", "PUT", "DELETE"],
