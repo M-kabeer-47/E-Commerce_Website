@@ -1,8 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import products from "./Products.js"; // Mongoose model for Products
-import Users from "./User.js";
+import products from "./Models/Products.js"; 
+import Users from "./Models/User.js";
 import jwt from 'jsonwebtoken';
 import Stripe from "stripe";
 import nodemailer from "nodemailer";
@@ -80,7 +80,7 @@ async function fetchProduct(id) {
 const app = express();
 app.use(
   cors({
-    origin: "https://e-commerce-web-git-a9b238-muhammadkabeer2003-gmailcoms-projects.vercel.app/", 
+    origin:"https://e-commerce-website-cck4.vercel.app", 
     credentials: true, 
     allowedHeaders: ["Content-Type", "Authorization"],
     methods: ["GET", "POST", "PUT", "DELETE"],

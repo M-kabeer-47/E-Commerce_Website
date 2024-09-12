@@ -9,6 +9,9 @@ import Footer from "../HomePage/Footer/Footer";
 import { incrementCartCount,setWishlistCount } from "../../store/Counts";
 import Cookies from "js-cookie";
 
+
+
+
 import { MdOutlineDelete } from "react-icons/md";
 
 
