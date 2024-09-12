@@ -122,10 +122,10 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
-      <ReactNotification />
-      <RouterProvider router={router} />
-      <ToastContainer />
+      <RouterProvider router={router}>
+        <ReactNotification />
+        <ToastContainer />
+      </RouterProvider>
     </Provider>
   </React.StrictMode>,
 );
-

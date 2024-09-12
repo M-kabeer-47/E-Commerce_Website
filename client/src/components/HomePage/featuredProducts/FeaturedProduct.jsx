@@ -9,8 +9,9 @@ import { useSelector } from "react-redux";
 
 
 import axios from "axios";
-const backendUrl = useSelector((state) => state.user.backendUrl);
+
 export default function FeaturedProduct() {
+  const backendUrl = useSelector((state) => state.user.backendUrl);
   const [featuredProducts, setFeaturedProducts] = useState([]);
   useEffect(()=>{
     const fetchFeaturedProducts = async () => {

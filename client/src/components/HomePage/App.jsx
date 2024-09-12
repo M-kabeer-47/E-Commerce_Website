@@ -18,7 +18,7 @@ export default function App() {
   const backendUrl = useSelector((state) => state.user.backendUrl);
   const [isWideScreen, setIsWideScreen] = useState(window.innerWidth >= 1050);
   const popularRef = useRef(null);
-  const cart = useSelector((state) => state.sidebars.isCartOpen);
+  
   const dispatch = useDispatch();
 
   useEffect(() => {
