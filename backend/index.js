@@ -80,7 +80,7 @@ async function fetchProduct(id) {
 const app = express();
 app.use(
   cors({
-    origin: "http://localhost:5173", 
+    origin: "https://e-commerce-website-78cl.vercel.app/", 
     credentials: true, 
     allowedHeaders: ["Content-Type", "Authorization"],
     methods: ["GET", "POST", "PUT", "DELETE"],
