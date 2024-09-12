@@ -17,6 +17,7 @@
     "dotenv": "^16.2.0",
     "bcrypt": "^5.1.0",
     "passport": "^0.6.0",
+    "passport-google-oauth20": "^2.0.0",
     "cookie-parser": "^1.4.6"
   },
   "author": "",
