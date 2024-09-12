@@ -35,6 +35,8 @@ export default function Navbar({page}) {
   const dispatch = useDispatch();
   const [userLoading,setUserLoading] = useState(true);
   const token = Cookies.get("uid");
+  console.log("The token is"+token);
+  
 
   const [shortName, setShortName] = useState("");
   const cartCount = useSelector((state) => state.Counts.cartCount);
