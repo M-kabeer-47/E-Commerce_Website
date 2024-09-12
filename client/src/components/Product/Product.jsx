@@ -190,10 +190,7 @@ export default function Product() {
                           transition: Bounce,
                         });
                         dispatch(setProductPageQuantity(0));
-                          setTimeout(() => {  
-                            window.location.reload();
-                          }
-                          , 1000);
+                          
                         if (
                           response.data !== "Product Already Exists in Cart"
                         ) {

@@ -6,10 +6,11 @@ import axios from "axios";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 export default function RegisterUser() {
   const [submit, updateSubmit] = useState(false);
   const backendUrl = useSelector((state) => state.user.backendUrl);
-  
+  const navigate = useNavigate();
   const [emailExists, setEmailExists] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   
@@ -185,7 +186,7 @@ console.log(user);
         transition: Bounce,
       });
       setTimeout(() => {
-        window.location.href = "https://e-commerce-website-cck4.vercel.app/login"; // 
+        navigate("/login")
       }, 3000);
     }
   }, [submit]);

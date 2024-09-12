@@ -276,7 +276,6 @@ app.post("/login",async(req,res)=>{
       res.cookie("uid", token, {
         maxAge: 2 * 24 * 60 * 60 * 1000,
         secure: true,         // Only sent over HTTPS
-        httpOnly: true,       // Prevent access by JavaScript
         sameSite: 'None'      // Allows cross-origin cookies
     });
     
