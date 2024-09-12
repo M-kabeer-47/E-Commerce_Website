@@ -23,7 +23,7 @@ export default function Navbar2() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const user = useSelector((state) => state.user.user);
-  const token = Cookies.get("uid");
+  const token = Cookies.get('uid');
   const [shortName,setShortName]  = useState("");
   const handleMouseEnter = (iconName) => {
     setHoveredIcon(iconName);
