@@ -273,16 +273,10 @@ app.post("/login",async(req,res)=>{
         
       },process.env.JWT_SECRET);
       console.log(token);
-      res.cookie("uid", token, {
-        maxAge: 2 * 24 * 60 * 60 * 1000,
-        secure: true,         // Only sent over HTTPS
-        sameSite: 'None',
-        domain: "https://e-commerce-website-cck4.vercel.app",
-        path: "/",            // Path to set cookie
-          // Allows cross-origin cookies
-    });
+      res.json( {token: token,
+        maxAge: 2 * 24 * 60 * 60 * 1000,});
     
-      res.send("Success");
+      
         
       
     }
@@ -351,12 +345,8 @@ failureRedirect:"https://e-commerce-website-cck4.vercel.app/login",
   console.log("Google Callback Route");
   
   console.log(req.user.token.expiresIn);
-  res.cookie("uid", token, {
-    maxAge: 2 * 24 * 60 * 60 * 1000,
-    secure: true,         // Only sent over HTTPS
-    httpOnly: true,       // Prevent access by JavaScript
-    sameSite: 'None'      // Allows cross-origin cookies
-});
+  res.json( {token: token,
+    maxAge: 2 * 24 * 60 * 60 * 1000,});
 
   res.redirect("https://e-commerce-website-cck4.vercel.app/");
 

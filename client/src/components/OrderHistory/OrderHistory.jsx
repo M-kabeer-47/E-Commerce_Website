@@ -117,7 +117,7 @@ const OrderHistoryPage = () => {
   }, []);
   const getOrders = async () => {
     try {
-      const token = Cookies.get("uid");
+      const token = localStorage.getItem("uid");
       const response = await axios.get(
         `${backendUrl}/orderHistory?page=${page}`,
         {

@@ -25,6 +25,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import WishlistCardLayout from "./WishlistCardLayout";
 import { useSelector } from "react-redux";
 export default function wishlistPage() {
+  const token = localStorage.getItem("uid");
   const backendUrl = useSelector((state) => state.user.backendUrl);
   const [wishlist, setWishlist] = useState([]);
   const [EmptyWishlist, setEmptyWishlist] = useState(false);
@@ -61,7 +62,7 @@ export default function wishlistPage() {
     try {
       const wishlist = await axios.get(`${backendUrl}/wishlist`, {
         headers: {
-          Authorization: `Bearer ${Cookies.get("uid")}`,
+          Authorization: `Bearer ${token}`,
         },
       });
       if (wishlist.data.length === 0) {
@@ -294,7 +295,7 @@ export default function wishlistPage() {
           text={"Add to cart"}
 
         onClick={async ()=>{
-          const token = Cookies.get("uid");
+          
             if(token){
                 try{
                   let quantityInCart = await axios.get(
@@ -399,7 +400,7 @@ export default function wishlistPage() {
                               {},
                               {
                                 headers: {
-                                  Authorization: `Bearer ${Cookies.get("uid")}`,
+                                  Authorization: `Bearer ${token}`,
                                 },
                               }
                             );

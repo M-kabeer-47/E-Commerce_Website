@@ -20,7 +20,7 @@ export default function Product() {
   const [isLoading, updateLoading] = useState(true);
   const [animationClass, setAnimationClass] = useState(""); // State for animation class
   const location = useLocation();
-  const token = Cookies.get("uid");
+  const token = localStorage.getItem("uid");
   const { product: id } = useParams();
   const dispatch = useDispatch();
   const ProductPageQuantity = useSelector((state) => state.product.quantity);

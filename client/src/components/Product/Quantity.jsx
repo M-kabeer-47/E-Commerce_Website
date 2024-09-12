@@ -10,7 +10,7 @@ const IncrementDecrementBtn = ({ count, maxValue, cart, product,requestBackend,s
   const backendUrl = useSelector((state) => state.user.backendUrl);
   const [incrementButtonClicked, setIncrementButtonClicked] = useState(false);
   const [decrementButtonClicked, setDecrementButtonClicked] = useState(false);
-  
+  const token = localStorage.getItem("uid");
   const [incrementClicks,setIncrementClicks] = useState(0);
   const [decrementClicks,setDecrementClicks] = useState(0);
   const [quantity, setQuantity] = useState(count);
@@ -43,7 +43,7 @@ const IncrementDecrementBtn = ({ count, maxValue, cart, product,requestBackend,s
   }, [count]);
   
   useEffect(() => {
-    const token = Cookies.get("uid");
+    
   let debounceTimeout;
 
     if (incrementButtonClicked) {
@@ -90,7 +90,7 @@ const IncrementDecrementBtn = ({ count, maxValue, cart, product,requestBackend,s
     }
   }
   useEffect(() => {
-    let token = Cookies.get("uid");
+    
     let debounceTimeout;
     if(decrementButtonClicked){
       if(type==="page"){

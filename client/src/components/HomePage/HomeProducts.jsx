@@ -44,7 +44,7 @@ const HomeProducts = ({ product, index, type }) => {
         };
     }, []);
     async function handleAddToCart(){
-        let token = Cookies.get("uid");     
+        let token = localStorage.getItem("uid");     
         let quantityInCart = await axios.get(
             `${backendUrl}/quantityInCart`,
             {
@@ -83,7 +83,7 @@ const HomeProducts = ({ product, index, type }) => {
        let response = await axios.post(`${backendUrl}/addToCart/${product._id}`,{
             quantity: 1
         },{
-            headers:{"Authorization": `Bearer ${Cookies.get("uid")}`
+            headers:{"Authorization": `Bearer ${token}`
         }
         })
         

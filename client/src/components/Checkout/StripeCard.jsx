@@ -19,9 +19,8 @@ function CheckoutForm() {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch= useDispatch();
-
+  const token = localStorage.getItem("uid");
   const { usdAmount, total, subtotal ,order,cart} = location.state || {};
-const token = Cookies.get("uid")
   const [paymentSuccess, setPaymentSuccess] = useState(false);  // State for tracking payment success
   const [isLoading,setLoading] = useState(true)
   const handleSubmit = async (event) => {
@@ -211,7 +210,7 @@ const {usdAmount} = location.state || {};
 
 
 const navigate = useNavigate();
-const token = Cookies.get("uid")
+const token = localStorage.getItem("uid");
 useEffect(()=>{
     const fetchPublishableKey = async () => {
         try {

@@ -15,7 +15,7 @@ import {openCart,} from "../../store/sidebars.js";
 import { useNavigate } from "react-router-dom";
 import { setUser } from "../../store/user.js";
 
-import Cookies from "js-cookie";
+
 import axios from "axios";
 import { toast,Bounce } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
@@ -34,10 +34,9 @@ export default function Navbar({page}) {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const dispatch = useDispatch();
   const [userLoading,setUserLoading] = useState(true);
-  const token = Cookies.get('uid');
-  console.log("The token is"+token);
-  console.log("Another token is"+Cookies.get("cid"));
-  console.log(" Stripe token is"+Cookies.get("__stripe_mid"));
+  const token = localStorage.getItem("uid");
+  
+  
   
 
   const [shortName, setShortName] = useState("");
@@ -80,7 +79,7 @@ else{
     
   };
   async function getUser() {
-    const token = Cookies.get("uid");
+    
 
     if (token) {
 

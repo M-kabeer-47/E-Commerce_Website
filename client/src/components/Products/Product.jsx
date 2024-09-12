@@ -17,8 +17,7 @@ import { useSelector } from "react-redux";
 const Product = ({ product, index }) => {
   const backendUrl = useSelector((state) => state.user.backendUrl);
   const dispatch = useDispatch();
-
-  
+  const token = localStorage.getItem("uid");  
   const { ref, inView } = useInView({
     triggerOnce: true, 
     threshold: 0.2, 
@@ -52,7 +51,7 @@ const Product = ({ product, index }) => {
           <Button
             text={"Add to cart"}
             onClick={async () => {
-              const token = Cookies.get("uid");
+              
               console.log("Hello");
 
               if (token) {
@@ -175,7 +174,7 @@ const Product = ({ product, index }) => {
             className="redButton"
             text={"Add to wishlist"}
             onClick={async () => {
-              const token = Cookies.get("uid");
+              
               if (token) {
                 try {
                   let response = await axios.post(

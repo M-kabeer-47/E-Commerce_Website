@@ -18,7 +18,7 @@ export default function App() {
   const backendUrl = useSelector((state) => state.user.backendUrl);
   const [isWideScreen, setIsWideScreen] = useState(window.innerWidth >= 1050);
   const popularRef = useRef(null);
-  
+  const token = localStorage.getItem("uid");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -57,7 +57,7 @@ export default function App() {
     };
   }, []);
   useEffect(()=>{
-    const token = Cookies.get("uid");
+    
    
     
     if(token){

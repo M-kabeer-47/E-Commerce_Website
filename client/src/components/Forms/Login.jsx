@@ -94,6 +94,8 @@ const [platform,setPlatform] = useState("");
     else if(response.data === "Success"){
       setUserExists(true);
       setIncorrectPassword(false);
+      localStorage.setItem("uid",response.data.token);
+      localStorage.setItem("tokenExpiry",response.data.maxAge);
       window.location.href = "https://e-commerce-website-cck4.vercel.app/";
       
       

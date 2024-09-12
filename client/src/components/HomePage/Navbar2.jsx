@@ -23,7 +23,7 @@ export default function Navbar2() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const user = useSelector((state) => state.user.user);
-  const token = Cookies.get('uid');
+  const token = localStorage.getItem("uid");
   const [shortName,setShortName]  = useState("");
   const handleMouseEnter = (iconName) => {
     setHoveredIcon(iconName);
@@ -84,7 +84,7 @@ else{
   }, [isSidebarOpen]);
 
   async function getUser(){
-    const token = Cookies.get("uid");
+    
     console.log("hui");
     
     if(token){

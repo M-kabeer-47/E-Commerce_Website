@@ -16,7 +16,10 @@ import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
 
 export default function CartPage() {
-  
+  const token = localStorage.getItem('uid');
+
+
+const tokenExpiry = localStorage.getItem('tokenExpiry');
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const backendUrl = useSelector((state) => state.user.backendUrl);
@@ -50,7 +53,7 @@ export default function CartPage() {
     try {
       const cart = await axios.get(`${backendUrl}/cart`, {
         headers: {
-          Authorization: `Bearer ${Cookies.get("uid")}`,
+          Authorization: `Bearer ${token}`,
         },
       });
       if (cart.data.length === 0) {
@@ -294,7 +297,7 @@ export default function CartPage() {
                               {},
                               {
                                 headers: {
-                                  Authorization: `Bearer ${Cookies.get("uid")}`,
+                                  Authorization: `Bearer ${token}`,
                                 },
                               }
                              

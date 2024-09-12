@@ -21,7 +21,7 @@ const EditInfoPage = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [submitOnce, setSubmitOnce] = useState(false);
   const [success, setSuccess] = useState(false);
-
+const token = localStorage.getItem("uid");
   const [currentPasswordVisible, setCurrentPasswordVisible] = useState(false);
   const [newPasswordVisible, setNewPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
@@ -31,7 +31,7 @@ const EditInfoPage = () => {
       try {
       const response = await axios.get(`${backendUrl}/user`, {
           headers: {
-            Authorization: `Bearer ${Cookies.get("uid")}`,
+            Authorization: `Bearer ${token}`,
           },
         });
 
@@ -65,7 +65,7 @@ const EditInfoPage = () => {
     } else if (currentPassword !== "") {
       let isCorrect = await axios.get(`${backendUrl}/verifyPassword`, {
         headers: {
-          Authorization: `Bearer ${Cookies.get("uid")}`,
+          Authorization: `Bearer ${token}`,
         },
         params: {
           password: currentPassword,
@@ -118,7 +118,7 @@ const EditInfoPage = () => {
         
         await axios.put(`${backendUrl}/updateUser`, {user:payload}, {
         headers:{
-            Authorization: `Bearer ${Cookies.get("uid")}`
+            Authorization: `Bearer ${token}`
         }
         }
         )

@@ -20,7 +20,7 @@ import { CircularProgress } from "@mui/material";
 import { useSelector } from "react-redux";
 export default function Shipping() {
   const backendUrl = useSelector((state) => state.user.backendUrl);
-  const token = Cookies.get("uid");
+  const token = localStorage.getItem("uid");
   const [orderPlaced, setOrderPlaced] = useState(false);
   const location = useLocation();
   const [stockLoader,setStockLoader]= useState(true)
@@ -129,7 +129,7 @@ export default function Shipping() {
     try {
       let cart = await axios.get(`${backendUrl}/cart`, {
         headers: {
-          Authorization: `Bearer ${Cookies.get("uid")}`,
+          Authorization: `Bearer ${token}`,
         },
         withCredentials: true,
       });

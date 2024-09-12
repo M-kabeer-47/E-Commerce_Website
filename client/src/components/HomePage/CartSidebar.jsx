@@ -24,6 +24,7 @@ axios.defaults.withCredentials = true;
 export default function CartSidebar(props) {
   const backendUrl = useSelector((state) => state.user.backendUrl);
   const dispatch = useDispatch();
+  const token = localStorage.getItem("uid");
   const [cart, setCart] = useState([]);
   const navigate = useNavigate();
   const [EmptyCart, setEmptyCart] = useState(false);
@@ -56,7 +57,7 @@ export default function CartSidebar(props) {
   }
   useEffect(() => {
     if (EmptyCart) {
-      const token = Cookies.get("uid");
+      
       
 
       if (token) {
@@ -89,7 +90,7 @@ export default function CartSidebar(props) {
       try {
         let cart = await axios.get(`${backendUrl}/cart`,{
           headers: {
-            Authorization: `Bearer ${Cookies.get("uid")}`,
+            Authorization: `Bearer ${token}`,
           },
           withCredentials: true,
         });
@@ -248,7 +249,7 @@ export default function CartSidebar(props) {
                             {},
                             {
                               headers: {
-                                Authorization: `Bearer ${Cookies.get("uid")}`,
+                                Authorization: `Bearer ${token}`,
                               },
                             }
                           );

@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 export default function WishlistCardLayout({ wishlist, getWishlist, convertPrice }) {
     const navigate = useNavigate();
+    const token = localStorage.getItem("uid");
     const backendUrl = useSelector((state) => state.user.backendUrl);
   return (
     <div
@@ -72,7 +73,7 @@ export default function WishlistCardLayout({ wishlist, getWishlist, convertPrice
               <Button
                 text="Add to cart"
                 onClick={async () => {
-                  const token = Cookies.get("uid");
+                  
                   if (token) {
                     
 
@@ -167,7 +168,7 @@ export default function WishlistCardLayout({ wishlist, getWishlist, convertPrice
                     {},
                     {
                       headers: {
-                        Authorization: `Bearer ${Cookies.get("uid")}`,
+                        Authorization: `Bearer ${token}`,
                       },
                     }
                   );

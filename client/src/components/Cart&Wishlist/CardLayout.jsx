@@ -9,6 +9,10 @@ import { useSelector } from "react-redux";
 export default function CardLayout({cart,getCart,convertPrice,total}) {
   const navigate = useNavigate();
   const backendUrl = useSelector((state) => state.user.backendUrl);
+  const token = localStorage.getItem('uid');
+
+
+const tokenExpiry = localStorage.getItem('tokenExpiry');
     return(
 
     
@@ -109,16 +113,18 @@ export default function CardLayout({cart,getCart,convertPrice,total}) {
           <MdOutlineDelete
             style={{ color: "#E7314E", fontSize: "25px", cursor: "pointer" }}
             onClick={async () => {
+              if (token && new Date().getTime() < tokenExpiry) {
               await axios.put(
                 `${backendUrl}/remove/${product._id}`,
                 {},
                 {
                   headers: {
-                    Authorization: `Bearer ${Cookies.get("uid")}`,
+                    Authorization: `Bearer ${token}`,
                   },
                 }
               );
               getCart();
+            }
             }}
           />
         </div>
