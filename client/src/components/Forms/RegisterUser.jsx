@@ -185,7 +185,7 @@ console.log(user);
         transition: Bounce,
       });
       setTimeout(() => {
-        window.location.href = "http://localhost:5173/login";
+        window.location.href = "https://e-commerce-website-cck4.vercel.app/login";
       }, 3000);
     }
   }, [submit]);
