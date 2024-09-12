@@ -18,8 +18,8 @@
     left: 0;
     width: 100%;
     height: 100%;
-    opacity: 0.5; /* Adjust the opacity of the background image */
-    z-index: 1; /* Keep the pseudo-element behind the content */
+    opacity: 0.5; 
+    z-index: 1;
     
     background-repeat: no-repeat;
     
