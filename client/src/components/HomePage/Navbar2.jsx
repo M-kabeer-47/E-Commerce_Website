@@ -24,6 +24,7 @@ export default function Navbar2() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const user = useSelector((state) => state.user.user);
   const token = localStorage.getItem("uid");
+  console.log("The token is",token);
   const [shortName,setShortName]  = useState("");
   const handleMouseEnter = (iconName) => {
     setHoveredIcon(iconName);
