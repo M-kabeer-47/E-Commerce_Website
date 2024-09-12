@@ -3,7 +3,7 @@ import './products.css';
 import Product from "./Product";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useNavigate,useLocation } from "react-router-dom";
-import { useDispatch,useDispatch } from "react-redux";
+import { useDispatch,useSelector} from "react-redux";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { updateCategory } from "../../store/category.js";
