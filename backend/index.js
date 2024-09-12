@@ -16,7 +16,7 @@ dotenv.config();
 const uri = "mongodb+srv://User1:byoabD1X2y7KzU2I@e-commerce.kopglez.mongodb.net/E-Commerce";
 import bcrypt from "bcrypt";
 import passport from "passport";
-import cookieParser from "cookie-parser"; // Make sure you are using cookie-parser
+import cookieParser from "cookie-parser"; 
 import google from "./Authentication/google.js";
 
 
@@ -33,13 +33,13 @@ const connectDB = async () => {
   }
 };
 
-// Call this function once at the start of your server
+
 connectDB();
 
-// Fetch Category Function
+
 async function fetchCategory(category,page) {
   try {
-    // Assuming your `products` model is properly set up
+    
     const pr = await products.find({ url: category });
     if (pr.length === 0) {
       console.log("No products found in the given category");
@@ -62,10 +62,10 @@ async function fetchCategory(category,page) {
   }
 }
 
-// Fetch Product Function
+
 async function fetchProduct(id) {
   try {
-    const product = await products.findById(id); // Use Mongoose model to find by ID
+    const product = await products.findById(id); 
     return product;
   } catch (error) {
     console.error("Error fetching product:", error);
@@ -73,23 +73,23 @@ async function fetchProduct(id) {
   }
 }
 
-// Express App Setup
+
 
 
 
 const app = express();
 app.use(
   cors({
-    origin: "http://localhost:5173", // Frontend URL
-    credentials: true, // Allow credentials (cookies)
-    allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
+    origin: "http://localhost:5173", 
+    credentials: true, 
+    allowedHeaders: ["Content-Type", "Authorization"],
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
 
 
 app.use(express.json());
-app.use(cookieParser()); // Use cookie-parser to handle cookies
+app.use(cookieParser()); 
 
 
 app.use(passport.initialize());
@@ -135,10 +135,12 @@ app.get("/product/:id", async (req, res) => {
 });
 
 app.get("/products/:category", async (req, res) => {
+  try{
 
+  
   const { category } = req.params;
   const {page} = req.query || 1;
-  console.log(page);
+  
 
   const categoryObject = await fetchCategory(category,page);
   
@@ -148,9 +150,16 @@ app.get("/products/:category", async (req, res) => {
   } else {
     res.json(categoryObject);
   }
-});
+}
+catch(err){
+  console.log(err);
+  res.status(500).json({ error: "An error occurred while fetching the category." });
+}
+}
+);
 
-// Search Route (Using Mongoose Query)
+
+
 app.get("/search/:text", async (req, res) => {
   const { text } = req.params;
   const { page } = req.query;
@@ -183,8 +192,9 @@ app.get("/search/:text", async (req, res) => {
   }
 });
 app.post("/checkEmail",async(req,res)=>{
-  console.log("Check Email Route");
-  console.log(req.body);
+  try{
+
+  
   const {email} = req.body;
   const user = await Users.findOne({email:email});
   if(user){
@@ -199,6 +209,11 @@ app.post("/checkEmail",async(req,res)=>{
     console.log("User Does Not Exist");
     res.send(false);
   }
+}
+catch(err){
+  console.log(err);
+  res.send("Error Checking Email");
+} 
 })
 app.post("/register",async(req,res)=>{
   let saltRounds = 10;
@@ -219,6 +234,7 @@ app.post("/register",async(req,res)=>{
     }
     catch(err){
       console.log(err);
+      res.send("Error Creating User");
     }
   
   
@@ -231,6 +247,9 @@ app.post("/register",async(req,res)=>{
 app.post("/login",async(req,res)=>{
   console.log("Login Route");
   console.log(req.body);
+  try{
+
+  
   const {email,password} = req.body;
   if(!await Users.exists({email:email})){
     console.log("User Does Not Exist");
@@ -266,21 +285,26 @@ app.post("/login",async(req,res)=>{
     }
   }
 }
+catch(err){
+  console.log(err);
+  res.send("Error Logging In");
+}
+}
 )
 async function authenticateUser(req, res, next) {
   const authHeader = req.headers['authorization'];
   
-  // Check if the Authorization header exists
+  
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return res.status(401).json({ message: 'No token provided or malformed authorization header' });
   }
 
-  // Extract the token from the header
+  
   const token = authHeader.split(' ')[1];
   
   
 
-  // Verify the token
+ 
   try {
     
     
@@ -335,6 +359,8 @@ function findProductIndex(cart,imageUrl){
 }
 
 app.get("/cart",authenticateUser,async(req,res)=>{
+  try{
+
   
   let cart = req.user.cart;
   for(let i = 0;i<cart.length;i++){
@@ -342,6 +368,11 @@ app.get("/cart",authenticateUser,async(req,res)=>{
     cart[i].quantity = product._doc.quantity;
   }
   res.send(cart);
+}
+catch(err){
+  console.log(err);
+  res.send("Error Fetching Cart");
+}
 })
 app.post("/addToCart/:id",authenticateUser,async(req,res)=>{
   
@@ -402,14 +433,24 @@ await Users.updateOne({email:req.user.email},{cart:cart});
   
 app.post("/emptyCart",authenticateUser,async(req,res)=>{
   console.log("Empty Cart Route");
-  await Users.updateOne({email:req.user.email},{cart:[]});
+  try{
+    await Users.updateOne({email:req.user.email},{cart:[]});
   res.send("Success");
+  }
+  catch(err){
+    console.log(err);
+    res.send("Error Emptying Cart");
+  }
+  
 })
 app.put("/increment/:id",authenticateUser,async(req,res)=>{
-  console.log("Increment Route");
+  
   console.log(req.body);
+  try{
+
+  
   const {quantity} = req.body;
-  console.log(req.params.id);
+  
   
   const product = await products.findById(req.params.id);
   const index = findProductIndex(req.user.cart,product.imageUrl);
@@ -417,12 +458,18 @@ app.put("/increment/:id",authenticateUser,async(req,res)=>{
   cart[index].quantityInCart+=quantity;
   await Users.updateOne({email:req.user.email},{cart:cart});
   res.send("Success");
+  }
+  catch(err){
+    console.log(err);
+    res.send("Error Incrementing Quantity");
+  }
 
 }
 
 )
 app.get("/featuredProducts",async(req,res)=>{
   console.log("Featured Products Route");
+  try{
   const featuredProducts = await products.find({})
   let featured = [];
   let variable = 3
@@ -432,12 +479,17 @@ app.get("/featuredProducts",async(req,res)=>{
     variable+=5;
   }
   res.send(featured);
-
+}
+catch(err){
+  console.log(err);
+  res.send("Error Fetching Featured Products");
+}
 })
 
   
 
 app.put("/decrement/:id",authenticateUser,async(req,res)=>{
+  try{
   console.log("Decrement Route");
   console.log(req.body);
   const {quantity} = req.body;
@@ -451,10 +503,17 @@ app.put("/decrement/:id",authenticateUser,async(req,res)=>{
   
   await Users.updateOne({email:req.user.email},{cart:cart});
   res.send("Success");
+  }
+  catch(err){
+    console.log(err);
+    res.send("Error Decrementing Quantity");
+  }
+
 
 }
 )
 app.put("/remove/:id",authenticateUser,async(req,res)=>{
+  try{
   console.log("Remove Route");
   console.log(req.params.id);
   const product = await products.findById(req.params.id);
@@ -463,9 +522,14 @@ app.put("/remove/:id",authenticateUser,async(req,res)=>{
   cart.splice(index,1);
   await Users.updateOne({email:req.user.email},{cart:cart});
   res.send("Success");
+  }
+  catch(err){
+    console.log(err);
+    res.send("Error Removing Product");
+  }
 })
 app.post("/addToWishlist",authenticateUser,async(req,res)=>{
-
+  try{
   console.log("Add to Wishlist Route");
   let {productId} = req.body;
 
@@ -481,8 +545,14 @@ app.post("/addToWishlist",authenticateUser,async(req,res)=>{
   }
   await Users.updateOne({email:req.user.email},{wishlist:wishlist});
   res.send("Success");
+}
+catch(err){
+  console.log(err);
+  res.send("Error Adding to Wishlist");
+}
 })
 app.get("/wishlist",authenticateUser,async(req,res)=>{
+  try{
   console.log("Wishlist Route");
   let wishlist = req.user.wishlist;
   for(let i = 0;i<wishlist.length;i++){
@@ -490,8 +560,14 @@ app.get("/wishlist",authenticateUser,async(req,res)=>{
     wishlist[i].quantity = product._doc.quantity;
   }
   res.send(wishlist);
+}
+catch(err){
+  console.log(err);
+  res.send("Error Fetching Wishlist");
+}
 })
 app.put("/removeWishlist/:id",authenticateUser,async(req,res)=>{
+  try{
   console.log("Remove Wishlist Route");
   console.log(req.params.id);
   const product = await products.findById(req.params.id);
@@ -500,10 +576,16 @@ app.put("/removeWishlist/:id",authenticateUser,async(req,res)=>{
   wishlist.splice(index,1);
   await Users.updateOne({email:req.user.email},{wishlist:wishlist});
   res.send("Success");
+  }
+  catch(err){
+    console.log(err);
+    res.send("Error Removing Product from Wishlist");
+  }
 })
 
 
 app.post("/sendEmail",async(req,res)=>{
+  try{
   console.log("Send Email Route");
   const {email,subject,message,name} = req.body;
   console.log(email);
@@ -539,9 +621,15 @@ app.post("/sendEmail",async(req,res)=>{
     console.log(err);
     res.send("Error Sending Email");
   }
+  }
+  catch(err){
+    console.log(err);
+    res.send("Error Sending Email");
+  }
 
 })
 app.put("/orderHistory",authenticateUser,async(req,res)=>{
+  try{
   console.log("Order History Route");
   
   const {order} = req.body;
@@ -551,9 +639,16 @@ app.put("/orderHistory",authenticateUser,async(req,res)=>{
   orderHistory.push(order);
   await Users.updateOne({email:req.user.email},{orderHistory:orderHistory});
   res.send("Success");
-  
+  }
+  catch(err){
+    console.log(err);
+    res.send("Error Adding to Order History");
+  }
 })
 app.get("/orderHistory",authenticateUser,async(req,res)=>{
+  try{
+
+  
   console.log("Order History Route");
   
   let {page} = req.query;
@@ -563,9 +658,16 @@ app.get("/orderHistory",authenticateUser,async(req,res)=>{
   const end = page * 3;
   const orders = orderHistory.slice(start,end);
   res.send(orders);
+  }
+  catch(err){
+    console.log(err);
+    res.send("Error Fetching Order History");
+  }
+
 })
 
 app.put("/updateStocks",authenticateUser,async(req,res)=>{
+  try{
   console.log("Update Stocks Route");
   const {order} = req.body;
   console.log(order);
@@ -585,8 +687,14 @@ app.put("/updateStocks",authenticateUser,async(req,res)=>{
     await products.updateOne({_id:order[i]._id},{quantity:quantity});
   }
   res.send("Success");
+}
+catch(err){
+  console.log(err);
+  res.send("Error Updating Stocks");
+}
 })
 app.get("/quantityInCart",authenticateUser,async(req,res)=>{
+  try{
   let {imageUrl} = req.query;
   console.log(imageUrl);
   
@@ -600,20 +708,34 @@ app.get("/quantityInCart",authenticateUser,async(req,res)=>{
     res.json({quantityInCart:product.quantityInCart});
   }
  
-
+  }
+  catch(err){
+    console.log(err);
+    res.send("Error Fetching Quantity in Cart");
+  }
 }
 
 )
 app.get("/verifyPassword",authenticateUser,async(req,res)=>{
+  try{
+    
+  
   console.log("Verify Password Route");
   
   let {password} = req.query;
   let isCorrect = await bcrypt.compare(password,req.user.password);
   console.log(isCorrect)
   res.send(isCorrect);
+  }
+  catch(err){
+    console.log(err);
+    res.send("Error Verifying Password");
+  }
+
 }
 )
 app.put("/updateUser",authenticateUser,async(req,res)=>{ 
+  try{
   console.log("Update Profile Route");
   const {user} = req.body;
   
@@ -630,18 +752,30 @@ app.put("/updateUser",authenticateUser,async(req,res)=>{
   
   await Users.updateOne({email:req.user.email},{...user});
   res.send("Success");
+}
+catch(err){
+  console.log(err);
+  res.send("Error Updating Profile");
+}
 } 
 )
 app.get("/getProductQuantity",async(req,res)=>{
+  try{
   console.log("Get Product Quantity Route");
   const {productId} = req.query;
   const product = await products.findById(productId);
   
   
   res.json({quantity:product.quantity});
+  }
+  catch(err){
+    console.log(err);
+    res.send("Error Fetching Product Quantity");
+  }
 }
 )
 app.get("/verifyStock",authenticateUser,async(req,res)=>{
+  try{
   let {order} = req.query;
   let outOfStock = false;
   let outOfStockProducts = [];
@@ -656,6 +790,11 @@ app.get("/verifyStock",authenticateUser,async(req,res)=>{
     status:outOfStock,
     products:outOfStockProducts
   });
+}
+catch(err){
+  console.log(err);
+  res.send("Error Verifying Stock");
+}
 })
 app.listen(3000, () => {
   console.log("Server is listening on Port 3000");

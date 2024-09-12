@@ -265,7 +265,7 @@ form{
     }
     
 }
-@media(max-width: 768px){
+@media(max-width: 800px){
     .stripeContainer{
         flex-direction: column;
         align-items: center;

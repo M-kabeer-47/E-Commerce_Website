@@ -109,7 +109,7 @@ const token = Cookies.get("uid")
         (
         <>
           <div className="paymentInfo">
-            <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
               <header>
                 <h3
                   style={{
@@ -143,9 +143,9 @@ const token = Cookies.get("uid")
                 </div>
               </section>
             </div>
-            <footer>
+            <footer style={{position:"relative",top:"0px"}}>
               <FaRegCopyright style={{ fontSize: "16px" }} />
-              <p style={{ display: "flex", alignItems: "center", position: "relative", top: "2px" }}>
+              <p style={{ display: "flex", alignItems: "center", position: "relative", top: "2px",height:"20px" }}>
                 Glitchware
               </p>
             </footer>
@@ -207,8 +207,8 @@ export default function StripeCard() {
   const [clientSecret, setClientSecret] = useState("");
 const [stripePromise, setStripePromise] = useState(null);
 const {usdAmount} = location.state || {};
-const [amount,setAmount] = useState(usdAmount);
-const [isLoading,setLoading] = useState(true)
+
+
 const navigate = useNavigate();
 const token = Cookies.get("uid")
 useEffect(()=>{
