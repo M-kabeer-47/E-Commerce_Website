@@ -34,7 +34,7 @@ export default function Navbar({page}) {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const dispatch = useDispatch();
   const [userLoading,setUserLoading] = useState(true);
-  const token = Cookies.get("uid");
+  const token = Cookies.get();
   console.log("The token is"+token);
   
 
