@@ -58,7 +58,7 @@ const query = queryParams.get('text');
   const initialFetch = async () => {
     try {
       setLoading(true);
-      let results = await axios.get(`http://localhost:3000/search/${query}?page=${1}`);
+      let results = await axios.get(`https://e-commerce-website-hzldz0138.vercel.app/search/${query}?page=${1}`);
       if(results.data === false ){
         
         navigate("/notfound");

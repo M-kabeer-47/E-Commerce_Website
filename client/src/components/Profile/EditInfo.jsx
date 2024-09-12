@@ -28,7 +28,7 @@ const EditInfoPage = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get("https://e-commerce-website-78cl.vercel.app/user", {
+        const response = await axios.get("https://e-commerce-website-hzldz0138.vercel.app/user", {
           headers: {
             Authorization: `Bearer ${Cookies.get("uid")}`,
           },
@@ -62,7 +62,7 @@ const EditInfoPage = () => {
 
       return;
     } else if (currentPassword !== "") {
-      let isCorrect = await axios.get("https://e-commerce-website-78cl.vercel.app/verifyPassword", {
+      let isCorrect = await axios.get("https://e-commerce-website-hzldz0138.vercel.app/verifyPassword", {
         headers: {
           Authorization: `Bearer ${Cookies.get("uid")}`,
         },
@@ -115,7 +115,7 @@ const EditInfoPage = () => {
       setTimeout(async () => {
         
         
-        await axios.put("https://e-commerce-website-78cl.vercel.app/updateUser", {user:payload}, {
+        await axios.put("https://e-commerce-website-hzldz0138.vercel.app/updateUser", {user:payload}, {
         headers:{
             Authorization: `Bearer ${Cookies.get("uid")}`
         }
