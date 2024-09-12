@@ -24,7 +24,7 @@ import { setCartCount, setWishlistCount } from "../../store/Counts.js";
 import UserDropdown from "./userDropdown/UserDropdown.jsx";
 export default function Navbar({page}) {
   
- 
+  const backendUrl = useSelector((state) => state.user.backendUrl);
   const [hoveredIcon, setHoveredIcon] = useState(null);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isSmallDropdownVisible, setIsSmallDropdownVisible] = useState(false);
@@ -81,7 +81,7 @@ else{
     if (token) {
 
       if (user === null) {
-        let User = await axios.get("https://e-commerce-website-hzldz0138.vercel.app/user", {
+        let User = await axios.get(`${backendUrl}/user`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

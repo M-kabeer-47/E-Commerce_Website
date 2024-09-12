@@ -8,9 +8,10 @@ import { FaGoogle } from "react-icons/fa";
 
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import { useSelector } from 'react-redux';
 axios.defaults.withCredentials = true;
 export default function Login() {
+  const backendUrl = useSelector((state) => state.user.backendUrl);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [email, updateEmail] = useState("");
   const [password, updatePassword] = useState("");
@@ -69,7 +70,7 @@ const [platform,setPlatform] = useState("");
       return
     }
     let Email = email.toLowerCase();
-    let response = await axios.post("https://e-commerce-website-hzldz0138.vercel.app/login",{ email: Email, password: password })
+    let response = await axios.post(`${backendUrl}/login`,{ email: Email, password: password })
     if(response.data === "User Does Not Exist"){
       setUserExists(false);
       console.log("User Does Not Exist");

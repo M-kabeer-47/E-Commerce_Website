@@ -3,8 +3,9 @@ import './index.css'; // Ensure this imports the CSS file with the above styles
 import HomeProducts from '../HomeProducts';
 
 import axios from 'axios';
-
+import { useSelector } from 'react-redux';
 const Slider = () => {
+  const backendUrl = useSelector((state) => state.user.backendUrl);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(3); // Default to 3 items per page
   const [featuredProducts,setFeaturedProducts] = useState([{},{}])
@@ -12,7 +13,7 @@ const Slider = () => {
     let timeout;
     try{
       timeout = setTimeout(async()=>{
-        let response = (await axios.get("https://e-commerce-website-hzldz0138.vercel.app/products/value-deals?page=1"))
+        let response = (await axios.get(`${backendUrl}/products/value-deals?page=1`))
         console.log(response.data);
         
         setFeaturedProducts(response.data)

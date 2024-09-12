@@ -17,8 +17,9 @@ import { useDispatch } from "react-redux";
 import { setCartCount } from "../../store/Counts";
 
 import { CircularProgress } from "@mui/material";
-
+import { useSelector } from "react-redux";
 export default function Shipping() {
+  const backendUrl = useSelector((state) => state.user.backendUrl);
   const token = Cookies.get("uid");
   const [orderPlaced, setOrderPlaced] = useState(false);
   const location = useLocation();
@@ -100,7 +101,7 @@ export default function Shipping() {
       console.log("Insdie function verifyStock:" +Cart);
       
     
-    let response = await axios.get("https://e-commerce-website-hzldz0138.vercel.app/verifyStock", {
+    let response = await axios.get(`${backendUrl}/verifyStock`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -126,7 +127,7 @@ export default function Shipping() {
     console.log("Inside true");
 
     try {
-      let cart = await axios.get(`https://e-commerce-website-hzldz0138.vercel.app/cart`, {
+      let cart = await axios.get(`${backendUrl}/cart`, {
         headers: {
           Authorization: `Bearer ${Cookies.get("uid")}`,
         },
@@ -218,7 +219,7 @@ const formattedTime = date.toLocaleTimeString('en-US', options);
       } else {
         setOrderPlaced(true);
         console.log("Placing Order");
-        axios.post("https://e-commerce-website-hzldz0138.vercel.app/emptyCart",{
+        axios.post(`${backendUrl}/emptyCart`,{
         
         },{
           headers: {
@@ -226,7 +227,7 @@ const formattedTime = date.toLocaleTimeString('en-US', options);
           }
         });
 
-        axios.put("https://e-commerce-website-hzldz0138.vercel.app/updateStocks",{
+        axios.put(`${backendUrl}/updateStocks`,{
           order:cart
         },{
           headers:{
@@ -240,7 +241,7 @@ const formattedTime = date.toLocaleTimeString('en-US', options);
           navigate("/");
         }, 3000)
       }
-       axios.put("https://e-commerce-website-hzldz0138.vercel.app/orderHistory", {order: order}, {
+       axios.put(`${backendUrl}/orderHistory`, {order: order}, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

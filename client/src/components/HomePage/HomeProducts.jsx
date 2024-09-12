@@ -8,8 +8,9 @@ import Cookies from "js-cookie"
 import { useDispatch } from 'react-redux';
 import{ incrementCartCount } from '../../store/Counts';
 import { useNavigate } from 'react-router-dom';
-
+import { useSelector } from 'react-redux';
 const HomeProducts = ({ product, index, type }) => {
+    const backendUrl = useSelector((state) => state.user.backendUrl);
     const [hoveredProduct, setHoveredProduct] = useState(null);
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     const [animationClass, setAnimationClass] = useState(""); // State for animation class
@@ -45,7 +46,7 @@ const HomeProducts = ({ product, index, type }) => {
     async function handleAddToCart(){
         let token = Cookies.get("uid");     
         let quantityInCart = await axios.get(
-            `https://e-commerce-website-hzldz0138.vercel.app//quantityInCart`,
+            `${backendUrl}/quantityInCart`,
             {
               params: { imageUrl: product.imageUrl },
               headers: { Authorization: `Bearer ${token}` },
@@ -79,7 +80,7 @@ const HomeProducts = ({ product, index, type }) => {
             );
             return;
           }
-       let response = await axios.post(`https://e-commerce-website-hzldz0138.vercel.app//addToCart/${product._id}`,{
+       let response = await axios.post(`${backendUrl}/addToCart/${product._id}`,{
             quantity: 1
         },{
             headers:{"Authorization": `Bearer ${Cookies.get("uid")}`

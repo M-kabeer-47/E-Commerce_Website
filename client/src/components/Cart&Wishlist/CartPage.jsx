@@ -13,12 +13,13 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast, Bounce, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { useSelector } from "react-redux";
 
 export default function CartPage() {
   
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const backendUrl = useSelector((state) => state.user.backendUrl);
   const [cart, setCart] = useState([]);
   const [EmptyCart, setEmptyCart] = useState(false);
   const [isWideScreen, setIsWideScreen] = useState(window.innerWidth >= 1050);
@@ -47,7 +48,7 @@ export default function CartPage() {
 
   const getCart = async () => {
     try {
-      const cart = await axios.get("https://e-commerce-website-hzldz0138.vercel.app/cart", {
+      const cart = await axios.get(`${backendUrl}/cart`, {
         headers: {
           Authorization: `Bearer ${Cookies.get("uid")}`,
         },
@@ -289,7 +290,7 @@ export default function CartPage() {
                           }}
                           onClick={async () => {
                             await axios.put(
-                              `https://e-commerce-website-hzldz0138.vercel.app/remove/${product._id}`,
+                              `${backendUrl}/remove/${product._id}`,
                               {},
                               {
                                 headers: {

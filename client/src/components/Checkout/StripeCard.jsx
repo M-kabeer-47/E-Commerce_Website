@@ -9,10 +9,11 @@ import { Elements } from "@stripe/react-stripe-js";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { setCartCount } from "../../store/Counts";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 function CheckoutForm() {
+  const backendUrl = useSelector((state) => state.user.backendUrl);
   const stripe = useStripe();
   const elements = useElements();
   const navigate = useNavigate();
@@ -58,21 +59,21 @@ const token = Cookies.get("uid")
       setTimeout(() => {
         navigate("/");
       }, 3000);  // Redirect after 3 seconds
-      axios.post("https://e-commerce-website-hzldz0138.vercel.app/emptyCart",{
+      axios.post(`${backendUrl}/emptyCart`,{
         
       },{
         headers: {
           "Authorization": `Bearer ${token}` 
         }
       })
-      await axios.put("https://e-commerce-website-hzldz0138.vercel.app/orderHistory", 
+      await axios.put(`${backendUrl}/orderHistory`, 
         
         {order: order}, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      axios.put("https://e-commerce-website-hzldz0138.vercel.app/updateStocks",{
+      axios.put(`${backendUrl}/updateStocks`,{
         order:cart
       },{
         headers:{
@@ -214,7 +215,7 @@ const token = Cookies.get("uid")
 useEffect(()=>{
     const fetchPublishableKey = async () => {
         try {
-            const response = await axios.get("https://e-commerce-website-hzldz0138.vercel.app/stripePublishableKey",{
+            const response = await axios.get(`${backendUrl}/stripePublishableKey`,{
               headers: {
                 "Authorization": `Bearer ${token}`
               }
@@ -232,7 +233,7 @@ useEffect(()=>{
       try {
         
         
-        const response = await axios.post("https://e-commerce-website-hzldz0138.vercel.app/create-payment-intent", {
+        const response = await axios.post(`${backendUrl}/create-payment-intent`, {
           amount: usdAmount * 100,
         },{
           headers: {

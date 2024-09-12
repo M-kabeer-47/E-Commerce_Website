@@ -5,8 +5,10 @@ import Cookies from "js-cookie";
 import Button from "../Products/Button";
 import { toast, Bounce } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 export default function WishlistCardLayout({ wishlist, getWishlist, convertPrice }) {
     const navigate = useNavigate();
+    const backendUrl = useSelector((state) => state.user.backendUrl);
   return (
     <div
       className="wishlist-products"
@@ -76,7 +78,7 @@ export default function WishlistCardLayout({ wishlist, getWishlist, convertPrice
 
                     try {
                       let quantityInCart = await axios.get(
-                        `https://e-commerce-website-hzldz0138.vercel.app/quantityInCart`,
+                        `${backendUrl}/quantityInCart`,
                         {
                           params: { imageUrl: product.imageUrl },
                           headers: { Authorization: `Bearer ${token}` },
@@ -89,7 +91,7 @@ export default function WishlistCardLayout({ wishlist, getWishlist, convertPrice
                           "Quantity " +
                           1
                       );
-                      let actualQuantity = await axios.get("https://e-commerce-website-hzldz0138.vercel.app/getProductQuantity", {
+                      let actualQuantity = await axios.get(`${backendUrl}/getProductQuantity`, {
                         params: {
                           productId: product._id,
                         },
@@ -130,7 +132,7 @@ export default function WishlistCardLayout({ wishlist, getWishlist, convertPrice
                       }
                       else{
                       let response = await axios.post(
-                        `https://e-commerce-website-hzldz0138.vercel.app/addToCart/${product._id}`,
+                        `${backendUrl}/addToCart/${product._id}`,
                         { quantity: 1 },
                         { headers: { Authorization: `Bearer ${token}` } }
                       );
@@ -161,7 +163,7 @@ export default function WishlistCardLayout({ wishlist, getWishlist, convertPrice
                 style={{ color: "#E7314E", fontSize: "25px", cursor: "pointer" }}
                 onClick={async () => {
                   await axios.put(
-                    `https://e-commerce-website-hzldz0138.vercel.app/removeWishlist/${product._id}`,
+                    `${backendUrl}/removeWishlist/${product._id}`,
                     {},
                     {
                       headers: {

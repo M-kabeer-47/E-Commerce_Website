@@ -15,6 +15,7 @@ import SearchResulsDisplay from '../Products/SearchResultsDisplay.jsx';
 
 
 export default function SearchResult() {
+  const backendUrl = useSelector((state) => state.user.backendUrl);
     
   const [title, updateTitle] = useState("");
   
@@ -30,7 +31,7 @@ const query = queryParams.get('text');
   const requestBackend = async (query) => {
     try {
       
-      let results = await axios.get(`https://e-commerce-website-hzldz0138.vercel.app/search/${query}?page=${page}`);
+      let results = await axios.get(`${backendUrl}/search/${query}?page=${page}`);
       if(results.data === false ){
         
         navigate("/notfound");
@@ -58,7 +59,7 @@ const query = queryParams.get('text');
   const initialFetch = async () => {
     try {
       setLoading(true);
-      let results = await axios.get(`https://e-commerce-website-hzldz0138.vercel.app/search/${query}?page=${1}`);
+      let results = await axios.get(`${backendUrl}/search/${query}?page=${1}`);
       if(results.data === false ){
         
         navigate("/notfound");

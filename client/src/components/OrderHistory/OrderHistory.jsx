@@ -6,10 +6,11 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Navbar from "../HomePage/Navbar";
 import Navbar2 from "../HomePage/Navbar2";
 import Footer from "../HomePage/Footer/Footer";
-
+import { useSelector } from "react-redux";
 
 
 const OrderCard = ({ order, index }) => {
+
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   useEffect(() => {
     const handleResize = () => {
@@ -100,7 +101,7 @@ const OrderCard = ({ order, index }) => {
 
 const OrderHistoryPage = () => {
   const [orders, setOrders] = useState([]);
-  
+  const backendUrl = useSelector((state) => state.user.backendUrl);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [isWideScreen, setIsWideScreen] = useState(window.innerWidth > 1050);
@@ -118,7 +119,7 @@ const OrderHistoryPage = () => {
     try {
       const token = Cookies.get("uid");
       const response = await axios.get(
-        `https://e-commerce-website-78cl.vercel.app/orderHistory?page=${page}`,
+        `${backendUrl}/orderHistory?page=${page}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

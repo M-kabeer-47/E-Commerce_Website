@@ -14,6 +14,7 @@ import { incrementCartCount, incrementWishlistCount } from "../../store/Counts";
 import { setProductPageQuantity } from "../../store/product";
 
 export default function Product() {
+  const backendUrl = useSelector((state) => state.user.backendUrl);
   const [isWideScreen, setIsWideScreen] = useState(window.innerWidth >= 1050);
   const [product, updateProduct] = useState(null);
   const [isLoading, updateLoading] = useState(true);
@@ -42,7 +43,7 @@ export default function Product() {
   // Fetch product data
   async function fetchProduct() {
     try {
-      let pr = await axios.get(`https://e-commerce-website-hzldz0138.vercel.app/product/${id}`);
+      let pr = await axios.get(`${backendUrl}/product/${id}`);
       updateProduct(pr.data);
       console.log(pr.data.quantity);
 
@@ -115,7 +116,7 @@ export default function Product() {
                       if (token) {
                         
                         let quantityInCart = await axios.get(
-                          `https://e-commerce-website-hzldz0138.vercel.app/quantityInCart`,
+                          `${backendUrl}/quantityInCart`,
                           {
                             params: { imageUrl: product.imageUrl },
                             headers: { Authorization: `Bearer ${token}` },
@@ -128,7 +129,7 @@ export default function Product() {
                             "Quantity " +
                             ProductPageQuantity
                         );
-                        let actualQuantity = await axios.get("https://e-commerce-website-hzldz0138.vercel.app/getProductQuantity", {
+                        let actualQuantity = await axios.get(`${backendUrl}/getProductQuantity`, {
                           params: {
                             productId: product._id,
                           },
@@ -173,7 +174,7 @@ export default function Product() {
 
 
                         let response = await axios.post(
-                          `https://e-commerce-website-hzldz0138.vercel.app/addToCart/${product._id}`,
+                          `${backendUrl}/addToCart/${product._id}`,
                           { quantity: ProductPageQuantity },
                           { headers: { Authorization: `Bearer ${token}` } }
                         );
@@ -226,7 +227,7 @@ export default function Product() {
                     if (token) {
                       try {
                         let response = await axios.post(
-                          `https://e-commerce-website-hzldz0138.vercel.app/addToWishlist`,
+                          `${backendUrl}/addToWishlist`,
                           {
                             productId: product._id,
                           },

@@ -10,11 +10,13 @@ import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { toast,Bounce } from 'react-toastify';
-import { ToastContainer } from 'react-toastify';
+
 import 'react-toastify/dist/ReactToastify.css';
 import { setCartCount, setWishlistCount } from "../../store/Counts.js";
 import { setUser } from "../../store/user";
+
 export default function Navbar2() {
+  const backendUrl = useSelector((state) => state.user.backendUrl);
   const cartCount = useSelector((state) => state.Counts.cartCount);
   const wishlistCount = useSelector((state) => state.Counts.wishlistCount);
   const [hoveredIcon, setHoveredIcon] = useState(null);
@@ -93,7 +95,7 @@ else{
         
         console.log("nigga");
           
-        let res = await axios.get("https://e-commerce-website-hzldz0138.vercel.app/user",{
+        let res = await axios.get(`${backendUrl}/user`,{
           headers: {
             "Authorization": `Bearer ${token}`
           }

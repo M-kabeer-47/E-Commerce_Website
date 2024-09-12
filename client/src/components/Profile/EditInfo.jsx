@@ -7,8 +7,9 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import { Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { useSelector } from "react-redux";
 const EditInfoPage = () => {
+  const backendUrl = useSelector((state) => state.user.backendUrl);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState();
   const [email, setEmail] = useState();
@@ -28,7 +29,7 @@ const EditInfoPage = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get("https://e-commerce-website-hzldz0138.vercel.app/user", {
+      const response = await axios.get(`${backendUrl}/user`, {
           headers: {
             Authorization: `Bearer ${Cookies.get("uid")}`,
           },
@@ -62,7 +63,7 @@ const EditInfoPage = () => {
 
       return;
     } else if (currentPassword !== "") {
-      let isCorrect = await axios.get("https://e-commerce-website-hzldz0138.vercel.app/verifyPassword", {
+      let isCorrect = await axios.get(`${backendUrl}/verifyPassword`, {
         headers: {
           Authorization: `Bearer ${Cookies.get("uid")}`,
         },
@@ -115,7 +116,7 @@ const EditInfoPage = () => {
       setTimeout(async () => {
         
         
-        await axios.put("https://e-commerce-website-hzldz0138.vercel.app/updateUser", {user:payload}, {
+        await axios.put(`${backendUrl}/updateUser`, {user:payload}, {
         headers:{
             Authorization: `Bearer ${Cookies.get("uid")}`
         }

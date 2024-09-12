@@ -9,8 +9,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCartShopping,
-  faHeart,
-  faCaretDown,
+  
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import { MdOutlineDelete } from "react-icons/md";
@@ -23,6 +22,7 @@ import { setCartCount } from "../../store/Counts.js";
 import { useSelector } from "react-redux";
 axios.defaults.withCredentials = true;
 export default function CartSidebar(props) {
+  const backendUrl = useSelector((state) => state.user.backendUrl);
   const dispatch = useDispatch();
   const [cart, setCart] = useState([]);
   const navigate = useNavigate();
@@ -62,7 +62,7 @@ export default function CartSidebar(props) {
       if (token) {
         try {
           axios.post(
-            "https://e-commerce-website-hzldz0138.vercel.app/emptyCart",
+            `${backendUrl}/emptyCart`,
             {},
             {
               headers: {
@@ -87,7 +87,7 @@ export default function CartSidebar(props) {
       
 
       try {
-        let cart = await axios.get(`https://e-commerce-website-hzldz0138.vercel.app/cart`, {
+        let cart = await axios.get(`${backendUrl}/cart`,{
           headers: {
             Authorization: `Bearer ${Cookies.get("uid")}`,
           },
@@ -244,7 +244,7 @@ export default function CartSidebar(props) {
                         }}
                         onClick={async () => {
                           await axios.put(
-                            `https://e-commerce-website-hzldz0138.vercel.app/remove/${product._id}`,
+                            `${backendUrl}/remove/${product._id}`,
                             {},
                             {
                               headers: {

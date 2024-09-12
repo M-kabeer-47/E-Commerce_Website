@@ -15,6 +15,7 @@ import { setUser } from "../../store/user.js";
 
 
 export default function App() {
+  const backendUrl = useSelector((state) => state.user.backendUrl);
   const [isWideScreen, setIsWideScreen] = useState(window.innerWidth >= 1050);
   const popularRef = useRef(null);
   const cart = useSelector((state) => state.sidebars.isCartOpen);
@@ -60,7 +61,7 @@ export default function App() {
    
     
     if(token){
-      axios.get("https://e-commerce-website-hzldz0138.vercel.app/user",{
+      axios.get(`${backendUrl}/user`,{
         headers: {
           "Authorization": `Bearer ${token}`
         }

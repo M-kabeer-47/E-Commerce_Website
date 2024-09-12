@@ -23,7 +23,9 @@ import { toast,Bounce } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
 import WishlistCardLayout from "./WishlistCardLayout";
+import { useSelector } from "react-redux";
 export default function wishlistPage() {
+  const backendUrl = useSelector((state) => state.user.backendUrl);
   const [wishlist, setWishlist] = useState([]);
   const [EmptyWishlist, setEmptyWishlist] = useState(false);
   const [isWideScreen, setIsWideScreen] = useState(window.innerWidth >= 1050);
@@ -57,7 +59,7 @@ export default function wishlistPage() {
 
   const getWishlist = async () => {
     try {
-      const wishlist = await axios.get("https://e-commerce-website-hzldz0138.vercel.app/wishlist", {
+      const wishlist = await axios.get(`${backendUrl}/wishlist`, {
         headers: {
           Authorization: `Bearer ${Cookies.get("uid")}`,
         },
@@ -296,7 +298,7 @@ export default function wishlistPage() {
             if(token){
                 try{
                   let quantityInCart = await axios.get(
-                    `https://e-commerce-website-hzldz0138.vercel.app/quantityInCart`,
+                    `${backendUrl}/quantityInCart`,
                     {
                       params: { imageUrl: product.imageUrl },
                       headers: { Authorization: `Bearer ${token}` },
@@ -309,7 +311,7 @@ export default function wishlistPage() {
                       "Quantity " +
                       1
                   );
-                  let actualQuantity = await axios.get("https://e-commerce-website-hzldz0138.vercel.app/getProductQuantity", {
+                  let actualQuantity = await axios.get(`${backendUrl}/getProductQuantity`, {
                     params: {
                       productId: product._id,
                     },
@@ -349,7 +351,7 @@ export default function wishlistPage() {
                     return;
                   }
                   else{
-                let response = await axios.post(`https://e-commerce-website-hzldz0138.vercel.app/addToCart/${product._id}`,{
+                let response = await axios.post(`${backendUrl}/addToCart/${product._id}`,{
                     quantity:1
                 },{
                     headers:{
@@ -393,7 +395,7 @@ export default function wishlistPage() {
                           }}
                           onClick={async () => {
                             await axios.put(
-                              `https://e-commerce-website-hzldz0138.vercel.app/removeWishlist/${product._id}`,
+                              `${backendUrl}/removeWishlist/${product._id}`,
                               {},
                               {
                                 headers: {

@@ -13,9 +13,9 @@ import { incrementCartCount, incrementWishlistCount } from "../../store/Counts";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useInView } from "react-intersection-observer"; 
-
+import { useSelector } from "react-redux";
 const Product = ({ product, index }) => {
-  
+  const backendUrl = useSelector((state) => state.user.backendUrl);
   const dispatch = useDispatch();
 
   
@@ -71,7 +71,7 @@ const Product = ({ product, index }) => {
                   return;
                 } 
                 let quantityInCart = await axios.get(
-                          `https://e-commerce-website-hzldz0138.vercel.app/quantityInCart`,
+                          `${backendUrl}/quantityInCart`,
                           {
                             params: { imageUrl: product.imageUrl },
                             headers: { Authorization: `Bearer ${token}` },
@@ -84,7 +84,7 @@ const Product = ({ product, index }) => {
                             "Quantity " +
                             1
                         );
-                        let actualQuantity = await axios.get("https://e-commerce-website-hzldz0138.vercel.app/getProductQuantity", {
+                        let actualQuantity = await axios.get(`${backendUrl}/getProductQuantity`, {
                           params: {
                             productId: product._id,
                           },
@@ -127,7 +127,7 @@ const Product = ({ product, index }) => {
                         
                 else {
                   let response = await axios.post(
-                    `https://e-commerce-website-hzldz0138.vercel.app/addToCart/${product._id}`,
+                    `${backendUrl}/addToCart/${product._id}`,
                     {
                       quantity: 1,
                     },
@@ -179,7 +179,7 @@ const Product = ({ product, index }) => {
               if (token) {
                 try {
                   let response = await axios.post(
-                    `https://e-commerce-website-hzldz0138.vercel.app/addToWishlist`,
+                    `${backendUrl}/addToWishlist`,
                     {
                       productId: product._id,
                     },

@@ -5,14 +5,16 @@ import { useState,useEffect  } from "react";
 
 
 import HomeProducts from "../HomeProducts";
+import { useSelector } from "react-redux";
 
 
 import axios from "axios";
+const backendUrl = useSelector((state) => state.user.backendUrl);
 export default function FeaturedProduct() {
   const [featuredProducts, setFeaturedProducts] = useState([]);
   useEffect(()=>{
     const fetchFeaturedProducts = async () => {
-      const response = await axios.get("https://e-commerce-website-hzldz0138.vercel.app/featuredProducts");
+      const response = await axios.get(`${backendUrl}/featuredProducts`);
       setFeaturedProducts(response.data);
     };
     fetchFeaturedProducts();

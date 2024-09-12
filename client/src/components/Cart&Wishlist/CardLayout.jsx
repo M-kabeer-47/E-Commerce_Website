@@ -4,8 +4,11 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import IncrementDecrementBtn from "../Product/Quantity";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 export default function CardLayout({cart,getCart,convertPrice,total}) {
   const navigate = useNavigate();
+  const backendUrl = useSelector((state) => state.user.backendUrl);
     return(
 
     
@@ -107,7 +110,7 @@ export default function CardLayout({cart,getCart,convertPrice,total}) {
             style={{ color: "#E7314E", fontSize: "25px", cursor: "pointer" }}
             onClick={async () => {
               await axios.put(
-                `https://e-commerce-website-hzldz0138.vercel.app/remove/${product._id}`,
+                `${backendUrl}/remove/${product._id}`,
                 {},
                 {
                   headers: {

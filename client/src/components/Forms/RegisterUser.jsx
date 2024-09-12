@@ -5,9 +5,10 @@ import "./RegisterUser.css";
 import axios from "axios";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-export default function RegisterUser(props) {
+import { useSelector } from "react-redux";
+export default function RegisterUser() {
   const [submit, updateSubmit] = useState(false);
+  const backendUrl = useSelector((state) => state.user.backendUrl);
   
   const [emailExists, setEmailExists] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -100,7 +101,7 @@ export default function RegisterUser(props) {
   async function emailExistsCheck() {
     let email = user.email.toLowerCase();
 
-    let response = await axios.post("https://e-commerce-website-hzldz0138.vercel.app/checkEmail", {
+    let response = await axios.post(`${backendUrl}/checkEmail`, {
       email,
     });
     if (response.data.data === "Google") {
@@ -151,7 +152,7 @@ export default function RegisterUser(props) {
       password: user.password,
     };
     await axios
-      .post("https://e-commerce-website-hzldz0138.vercel.app/register", {
+      .post(`${backendUrl}/register`, {
         User,
       })
       .then((response) => {

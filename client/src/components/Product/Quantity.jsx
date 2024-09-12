@@ -7,6 +7,7 @@ import { incrementQuantity,decrementQuantity, setProduct } from "../../store/pro
 import { toggleLoader } from "../../store/loader";
 
 const IncrementDecrementBtn = ({ count, maxValue, cart, product,requestBackend,style,type }) => {
+  const backendUrl = useSelector((state) => state.user.backendUrl);
   const [incrementButtonClicked, setIncrementButtonClicked] = useState(false);
   const [decrementButtonClicked, setDecrementButtonClicked] = useState(false);
   
@@ -20,7 +21,7 @@ const IncrementDecrementBtn = ({ count, maxValue, cart, product,requestBackend,s
       try {
         dispatch(toggleLoader());
         await axios.put(
-          `https://e-commerce-website-hzldz0138.vercel.app/increment/${product}`,
+          `${backendUrl}/increment/${product}`,
           { quantity: incrementClicks },
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -72,7 +73,7 @@ const IncrementDecrementBtn = ({ count, maxValue, cart, product,requestBackend,s
       try {
         dispatch(toggleLoader());
         await axios.put(
-          `https://e-commerce-website-hzldz0138.vercel.app/decrement/${product}`,
+          `${backendUrl}/decrement/${product}`,
           { quantity: decrementClicks },
           { headers: { Authorization: `Bearer ${token}` } }
         );
