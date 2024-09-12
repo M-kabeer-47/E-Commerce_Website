@@ -208,7 +208,7 @@ export default function StripeCard() {
 const [stripePromise, setStripePromise] = useState(null);
 const {usdAmount} = location.state || {};
 
-
+const backendUrl = useSelector((state) => state.user.backendUrl);
 const navigate = useNavigate();
 const token = localStorage.getItem("uid");
 useEffect(()=>{
