@@ -12,17 +12,17 @@ dotenv.config();
 
 
 
-// MongoDB connection URI
+
 const uri = "mongodb+srv://User1:byoabD1X2y7KzU2I@e-commerce.kopglez.mongodb.net/E-Commerce";
 import bcrypt from "bcrypt";
 import passport from "passport";
 import cookieParser from "cookie-parser"; // Make sure you are using cookie-parser
 import google from "./Authentication/google.js";
-// import product from "../src/store/product.js";
 
 
 
-// Connect to MongoDB using Mongoose
+
+
 const connectDB = async () => {
   try {
     await mongoose.connect(uri);
