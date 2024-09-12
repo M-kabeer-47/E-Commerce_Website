@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 const ProtectedRoute = ({ children }) => {
-  const token  = Cookies.get("uid");
+  const token  = localStorage.getItem("uid");
+  const expires = localStorage.getItem("tokenExpiry");
 
-
-  if (!token) {
+  if (!token && new Date().getTime() > tokenExpiry) {
     return <Navigate to="/login" replace />;
   }
 
