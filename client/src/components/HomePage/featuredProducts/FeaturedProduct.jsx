@@ -12,7 +12,7 @@ export default function FeaturedProduct() {
   const [featuredProducts, setFeaturedProducts] = useState([]);
   useEffect(()=>{
     const fetchFeaturedProducts = async () => {
-      const response = await axios.get("https://e-commerce-website-78cl.vercel.app/featuredProducts");
+      const response = await axios.get("https://e-commerce-website-hzldz0138.vercel.app/featuredProducts");
       setFeaturedProducts(response.data);
     };
     fetchFeaturedProducts();

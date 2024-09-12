@@ -60,7 +60,7 @@ export default function App() {
    
     
     if(token){
-      axios.get("https://e-commerce-website-78cl.vercel.app/user",{
+      axios.get("https://e-commerce-website-hzldz0138.vercel.app/user",{
         headers: {
           "Authorization": `Bearer ${token}`
         }

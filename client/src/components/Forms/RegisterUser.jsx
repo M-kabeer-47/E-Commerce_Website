@@ -100,7 +100,7 @@ export default function RegisterUser(props) {
   async function emailExistsCheck() {
     let email = user.email.toLowerCase();
 
-    let response = await axios.post("https://e-commerce-website-78cl.vercel.app/checkEmail", {
+    let response = await axios.post("https://e-commerce-website-hzldz0138.vercel.app/checkEmail", {
       email,
     });
     if (response.data.data === "Google") {
@@ -151,7 +151,7 @@ export default function RegisterUser(props) {
       password: user.password,
     };
     await axios
-      .post("https://e-commerce-website-78cl.vercel.app/register", {
+      .post("https://e-commerce-website-hzldz0138.vercel.app/register", {
         User,
       })
       .then((response) => {

@@ -2,14 +2,14 @@ import React, { act, useState } from "react";
 import { Rating } from "@mui/material";
 import Button from "./Button";
 import "./products.css";
-import { setCartClicked, setProduct } from "../../store/product";
+
 import Tooltip from "@mui/material/Tooltip";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { incrementCartCount, incrementWishlistCount } from "../../store/Counts";
-import { setCartCount, setWishlistCount } from "../../store/Counts";
+
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useInView } from "react-intersection-observer"; 
@@ -71,7 +71,7 @@ const Product = ({ product, index }) => {
                   return;
                 } 
                 let quantityInCart = await axios.get(
-                          `https://e-commerce-website-78cl.vercel.app/quantityInCart`,
+                          `https://e-commerce-website-hzldz0138.vercel.app/quantityInCart`,
                           {
                             params: { imageUrl: product.imageUrl },
                             headers: { Authorization: `Bearer ${token}` },
@@ -84,7 +84,7 @@ const Product = ({ product, index }) => {
                             "Quantity " +
                             1
                         );
-                        let actualQuantity = await axios.get("https://e-commerce-website-78cl.vercel.app/getProductQuantity", {
+                        let actualQuantity = await axios.get("https://e-commerce-website-hzldz0138.vercel.app/getProductQuantity", {
                           params: {
                             productId: product._id,
                           },
@@ -127,7 +127,7 @@ const Product = ({ product, index }) => {
                         
                 else {
                   let response = await axios.post(
-                    `https://e-commerce-website-78cl.vercel.app/addToCart/${product._id}`,
+                    `https://e-commerce-website-hzldz0138.vercel.app/addToCart/${product._id}`,
                     {
                       quantity: 1,
                     },
@@ -179,7 +179,7 @@ const Product = ({ product, index }) => {
               if (token) {
                 try {
                   let response = await axios.post(
-                    `https://e-commerce-website-78cl.vercel.app/addToWishlist`,
+                    `https://e-commerce-website-hzldz0138.vercel.app/addToWishlist`,
                     {
                       productId: product._id,
                     },

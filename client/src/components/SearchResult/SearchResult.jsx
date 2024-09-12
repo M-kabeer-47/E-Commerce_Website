@@ -30,7 +30,7 @@ const query = queryParams.get('text');
   const requestBackend = async (query) => {
     try {
       
-      let results = await axios.get(`https://e-commerce-website-78cl.vercel.app/search/${query}?page=${page}`);
+      let results = await axios.get(`https://e-commerce-website-hzldz0138.vercel.app/search/${query}?page=${page}`);
       if(results.data === false ){
         
         navigate("/notfound");

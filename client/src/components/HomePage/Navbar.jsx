@@ -81,7 +81,7 @@ else{
     if (token) {
 
       if (user === null) {
-        let User = await axios.get("https://e-commerce-website-78cl.vercel.app/user", {
+        let User = await axios.get("https://e-commerce-website-hzldz0138.vercel.app/user", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

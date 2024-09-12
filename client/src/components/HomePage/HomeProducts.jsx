@@ -45,7 +45,7 @@ const HomeProducts = ({ product, index, type }) => {
     async function handleAddToCart(){
         let token = Cookies.get("uid");     
         let quantityInCart = await axios.get(
-            `https://e-commerce-website-78cl.vercel.app/quantityInCart`,
+            `https://e-commerce-website-hzldz0138.vercel.app//quantityInCart`,
             {
               params: { imageUrl: product.imageUrl },
               headers: { Authorization: `Bearer ${token}` },
@@ -79,7 +79,7 @@ const HomeProducts = ({ product, index, type }) => {
             );
             return;
           }
-       let response = await axios.post(`https://e-commerce-website-78cl.vercel.app/addToCart/${product._id}`,{
+       let response = await axios.post(`https://e-commerce-website-hzldz0138.vercel.app//addToCart/${product._id}`,{
             quantity: 1
         },{
             headers:{"Authorization": `Bearer ${Cookies.get("uid")}`

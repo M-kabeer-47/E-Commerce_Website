@@ -20,7 +20,7 @@ const IncrementDecrementBtn = ({ count, maxValue, cart, product,requestBackend,s
       try {
         dispatch(toggleLoader());
         await axios.put(
-          `https://e-commerce-website-78cl.vercel.app/increment/${product}`,
+          `https://e-commerce-website-hzldz0138.vercel.app/increment/${product}`,
           { quantity: incrementClicks },
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -72,7 +72,7 @@ const IncrementDecrementBtn = ({ count, maxValue, cart, product,requestBackend,s
       try {
         dispatch(toggleLoader());
         await axios.put(
-          `https://e-commerce-website-78cl.vercel.app/decrement/${product}`,
+          `https://e-commerce-website-hzldz0138.vercel.app/decrement/${product}`,
           { quantity: decrementClicks },
           { headers: { Authorization: `Bearer ${token}` } }
         );

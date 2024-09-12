@@ -54,7 +54,7 @@ export default function wishlistPage() {
 
   const getWishlist = async () => {
     try {
-      const wishlist = await axios.get("http://localhost:3000/wishlist", {
+      const wishlist = await axios.get("https://e-commerce-website-hzldz0138.vercel.app/wishlist", {
         headers: {
           Authorization: `Bearer ${Cookies.get("uid")}`,
         },
@@ -293,7 +293,7 @@ export default function wishlistPage() {
             if(token){
                 try{
                   let quantityInCart = await axios.get(
-                    `https://e-commerce-website-78cl.vercel.app/quantityInCart`,
+                    `https://e-commerce-website-hzldz0138.vercel.app/quantityInCart`,
                     {
                       params: { imageUrl: product.imageUrl },
                       headers: { Authorization: `Bearer ${token}` },
@@ -306,7 +306,7 @@ export default function wishlistPage() {
                       "Quantity " +
                       1
                   );
-                  let actualQuantity = await axios.get("https://e-commerce-website-78cl.vercel.app/getProductQuantity", {
+                  let actualQuantity = await axios.get("https://e-commerce-website-hzldz0138.vercel.app/getProductQuantity", {
                     params: {
                       productId: product._id,
                     },
@@ -346,7 +346,7 @@ export default function wishlistPage() {
                     return;
                   }
                   else{
-                let response = await axios.post(`https://e-commerce-website-78cl.vercel.app/addToCart/${product._id}`,{
+                let response = await axios.post(`https://e-commerce-website-hzldz0138.vercel.app/addToCart/${product._id}`,{
                     quantity:1
                 },{
                     headers:{
@@ -390,7 +390,7 @@ export default function wishlistPage() {
                           }}
                           onClick={async () => {
                             await axios.put(
-                              `https://e-commerce-website-78cl.vercel.app/removeWishlist/${product._id}`,
+                              `https://e-commerce-website-hzldz0138.vercel.app/removeWishlist/${product._id}`,
                               {},
                               {
                                 headers: {
