@@ -10,7 +10,7 @@
 
 .about-us-section::before {
     content: "";
-    background-image: url("images/aboutus.jpg");
+    background-image: url("aboutus.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     position: absolute;

@@ -94,7 +94,7 @@ const [platform,setPlatform] = useState("");
     else if(response.data === "Success"){
       setUserExists(true);
       setIncorrectPassword(false);
-      window.location.href = "https://e-commerce-website-cck4.vercel.app";
+      window.location.href = "https://e-commerce-website-cck4.vercel.app/";
       
       
         
@@ -169,7 +169,7 @@ const navigate = useNavigate();
         <h4 style={{color:"white",fontWeight:"normal"}}>or</h4>
         <button  className='login-button google-button' onClick={()=>{
           event.preventDefault();
-          window.location.href = "https://e-commerce-website-phi-vert.vercel.app/auth/google";
+          window.location.href = "https://e-commerce-website-phi-vert.vercel.app/auth/google"; //
           
 
 
