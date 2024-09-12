@@ -338,7 +338,7 @@ app.get("/auth/google",passport.authenticate("google",{
 })) 
 app.get("/auth/google/callback",passport.authenticate("google",{
 session:false,
-failureRedirect:"https://e-commerce-website-cck4.vercel.app/login",
+failureRedirect:"http://localhost:5173/login",
   
 
 }),function (req,res){
@@ -348,7 +348,7 @@ failureRedirect:"https://e-commerce-website-cck4.vercel.app/login",
   res.cookie("uid",req.user.token,{
     maxAge: 2 * 24 * 60 * 60 * 1000
   });
-  res.redirect("https://e-commerce-website-cck4.vercel.app");
+  res.redirect("http://localhost:5173/");
 
 })
 function findProductIndex(cart,imageUrl){
