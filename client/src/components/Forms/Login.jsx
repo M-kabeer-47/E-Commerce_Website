@@ -91,7 +91,7 @@ const [platform,setPlatform] = useState("");
       console.log("Incorrect Password");
       return
   }
-    else if(response.data === "Success"){
+    else if(response.data.data === "Success"){
       setUserExists(true);
       setIncorrectPassword(false);
       localStorage.setItem("uid",response.data.token);

@@ -274,7 +274,7 @@ app.post("/login",async(req,res)=>{
       },process.env.JWT_SECRET);
       console.log(token);
       res.json( {token: token,
-        maxAge: 2 * 24 * 60 * 60 * 1000,});
+        maxAge: 2 * 24 * 60 * 60 * 1000,data:"Success"});
     
       
         
