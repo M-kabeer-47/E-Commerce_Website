@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 
-import Cookies from "js-cookie";
 
 import Navbar from "../HomePage/Navbar";
 import Navbar2 from "../HomePage/Navbar2";

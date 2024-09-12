@@ -76,7 +76,7 @@ export default function WishlistCardLayout({ wishlist, getWishlist, convertPrice
 
                     try {
                       let quantityInCart = await axios.get(
-                        `http://localhost:3000/quantityInCart`,
+                        `https://e-commerce-website-78cl.vercel.app/quantityInCart`,
                         {
                           params: { imageUrl: product.imageUrl },
                           headers: { Authorization: `Bearer ${token}` },
@@ -89,7 +89,7 @@ export default function WishlistCardLayout({ wishlist, getWishlist, convertPrice
                           "Quantity " +
                           1
                       );
-                      let actualQuantity = await axios.get("http://localhost:3000/getProductQuantity", {
+                      let actualQuantity = await axios.get("https://e-commerce-website-78cl.vercel.app/getProductQuantity", {
                         params: {
                           productId: product._id,
                         },
@@ -130,7 +130,7 @@ export default function WishlistCardLayout({ wishlist, getWishlist, convertPrice
                       }
                       else{
                       let response = await axios.post(
-                        `http://localhost:3000/addToCart/${product._id}`,
+                        `https://e-commerce-website-78cl.vercel.app/addToCart/${product._id}`,
                         { quantity: 1 },
                         { headers: { Authorization: `Bearer ${token}` } }
                       );
@@ -161,7 +161,7 @@ export default function WishlistCardLayout({ wishlist, getWishlist, convertPrice
                 style={{ color: "#E7314E", fontSize: "25px", cursor: "pointer" }}
                 onClick={async () => {
                   await axios.put(
-                    `http://localhost:3000/removeWishlist/${product._id}`,
+                    `https://e-commerce-website-78cl.vercel.app/removeWishlist/${product._id}`,
                     {},
                     {
                       headers: {

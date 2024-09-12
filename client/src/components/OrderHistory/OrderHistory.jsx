@@ -118,7 +118,7 @@ const OrderHistoryPage = () => {
     try {
       const token = Cookies.get("uid");
       const response = await axios.get(
-        `http://localhost:3000/orderHistory?page=${page}`,
+        `https://e-commerce-website-78cl.vercel.app/orderHistory?page=${page}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -69,7 +69,7 @@ const [platform,setPlatform] = useState("");
       return
     }
     let Email = email.toLowerCase();
-    let response = await axios.post("http://localhost:3000/login",{ email: Email, password: password })
+    let response = await axios.post("https://e-commerce-website-78cl.vercel.app/login",{ email: Email, password: password })
     if(response.data === "User Does Not Exist"){
       setUserExists(false);
       console.log("User Does Not Exist");

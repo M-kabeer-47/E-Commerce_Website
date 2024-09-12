@@ -28,7 +28,7 @@ const EditInfoPage = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/user", {
+        const response = await axios.get("https://e-commerce-website-78cl.vercel.app/user", {
           headers: {
             Authorization: `Bearer ${Cookies.get("uid")}`,
           },
@@ -62,7 +62,7 @@ const EditInfoPage = () => {
 
       return;
     } else if (currentPassword !== "") {
-      let isCorrect = await axios.get("http://localhost:3000/verifyPassword", {
+      let isCorrect = await axios.get("https://e-commerce-website-78cl.vercel.app/verifyPassword", {
         headers: {
           Authorization: `Bearer ${Cookies.get("uid")}`,
         },
@@ -115,7 +115,7 @@ const EditInfoPage = () => {
       setTimeout(async () => {
         
         
-        await axios.put("http://localhost:3000/updateUser", {user:payload}, {
+        await axios.put("https://e-commerce-website-78cl.vercel.app/updateUser", {user:payload}, {
         headers:{
             Authorization: `Bearer ${Cookies.get("uid")}`
         }

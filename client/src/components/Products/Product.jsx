@@ -71,7 +71,7 @@ const Product = ({ product, index }) => {
                   return;
                 } 
                 let quantityInCart = await axios.get(
-                          `http://localhost:3000/quantityInCart`,
+                          `https://e-commerce-website-78cl.vercel.app/quantityInCart`,
                           {
                             params: { imageUrl: product.imageUrl },
                             headers: { Authorization: `Bearer ${token}` },
@@ -84,7 +84,7 @@ const Product = ({ product, index }) => {
                             "Quantity " +
                             1
                         );
-                        let actualQuantity = await axios.get("http://localhost:3000/getProductQuantity", {
+                        let actualQuantity = await axios.get("https://e-commerce-website-78cl.vercel.app/getProductQuantity", {
                           params: {
                             productId: product._id,
                           },
@@ -127,7 +127,7 @@ const Product = ({ product, index }) => {
                         
                 else {
                   let response = await axios.post(
-                    `http://localhost:3000/addToCart/${product._id}`,
+                    `https://e-commerce-website-78cl.vercel.app/addToCart/${product._id}`,
                     {
                       quantity: 1,
                     },
@@ -179,7 +179,7 @@ const Product = ({ product, index }) => {
               if (token) {
                 try {
                   let response = await axios.post(
-                    `http://localhost:3000/addToWishlist`,
+                    `https://e-commerce-website-78cl.vercel.app/addToWishlist`,
                     {
                       productId: product._id,
                     },

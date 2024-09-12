@@ -107,7 +107,7 @@ export default function CardLayout({cart,getCart,convertPrice,total}) {
             style={{ color: "#E7314E", fontSize: "25px", cursor: "pointer" }}
             onClick={async () => {
               await axios.put(
-                `http://localhost:3000/remove/${product._id}`,
+                `https://e-commerce-website-78cl.vercel.app/remove/${product._id}`,
                 {},
                 {
                   headers: {

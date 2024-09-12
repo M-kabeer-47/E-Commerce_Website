@@ -47,7 +47,7 @@ export default function CartPage() {
 
   const getCart = async () => {
     try {
-      const cart = await axios.get("http://localhost:3000/cart", {
+      const cart = await axios.get("https://e-commerce-website-78cl.vercel.app/cart", {
         headers: {
           Authorization: `Bearer ${Cookies.get("uid")}`,
         },
@@ -289,7 +289,7 @@ export default function CartPage() {
                           }}
                           onClick={async () => {
                             await axios.put(
-                              `http://localhost:3000/remove/${product._id}`,
+                              `https://e-commerce-website-78cl.vercel.app/remove/${product._id}`,
                               {},
                               {
                                 headers: {

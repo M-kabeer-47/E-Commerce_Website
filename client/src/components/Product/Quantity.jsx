@@ -9,7 +9,7 @@ import { toggleLoader } from "../../store/loader";
 const IncrementDecrementBtn = ({ count, maxValue, cart, product,requestBackend,style,type }) => {
   const [incrementButtonClicked, setIncrementButtonClicked] = useState(false);
   const [decrementButtonClicked, setDecrementButtonClicked] = useState(false);
-  const [disabled,setDisabled] = useState(false)
+  
   const [incrementClicks,setIncrementClicks] = useState(0);
   const [decrementClicks,setDecrementClicks] = useState(0);
   const [quantity, setQuantity] = useState(count);
@@ -20,7 +20,7 @@ const IncrementDecrementBtn = ({ count, maxValue, cart, product,requestBackend,s
       try {
         dispatch(toggleLoader());
         await axios.put(
-          `http://localhost:3000/increment/${product}`,
+          `https://e-commerce-website-78cl.vercel.app/increment/${product}`,
           { quantity: incrementClicks },
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -72,7 +72,7 @@ const IncrementDecrementBtn = ({ count, maxValue, cart, product,requestBackend,s
       try {
         dispatch(toggleLoader());
         await axios.put(
-          `http://localhost:3000/decrement/${product}`,
+          `https://e-commerce-website-78cl.vercel.app/decrement/${product}`,
           { quantity: decrementClicks },
           { headers: { Authorization: `Bearer ${token}` } }
         );

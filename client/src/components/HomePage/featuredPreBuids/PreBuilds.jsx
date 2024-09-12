@@ -12,7 +12,7 @@ const Slider = () => {
     let timeout;
     try{
       timeout = setTimeout(async()=>{
-        let response = (await axios.get("http://localhost:3000/products/value-deals?page=1"))
+        let response = (await axios.get("https://e-commerce-website-78cl.vercel.app/products/value-deals?page=1"))
         console.log(response.data);
         
         setFeaturedProducts(response.data)

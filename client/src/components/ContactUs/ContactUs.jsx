@@ -83,7 +83,7 @@ export default function ContactPage() {
       console.log(payload);
 
       await axios.post(
-        "http://localhost:3000/sendEmail",
+        "https://e-commerce-website-78cl.vercel.app/sendEmail",
         payload,
         
 

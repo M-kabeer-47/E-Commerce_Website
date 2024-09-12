@@ -58,21 +58,21 @@ const token = Cookies.get("uid")
       setTimeout(() => {
         navigate("/");
       }, 3000);  // Redirect after 3 seconds
-      axios.post("http://localhost:3000/emptyCart",{
+      axios.post("https://e-commerce-website-78cl.vercel.app/emptyCart",{
         
       },{
         headers: {
           "Authorization": `Bearer ${token}` 
         }
       })
-      await axios.put("http://localhost:3000/orderHistory", 
+      await axios.put("https://e-commerce-website-78cl.vercel.app/orderHistory", 
         
         {order: order}, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      axios.put("http://localhost:3000/updateStocks",{
+      axios.put("https://e-commerce-website-78cl.vercel.app/updateStocks",{
         order:cart
       },{
         headers:{
@@ -214,7 +214,7 @@ const token = Cookies.get("uid")
 useEffect(()=>{
     const fetchPublishableKey = async () => {
         try {
-            const response = await axios.get("http://localhost:3000/stripePublishableKey",{
+            const response = await axios.get("https://e-commerce-website-78cl.vercel.app/stripePublishableKey",{
               headers: {
                 "Authorization": `Bearer ${token}`
               }
@@ -232,7 +232,7 @@ useEffect(()=>{
       try {
         
         
-        const response = await axios.post("http://localhost:3000/create-payment-intent", {
+        const response = await axios.post("https://e-commerce-website-78cl.vercel.app/create-payment-intent", {
           amount: usdAmount * 100,
         },{
           headers: {

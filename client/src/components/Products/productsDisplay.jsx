@@ -49,7 +49,7 @@ export default function ProductDisplay() {
     try {
       
       console.log(`Fetching category: ${category}`);
-      const response = await axios.get(`http://localhost:3000/products/${category}?page=${page}`);
+      const response = await axios.get(`https://e-commerce-website-78cl.vercel.app/products/${category}?page=${page}`);
       let categoryObject = response.data;
       if (categoryObject === false || categoryObject.length === 0) {
         setHasMore(false);
@@ -79,7 +79,7 @@ export default function ProductDisplay() {
       setLoading(true);
       console.log("Initial fetch");
       
-      let response = await axios.get(`http://localhost:3000/products/${Category}?page=${1}`)
+      let response = await axios.get(`https://e-commerce-website-78cl.vercel.app/products/${Category}?page=${1}`)
       console.log(response.data);
       
       updateTitle(response.data[0].category);

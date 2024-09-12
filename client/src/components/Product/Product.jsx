@@ -42,7 +42,7 @@ export default function Product() {
   // Fetch product data
   async function fetchProduct() {
     try {
-      let pr = await axios.get(`http://localhost:3000/product/${id}`);
+      let pr = await axios.get(`https://e-commerce-website-78cl.vercel.app/product/${id}`);
       updateProduct(pr.data);
       console.log(pr.data.quantity);
 
@@ -115,7 +115,7 @@ export default function Product() {
                       if (token) {
                         
                         let quantityInCart = await axios.get(
-                          `http://localhost:3000/quantityInCart`,
+                          `https://e-commerce-website-78cl.vercel.app/quantityInCart`,
                           {
                             params: { imageUrl: product.imageUrl },
                             headers: { Authorization: `Bearer ${token}` },
@@ -128,7 +128,7 @@ export default function Product() {
                             "Quantity " +
                             ProductPageQuantity
                         );
-                        let actualQuantity = await axios.get("http://localhost:3000/getProductQuantity", {
+                        let actualQuantity = await axios.get("https://e-commerce-website-78cl.vercel.app/getProductQuantity", {
                           params: {
                             productId: product._id,
                           },
@@ -173,7 +173,7 @@ export default function Product() {
 
 
                         let response = await axios.post(
-                          `http://localhost:3000/addToCart/${product._id}`,
+                          `https://e-commerce-website-78cl.vercel.app/addToCart/${product._id}`,
                           { quantity: ProductPageQuantity },
                           { headers: { Authorization: `Bearer ${token}` } }
                         );
@@ -226,7 +226,7 @@ export default function Product() {
                     if (token) {
                       try {
                         let response = await axios.post(
-                          `http://localhost:3000/addToWishlist`,
+                          `https://e-commerce-website-78cl.vercel.app/addToWishlist`,
                           {
                             productId: product._id,
                           },

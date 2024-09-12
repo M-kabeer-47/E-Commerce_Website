@@ -93,7 +93,7 @@ else{
         
         console.log("nigga");
           
-        let res = await axios.get("http://localhost:3000/user",{
+        let res = await axios.get("https://e-commerce-website-78cl.vercel.app/user",{
           headers: {
             "Authorization": `Bearer ${token}`
           }

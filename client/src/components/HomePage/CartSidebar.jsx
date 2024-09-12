@@ -62,7 +62,7 @@ export default function CartSidebar(props) {
       if (token) {
         try {
           axios.post(
-            "http://localhost:3000/emptyCart",
+            "https://e-commerce-website-78cl.vercel.app/emptyCart",
             {},
             {
               headers: {
@@ -87,7 +87,7 @@ export default function CartSidebar(props) {
       
 
       try {
-        let cart = await axios.get(`http://localhost:3000/cart`, {
+        let cart = await axios.get(`https://e-commerce-website-78cl.vercel.app/cart`, {
           headers: {
             Authorization: `Bearer ${Cookies.get("uid")}`,
           },
@@ -244,7 +244,7 @@ export default function CartSidebar(props) {
                         }}
                         onClick={async () => {
                           await axios.put(
-                            `http://localhost:3000/remove/${product._id}`,
+                            `https://e-commerce-website-78cl.vercel.app/remove/${product._id}`,
                             {},
                             {
                               headers: {

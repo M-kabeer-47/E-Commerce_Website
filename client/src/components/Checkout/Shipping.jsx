@@ -100,7 +100,7 @@ export default function Shipping() {
       console.log("Insdie function verifyStock:" +Cart);
       
     
-    let response = await axios.get("http://localhost:3000/verifyStock", {
+    let response = await axios.get("https://e-commerce-website-78cl.vercel.app/verifyStock", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -126,7 +126,7 @@ export default function Shipping() {
     console.log("Inside true");
 
     try {
-      let cart = await axios.get(`http://localhost:3000/cart`, {
+      let cart = await axios.get(`https://e-commerce-website-78cl.vercel.app/cart`, {
         headers: {
           Authorization: `Bearer ${Cookies.get("uid")}`,
         },
@@ -218,7 +218,7 @@ const formattedTime = date.toLocaleTimeString('en-US', options);
       } else {
         setOrderPlaced(true);
         console.log("Placing Order");
-        axios.post("http://localhost:3000/emptyCart",{
+        axios.post("https://e-commerce-website-78cl.vercel.app/emptyCart",{
         
         },{
           headers: {
@@ -226,7 +226,7 @@ const formattedTime = date.toLocaleTimeString('en-US', options);
           }
         });
 
-        axios.put("http://localhost:3000/updateStocks",{
+        axios.put("https://e-commerce-website-78cl.vercel.app/updateStocks",{
           order:cart
         },{
           headers:{
@@ -240,7 +240,7 @@ const formattedTime = date.toLocaleTimeString('en-US', options);
           navigate("/");
         }, 3000)
       }
-       axios.put("http://localhost:3000/orderHistory", {order: order}, {
+       axios.put("https://e-commerce-website-78cl.vercel.app/orderHistory", {order: order}, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
