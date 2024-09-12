@@ -276,7 +276,9 @@ app.post("/login",async(req,res)=>{
       res.cookie("uid", token, {
         maxAge: 2 * 24 * 60 * 60 * 1000,
         secure: true,         // Only sent over HTTPS
-        sameSite: 'None'      // Allows cross-origin cookies
+        sameSite: 'None',
+        domain: "https://e-commerce-website-cck4.vercel.app",
+          // Allows cross-origin cookies
     });
     
       res.send("Success");
