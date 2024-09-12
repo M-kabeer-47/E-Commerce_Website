@@ -1,0 +1,117 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+.about-us-section {
+    /* position: relative; */
+    width: 100%;
+    height: 700px;
+}
+
+.about-us-section::before {
+    content: "";
+    background-image: url("images/aboutus.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5; /* Adjust the opacity of the background image */
+    z-index: 1; /* Keep the pseudo-element behind the content */
+    
+    background-repeat: no-repeat;
+    
+}
+
+
+.about-us-titles {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+    top: 250px;
+    z-index: 1; /* Ensures content is above the background */
+}
+
+.about-us-titles h2 {
+    font-size: 45px;
+    margin: 0px;
+}
+
+.about-us-titles p {
+    font-size: 20px;
+    text-align: center;
+    min-width: 100%;
+}
+.company-title{
+    text-align:start;
+    padding-inline: 2%;
+    width: 100%;
+    margin-top: 50px;
+    
+    color: #35b8ff;
+    
+}
+.company-details{
+    min-width: 100%;
+    
+    text-align: start;
+    padding-inline: 2%;
+    margin-bottom: 20px;
+}
+
+/* Carousel Container */
+.carousel-container {
+    overflow: hidden;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(31, 31, 31);
+    margin-bottom: 200px;
+    
+  }
+
+  .carousel-inner {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    
+  }
+  
+  .carousel-item {
+    min-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:150px;
+  }
+  
+  .logo {
+    padding: 0 20px;
+    text-align: center;
+  }
+  
+  /* For screens 700px and below */
+  @media (max-width: 700px) {
+    .carousel-item {
+      min-width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+  
+    .logo {
+      padding: 0 10px;
+    }
+  }
+    
+@media(max-width:600px){
+    .company-title{
+        font-size: 25px;
+    }
+}

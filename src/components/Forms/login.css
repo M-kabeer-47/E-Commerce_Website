@@ -1,0 +1,203 @@
+*{
+  margin: 0px;
+}
+.body{
+  box-sizing: border-box;
+  background-color: #191919;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 20px;
+  padding-block: 20px;
+}
+.login-title{
+  
+  font-family: Audiowide;
+  color: #007bff;
+  margin: 0px;
+  font-size: 18px;
+  text-align: start;
+  width: 100%;
+  
+}
+form {
+  box-sizing: border-box;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    ;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    max-width: 500px;
+    width: 100%;
+    gap: 20px;
+    background-color: white;
+    background-color: #000;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 10px;
+    padding-bottom: 40px;
+  }
+  .login-button{
+    background-color: white;
+    max-width: 430px
+    ;
+    width: 100%;    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    font-size: 18px;
+    margin-top: 10px;
+    transition: 0.3s ease all;
+    
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    background-color:#007bff;
+    color: white;
+  }
+  
+  .google-button{
+    
+    font-size: 16px;
+    padding: 8px;
+    font-weight: normal;
+    margin-top: 0px;
+    background-color: white;
+    color: black;
+  }
+  .google-button:hover{
+    
+  }
+  .input-container {
+    position: relative;
+    max-width: 430px;
+    height: 30px;
+    
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    height: 40px;
+    position: relative;
+    
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    /* transition: 0.3s ease all; */
+    transition: border-color 0.3s, color 0.3s;
+    
+
+  }
+  
+  .input-field {
+    
+    background-color: #000;
+    padding: 10px;
+    font-size: 16px;
+    /* background-color: orange; */
+    position: absolute;
+    top: 0px;
+    left:0px;
+    height: 100%;
+    left:30px;
+    width: 90%;    
+    /* background-color: orange; */
+    /* border: 2px solid #ccc; */
+    border-radius: 5px;
+    outline: none;
+    border: none    ;
+    color: white;
+    
+
+    /* transition: border-color 0.3s, color 0.3s; */
+  }
+  
+  .inputs {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    width: 100%;
+    align-items: center;
+  }
+  
+  
+  .signin{
+    font-size: 55px;
+    font-weight: 400;
+    letter-spacing: 4px;
+    
+  }
+  .sign-up-option{
+    display: block;
+    gap:10px;
+    min-width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 0px;
+    
+    
+    font-size: 15px;
+  }
+  .sign-up-link{
+    color: #007bff;
+    cursor: pointer;
+  }
+  
+  .input-container:focus {
+    border: 2px solid #007bff;
+  }
+  .input-label{
+    position: absolute;
+    top:-30px;
+    left: 2px;
+    color: white;
+  }
+  
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+      -webkit-box-shadow: 0 0 0 1000px #000 inset !important; /* Black background */
+      -webkit-text-fill-color: white !important; /* Ensures white text */
+      transition: background-color 5000s ease-in-out 0s !important; /* Keep background consistent */
+  }
+  
+  .input-field:focus {
+      color: white !important; /* Ensure focused input text is white */
+  }
+  
+  .input-field {
+      color: white; /* Default white text color */
+  }
+ 
+  .popup {
+    position: fixed;
+    bottom: 30px; /* Adjust this value as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f42334;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+@media(max-width:370px){
+  .body{
+    padding-inline: 8px;
+  }
+  form{
+    
+    
+  }
+  .input-field{
+    max-width: 85%;
+  }
+}

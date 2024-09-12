@@ -1,0 +1,480 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.skeleton-container{
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 300px; /* Adjust width to fit three columns with some spacing */
+
+  margin-bottom: 40px; /* Add some margin for spacing */
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background-color: #b6b6b6;
+  border-radius: 4px;
+}
+
+.skeleton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  height: 100%;
+  width: 150%;
+  background: linear-gradient(90deg, transparent, rgb(242, 238, 238), transparent);
+  animation: shine 1.5s infinite;
+}
+.skeleton-title {
+  height: 60px; /* Adjust height for the title skeleton */
+  max-width: 100%; /* Adjust width for the title skeleton */
+  margin-right: 50px;
+  position: relative;
+  position: relative;
+  top:50px;
+  margin-bottom: 100px;
+  
+}
+
+.skeleton-1 {
+  height: 200px; /* Adjust height as needed */
+  width: 100%;
+  border-radius: 10px;
+}
+
+.skeleton-2 {
+  height: 20px; /* Adjust height as needed */
+  width: 70%;
+}
+
+.skeleton-3,
+.skeleton-4 {
+  height: 20px; /* Adjust height as needed */
+  width: 100%;
+}
+
+@keyframes shine {
+  0% {
+    left: -150%;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+.homePage {
+  background-color: #191919;
+  height: 200px;
+  width: 100%;
+}
+.main {
+  display: flex;
+  flex-direction: row;
+  height: fit-content;
+  overflow-y: auto;
+}
+.filterDiv {
+  display: flex;
+  margin-top: 160px;
+  flex-direction: column;
+  gap: 30px;
+  max-width: 350px;
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 50px;
+}
+.line {
+  position: relative;
+  top: -35px;
+}
+h3 {
+  color: white;
+}
+.productsDiv h2 {
+  font-family: "Poppins";
+  font-size: 50px;
+  color: white;
+  text-align: start;
+  max-width: 500px;
+  margin-bottom: 40px;
+}
+.Product {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.5s ease-in-out;
+}
+
+.Product.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+p {
+  font-family: "Poppins";
+  font-size: 16px;
+  color: white;
+  max-width: 300px;
+  text-align: center;
+  margin-bottom: 5px;
+}
+/* Ensure the image fills the container while maintaining its aspect ratio */
+.images {
+  width: 300px;
+  /* height: 700px; */
+  aspect-ratio: 3/2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+  overflow: hidden;
+  aspect-ratio: 3/2;
+  object-fit: contain;
+  
+}
+img {
+  width: 100%;
+  /* aspect-ratio: 3/2; */
+  object-fit: cover;
+  /* mix-blend-mode: color-burn; */
+  
+}
+.productsDiv {
+  margin-top: 40px;
+  width: 100%;
+  height: fit-content;
+  
+
+  display: flex;
+  flex-direction: column;
+  padding-left: 10px;
+  padding-top: 20px;
+}
+.products {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 50px;
+  overflow-y: hidden;
+  
+  min-height: auto;
+  
+  /* min-height: 100vh; */
+}
+
+
+
+.Product {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  justify-content: start;
+  align-items: center;
+  gap: 10px;
+  
+  
+}
+.Product p {
+  text-align: start;
+  margin: 0;
+  padding: 0;
+}
+.product {
+  overflow: hidden;
+}
+.title, .category, .price {
+  margin: 10px 0;
+}
+.Dropdown {
+  position: relative;
+  max-width: 250px;
+  width: 100%;
+}
+.Dropdown > button {
+  position: relative;
+  z-index: 2;
+  transition: 0.3s;
+}
+.Dropdown > button:hover {
+  background: #3a3a3a;
+}
+.Dropdown.open > button {
+  background: #00A7FF;
+}
+.Dropdown button {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 0 16px;
+  width: 100%;
+  height: 64px;
+  border-radius: 6px;
+  color: #f9f9f9;
+  background: #252525;
+  border: 0;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: "Euclid Circular A";
+}
+.Dropdown button #icon {
+  margin-left: auto;
+}
+.Menu {
+  position: absolute;
+  overflow: hidden;
+  z-index: 1;
+  top: 61px;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  border-top: 0;
+  /* background: #3e3e3e; */
+  translate: 0 -20px;
+  transition: 0.4s;
+  padding-bottom: 10px;
+  border-radius: 20px;
+}
+.Menu button {
+  border: 0;
+  width: 100%;
+  height: 56px;
+  border-radius: 0;
+}
+.Menu button:hover {
+  background: #383838;
+}
+.Dropdown.open .Menu {
+  opacity: 1;
+  translate: 0;
+  visibility: visible;
+}
+.sliderButton {
+  background-color: #0283c8;
+  color: white;
+  max-width: 100px;
+  padding: 5px;
+  text-align: center;
+  font-weight: 500;
+}
+.hover-button {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: rgb(40, 40, 40);
+  color: black;
+  border: 1px solid #000;
+  font-size: 16px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: color 0.4s;
+  z-index: 1;
+  outline: none;
+  
+  
+}
+.hover-button:focus {
+  outline: none;
+  border-color: inherit;
+}
+.hover-button:hover {
+  color: #fff;
+  border-color: inherit;
+}
+.hover-button::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 0;
+  background-color: #1595d9;
+  transition: height 0.3s;
+  z-index: -1;
+}
+.redButton::before {
+  background-color: #003077;
+}
+.hover-button:hover::before {
+  height: 100%;
+}
+
+.BUTTONDIV {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  
+  
+  box-sizing: border-box;
+  
+  gap: 20px;
+}
+
+.sliderButton{
+  width: 200px;
+  position: relative;
+  left:-10px;
+}
+.priceSlider{
+  display: flex;
+  flex-direction: column;
+  gap:20px;
+  padding-left: 5px;
+
+}
+.product-stock-error{
+  position: absolute;
+  top:340px;
+  left: 200px;
+}
+@media (max-width: 768px) {
+  
+    .dropdown-button{
+      background-color: orange;
+    }
+    .product-stock-error{
+      top:340px;
+      left: 120px;
+    }
+  .Menu {
+      top: 57px;
+      max-width: 300px;
+  }
+  
+  .products {
+      gap: 20px;
+  }
+  .images {
+      width: 200px;
+      aspect-ratio: 3/2;
+      
+  }
+  .productsDiv h2 {
+      font-size: 40px;
+      max-width: 300px;
+  }
+  .hover-button {
+      padding: 8px 16px;
+      font-size: 14px;
+  }
+}
+@media (max-width: 700px) {
+  
+  /* .Dropdown button {
+      padding: 7px;
+      max-height: 40px;
+      /* padding-block: 10px; */
+
+      .product-stock-error{
+        top: 300px;
+        left: 170px;
+      }
+  .Menu {
+      max-width: 300px;
+      display: flex;
+      flex-direction: column;
+      gap:10px;
+      text-align: start;
+      position: relative;
+      top: 2px;
+      background-color:  #252525;
+      padding-bottom: 20px;
+      border-radius: 0px;
+     /* min-height: 200px; */
+     /* max-height: 250px; */
+      
+  }
+  .Menu button {
+      display: flex;
+      align-items: start;
+      min-height:25px;
+      padding: 20px;
+  }
+
+  
+  .productsDiv h2 {
+      max-width: 300px;
+      font-size: 40px;
+  }
+  .hover-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 10px; /* Adjust padding for better spacing */
+    
+    color: white;
+    border: 1px solid #000;
+    font-size: 16px; /* Font size for text */
+    cursor: pointer;
+    overflow: hidden;
+    transition: color 0.4s, background-color 0.4s;
+    z-index: 1;
+    max-width: 120px; /* Ensure button fits within 120px */
+    width: 100%;
+    height: 40px; /* Height for consistency */
+    text-align: center; /* Center text and icons */
+  }
+  .Dropdown{
+    height: 120px;
+  }
+  .filterDiv{
+    justify-content: normal;
+    gap:0px;
+    padding-inline: 20px;;
+  }
+  .images {
+      width: 200px;
+      height: 200px;
+  }
+  .productsDiv {
+      padding-left: 5px;
+      padding-right: 5px;
+  }
+  .Product {
+      width: 100%;
+  }
+  .products {
+      flex-direction: column;
+      align-items: center;
+      gap: 100px;
+  }
+  .stock-error{
+    position: relative;
+    left: 45px;
+  }
+}
+@media(max-width: 600px){
+  .main{
+    flex-direction: column;
+  }
+  .priceSlider{
+    width: 250px;
+    
+  }
+  .product-stock-error{
+    top:300px;
+    left: 60%;
+    overflow: hidden;
+  }
+}

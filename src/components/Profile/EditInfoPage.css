@@ -1,0 +1,157 @@
+.edit-info-page {
+    background-color: #191919;
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    box-sizing: border-box;
+   max-width: 100%
+  }
+  
+  h1 {
+    color: #00a7ff;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .edit-info-form {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    border-radius: 10px;
+    
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* gap:1rem; */
+  max-width: 80%;
+  }
+  
+  .form-group {
+    /* margin-bottom: 1.5rem; */
+    position: relative;
+    padding-bottom: 1.2rem; /* Add space for error message */
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #00a7ff;
+  }
+  
+  input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #333;
+    border-radius: 4px;
+    background-color: #222;
+    color: white;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+  }
+  .password-container {
+    position: relative;
+  }
+  
+  .password-field {
+    display: flex;
+    align-items: center;
+  }
+  
+  .password-field input {
+    width: 100%;
+    padding-right: 40px; /* Space for the eye icon */
+  }
+  
+  .toggle-visibility {
+    position: absolute;
+    right: 10px;
+    top: 60%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: white;
+  }
+  
+  
+  .toggle-visibility svg {
+    font-size: 16px; /* Adjust as needed */
+  }
+  .toggle-visibility:focus{
+    outline: none;
+  }
+  input:focus {
+    outline: none;
+    border-color: #00a7ff;
+  }
+  
+  .error-message {
+    color: #ff4444;
+    font-size: 0.875rem;
+    position: absolute;
+    bottom: -15px;
+    width: 100%;
+    text-align: start;
+    left: 0;
+  }
+  
+  .submit-button {
+    background-color: #00a7ff;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+  }
+  
+  .submit-button:hover {
+    background-color: #0077cc;
+  }
+  
+  .loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 1.5rem;
+    color: #00a7ff;
+  }
+  
+  .error {
+    color: #ff4444;
+    text-align: center;
+    font-size: 1.25rem;
+    margin-top: 2rem;
+  }
+  @media(max-width:1000px){
+    .edit-info-form{
+      max-width: 90%;
+  }
+}
+  @media(max-width:800px){
+    .edit-info-form{
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 600px) {
+    .edit-info-page {
+      padding: 1rem;
+    }
+  
+    .edit-info-form {
+      padding: 1.5rem;
+    }
+  
+    h1 {
+      font-size: 1.5rem;
+    }
+  
+    input, .submit-button {
+      font-size: 0.875rem;
+    }
+  }

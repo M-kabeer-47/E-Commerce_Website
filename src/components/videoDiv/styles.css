@@ -1,0 +1,65 @@
+.videoDiv {
+  margin-top:120px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px;
+    justify-content: space-around;
+    background-color:#191919;
+    
+    
+  }
+  
+  .textDiv {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .textDiv h2 {
+    font-size: 2rem;
+    color: #00A7FF;
+    max-width: 400px;
+    text-align: start;
+    font-weight: bold;
+    font-size: 40px;
+  }
+  
+  .textDiv p {
+    font-size: 1rem;
+    color: white;
+    margin: 10px 0;
+    text-align: start;
+    line-height: 27px;
+    font-size: 16px;
+    max-width: 600px;
+  }
+
+
+  @media(max-width:900px){
+    .videoDiv{
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr;
+    }
+    .textDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    }
+  }
+  
+  .video {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .ps5Video {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
+    
+  }
+  

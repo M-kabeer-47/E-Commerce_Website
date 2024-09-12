@@ -1,0 +1,12 @@
+.faqs-section{
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+    padding-inline: 20px;
+
+}
+.faqs-title{
+    position: relative;
+    top:80px;
+    margin-bottom: 100px;
+}

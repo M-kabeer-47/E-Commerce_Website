@@ -1,0 +1,310 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.shipping-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 15px;
+    width: 100%;
+    /* background-color: orange; */
+    padding-right: 20px;
+    box-sizing: border-box;
+    margin-bottom:30px
+}
+
+.shipping-input {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    
+
+    
+}
+
+input {
+    
+    transition: border 0.4s ease-in-out, box-shadow 0.4s ease-in-out; /* Smoother transition globally */
+}
+.payment-option{
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    background-color: black;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    max-width: 450px;
+    width: 100%;
+     
+}
+.credit-card-icon{
+    color: white;
+}
+.payment-option:hover{
+    cursor: pointer;
+    border: 2px solid #1e88e5;
+}
+.react-international-phone .react-international-phone__button {
+    height: 46px !important; /* Set the desired height */
+    padding: 0; /* Adjust padding if needed */
+    display: flex;
+    align-items: center;
+    
+    background-color: orange !important;
+}
+
+.react-international-phone .react-international-phone__input {
+    height: 50px !important; /* Match this to the input height */
+    background-color: transparent !important;
+}
+
+.react-international-phone-input-container .react-international-phone-country-selector-button{
+    background-color: transparent !important;
+    color: white !important;
+    border: 2px solid white !important; 
+    
+}
+.react-international-phone-country-selector-button__dropdown-arrow{
+     border-top: 4px solid white !important;
+    
+}
+.react-international-phone-input{
+    height: 46px !important;
+}
+.react-international-phone-country-selector-button{
+    height: 46px !important;
+}
+.Label {
+    margin-bottom: var(--p-spacing1);
+    font-size: var(--fontSizeSm);
+    transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    color: white;
+}
+label.p-FieldLabel.Label.Label--empty{
+
+    color: white;
+}
+.stripeContainer{
+    display: flex;
+    
+    /* background-color: orange; */
+   width: 60%; 
+    height: auto;
+    border-radius: 20px;
+    padding: 20px;
+
+}
+
+.paymentInfo{
+    max-width:400px;
+    width: 100%;
+    background-color: #1f1f1f;
+    border-radius:10px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    display:flex;
+    flex-direction:column;
+    padding-inline:20px;
+    box-shadow:0 5px 30px rgba(0, 0, 0, 0.6);
+    border-right:0px;
+}
+
+.paymentInfo footer{
+    background-color: #1f1f1f;    
+    display: flex;
+    justify-content: center;
+    padding:0px;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    left: -10px;
+    top: 20px;
+}
+form{
+    border-radius: 10px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+.shipping-main{
+    display: flex;
+}
+.shipping-container{
+    width: 50%;
+}
+
+.payment{
+    display: flex;
+}
+.order-details-div{
+    width: 45%;
+}
+.shipping-button{
+    width: 50%;
+}
+
+.successBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    background-color: #675dff; 
+    background-color: #1f1f1f;/* Subtle background color */
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.5s ease-in-out;
+    border: 2px solid black;
+  }
+  
+  .successBox h3 {
+    margin-top: 20px;
+    font-size: 24px;
+    color: white;
+    text-align: center;
+
+    opacity: 0;
+    animation: textFadeIn 1s 0.5s forwards;
+    font-weight: bolder;
+  }
+  
+  .tickAnimation {
+    font-size: 80px;
+    color: black;
+    color: #1e88e5;
+    animation: tickAppear 0.8s ease-in-out, tickGlow 1.5s ease-in-out infinite alternate;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  @keyframes textFadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes tickAppear {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes tickGlow {
+    0% {
+      text-shadow: 0 0 10px rgba(0, 167, 255, 0.7);
+    }
+    100% {
+      text-shadow: 0 0 20px rgba(0, 167, 255, 1);
+    }
+  }
+  
+  
+@media(max-width:950px){
+    
+    .shipping-main{
+        display: grid;
+        
+        
+        max-width: 100%;
+        padding-inline: 20px;
+
+        
+        
+    
+    }
+    .order-details-div{
+        box-sizing: border-box;
+        width: 100%;
+        height: auto;
+        
+        
+    }
+    .order-details{
+        /* width: 100%; */
+        width: 100%;
+        height: auto;
+        grid-column-start: 1;
+        grid-column-end: 2;
+        grid-row-start: 1;
+        grid-row-end: 2;
+        
+       
+       
+    }   
+    .shipping-container{
+        min-width: 100%;
+        grid-column-start: 1;
+        grid-column-end: 2;
+        grid-row-start: 2;
+        grid-row-end: 3;
+        box-sizing: none;
+        width: 100%
+        
+    }
+    .shipping-button{
+        width: 100%;
+    }
+    
+}
+@media(max-width: 768px){
+    .stripeContainer{
+        flex-direction: column;
+        align-items: center;
+        
+        width: 100%;
+        border-radius: 20px;
+        margin-block:10px;
+    }  
+    .paymentInfo{
+        max-width: 600px;
+        padding-bottom: 50px;
+        border-radius: 10px;
+        border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    }
+    form{
+        border-radius: 10px;
+        border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    }
+    
+    .paymentInfo footer{
+        display: none;
+    }
+    
+
+}
+@media(max-width:550px){
+    .payment{
+        flex-direction: column;
+        gap:10px;
+        padding-right:20px;
+    }
+    .shipping-inputs{
+        grid-template-columns: 1fr;
+        
+        gap: 10px 15px;
+        padding-right: 20px;
+        box-sizing: border-box;
+        margin-top: 0px;
+    }
+}

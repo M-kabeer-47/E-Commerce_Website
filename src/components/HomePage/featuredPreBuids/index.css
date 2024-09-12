@@ -1,0 +1,110 @@
+.sliderBigContainer {
+  padding-top: 50px;
+  width: 100%;
+  min-height: fit-content;
+  background-color: #191919;
+}
+
+.sliderContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  
+  position: relative;
+}
+
+.prebuildDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px; /* Add some spacing below the title */
+}
+
+.prebuildTitle {
+  font-size: 50px;
+  font-weight: bold;
+  width: 100%; /* Use 100% to take up full width of parent */
+  max-width: 700px; /* Optional: Set a max-width if you want */
+  height: auto;
+  text-align: center; /* Center the text */
+}
+
+.arrowButton {
+  background-color: transparent;
+  border: none;
+  font-size: 2em;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  color: white;
+  outline: none;
+}
+.arrowButton:focus{
+  outline: none;
+}
+
+.arrowButton.left {
+  position:absolute;
+  left: 50px;
+  top:200px;
+}
+
+.arrowButton.right {
+  position: absolute;
+  right: 50px;
+  top:200px;
+}
+
+.arrowButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.sliderWrapper {
+  overflow: hidden;
+  width: 80%;
+}
+
+.slider {
+  display: flex;
+  transition: transform 0.5s ease-in-out; /* Add smooth transition */
+}
+
+.sliderItem {
+  min-width: calc(100% / 3); /* 100% divided by itemsPerPage */
+  max-width: calc(100% / 3); /* Ensure the width does not exceed the calculated value */
+  box-sizing: border-box;
+  flex-shrink: 0; /* Prevent shrinking */
+  padding: 0 10px; /* Add padding for spacing between items */
+}
+
+@media (max-width: 950px) {
+  .sliderItem {
+    min-width: 100%; /* Ensure only one item is displayed */
+    max-width: 100%;
+    padding: 0; /* Remove padding */
+    margin: 0 auto; /* Center the item */
+  }
+  .arrowButton.left{
+    left: 20px;
+    top:250px;
+
+  }
+  .arrowButton.right{
+    right:   20px;
+    top:250px;
+  }
+}
+@media(max-width:400px){
+  .arrowButton.left{
+    left:7px;
+    top:300px;
+  }
+  .arrowButton.right{
+    right: 7px;;
+    top:300px;
+  }
+}

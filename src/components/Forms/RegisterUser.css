@@ -1,0 +1,184 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    z-index: 999; /* Ensure it covers other content */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.reg-inputs{
+    gap:45px;
+}
+
+.registerInput{
+    /* height: 40px; */
+}
+.no-scroll {
+    overflow: hidden; /* Disable scrolling */
+    height: 100%; /* Ensure height is 100% to prevent scroll */
+}
+
+
+.registerForm::-webkit-scrollbar {
+    width: 8px; /* Change this value to make the scrollbar thinner or thicker */
+}
+
+.registerForm::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Color of the scrollbar track */
+}
+
+.registerForm::-webkit-scrollbar-thumb {
+    background: #888; /* Color of the scrollbar thumb */
+    border-radius: 4px; /* Rounded corners */
+}
+
+.registerForm::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Color of the scrollbar thumb when hovered */
+}
+
+.registerForm {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px; /* Add padding inside the form */
+    margin: 20px; /* Add margin around the form */
+    overflow-x: hidden;
+    overflow-y: auto; /* Enable vertical scrollbar only when necessary */
+    max-height: calc(100vh - 40px); /* Ensure the form doesn't exceed the viewport height minus margin */
+    max-width: calc(100vw - 40px); /* Ensure the form doesn't exceed the viewport width minus margin */
+    max-width: 600px;
+    min-height: 100vh;
+    background-color: #000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for better visualization */
+    
+    z-index: 3000000;
+    
+}
+
+
+.checkboxDiv {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    position: relative;
+    left: 10px;
+    width: 100%;
+}
+
+.registerIconDiv {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
+    padding: 0px;
+}
+
+.registerUser {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.registerInput {
+    
+    
+    left:0px;
+    width: 100% !important;
+}
+.REGINPUTS {
+    gap: 45px !important;
+}
+
+.invalid {
+    border-bottom: 2px solid red !important;
+}
+
+.valid {
+    border-bottom: 2px solid greenyellow;
+}
+
+.addDomainDiv {
+    width: 100%;
+    min-height: fit-content;
+    padding-block: 10px;
+    position: relative;
+    top: -70px;
+}
+
+.domainInput {
+    display: flex;
+    width: 100%;
+    gap: 0px;
+    align-items: center;
+    min-height: 60px;
+    justify-content: start;
+    position: relative;
+    left: 2px;
+    top: -30px;
+}
+
+.domains {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+    top: -50px;
+}
+
+.domaininput {
+    width: 93% !important;
+}
+
+.registerTop {
+    display: flex;
+    justify-content: space-between;
+    padding-inline: 5px;
+    width: 100%;
+}
+
+.domainCheck {
+    width: 40px !important;
+    height: 20px !important;
+    position: relative !important;
+    top: 17px !important;
+}
+
+.registerButton {
+    width: 150px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    font-size: 17px;
+    font-weight: 500;
+    background-color: #1e88e5 !important;
+    position: relative;
+    top: -110px;
+    left: 230px;
+}
+
+.exists{
+    border: 2px solid red !important; 
+
+}
+@media (max-width: 768px) {
+    .registerForm {
+        max-width: 80%; /* Adjust max-width for smaller screens */
+        padding: 10px; /* Reduce padding for smaller screens */
+        padding-right: 20px;
+        left: 45%;
+    }
+
+    .registerButton {
+        width: 100%; /* Make button full width */
+        left: 0;
+        top: -80px; /* Adjust positioning */
+    }
+}

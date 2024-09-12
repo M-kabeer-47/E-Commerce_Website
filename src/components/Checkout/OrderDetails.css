@@ -1,0 +1,144 @@
+.order-details {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    
+    max-width: 400px;
+    margin: 0 auto;
+    animation: fadeIn 0.5s ease-out;
+    max-width: 100%;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .order-details-header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #00A7FF;
+  }
+  
+  .order-details-header h3 {
+    color: #00A7FF;
+    font-size: 1.5rem;
+    margin: 0;
+  }
+  
+  .order-details-products {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    padding-right: 10px;
+  }
+  
+  .order-details-products::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  .order-details-products::-webkit-scrollbar-thumb {
+    background-color: white;
+    border-radius: 10px;
+  }
+  
+  .order-details-product {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #333;
+    transition: background-color 0.3s ease;
+    padding-right: 20px;
+  }
+  
+  .order-details-product:hover {
+    background-color: #2a2a2a;
+  }
+  
+  .product-info {
+    display: flex;
+    align-items: center;
+    max-width: 100%;
+    
+  }
+  
+  .product-image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+  
+  .product-details {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .product-name {
+    font-size: 0.9rem;
+    margin: 0;
+  }
+  
+  .product-price {
+    font-size: 0.8rem;
+    color: #00A7FF;
+    margin: 5px 0 0 0;
+    text-align: start;
+  }
+  
+  .product-quantity {
+    font-size: 0.9rem;
+    color: #888;
+  }
+  
+  .order-details-summary {
+    border-top: 2px solid #00A7FF;
+    padding-top: 20px;
+  }
+  
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .summary-row h4 {
+    margin: 0;
+    font-size: 1rem;
+  }
+  
+  .summary-row .price {
+    color: #00A7FF;
+  }
+  
+  @media (max-width: 480px) {
+    .order-details {
+      padding: 15px;
+    }
+  
+    .order-details-header h3 {
+      font-size: 1.2rem;
+    }
+  
+    .product-image {
+      width: 40px;
+      height: 40px;
+    }
+  
+    .product-name {
+      font-size: 0.8rem;
+    }
+  
+    .product-price, .product-quantity {
+      font-size: 0.7rem;
+    }
+  
+    .summary-row h4 {
+      font-size: 0.9rem;
+    }
+  }
