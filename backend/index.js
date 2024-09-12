@@ -796,6 +796,10 @@ catch(err){
   res.send("Error Verifying Stock");
 }
 })
+app.get("/", (req, res) => {
+  res.send("Hello from the server");
+}
+);
 app.listen(3000, () => {
   console.log("Server is listening on Port 3000");
 });
