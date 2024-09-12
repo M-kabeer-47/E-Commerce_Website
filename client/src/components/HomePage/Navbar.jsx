@@ -34,8 +34,10 @@ export default function Navbar({page}) {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const dispatch = useDispatch();
   const [userLoading,setUserLoading] = useState(true);
-  const token = Cookies.get();
+  const token = Cookies.get("uid");
   console.log("The token is"+token);
+  console.log("Another token is"+Cookies.get("cid"));
+  console.log(" Stripe token is"+Cookies.get("__stripe_mid"));
   
 
   const [shortName, setShortName] = useState("");
