@@ -348,7 +348,7 @@ failureRedirect:"https://e-commerce-website-cck4.vercel.app/login",
   res.json( {token: token,
     maxAge: 2 * 24 * 60 * 60 * 1000,});
 
-  res.redirect("https://e-commerce-website-cck4.vercel.app/");
+  res.redirect("https://e-commerce-website-cck4.vercel.app");
 
 })
 function findProductIndex(cart,imageUrl){
