@@ -278,6 +278,7 @@ app.post("/login",async(req,res)=>{
         secure: true,         // Only sent over HTTPS
         sameSite: 'None',
         domain: "https://e-commerce-website-cck4.vercel.app",
+        path: "/",            // Path to set cookie
           // Allows cross-origin cookies
     });
     
