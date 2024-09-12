@@ -8,8 +8,10 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 export default function ContactPage() {
   const [isWideScreen, setIsWideScreen] = useState(window.innerWidth >= 1050);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -105,7 +107,7 @@ export default function ContactPage() {
         theme: "colored",
         transition: Bounce,
         });
-        window.location.reload();
+        navigate("/")
     } else {
       console.log("Form contains errors");
     }
