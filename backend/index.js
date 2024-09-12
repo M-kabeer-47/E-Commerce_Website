@@ -80,7 +80,7 @@ async function fetchProduct(id) {
 const app = express();
 app.use(
   cors({
-    origin:"https://e-commerce-website-cck4.vercel.app", 
+    origin:"https://e-commerce-website-cck4.vercel.app",
     credentials: true, 
     allowedHeaders: ["Content-Type", "Authorization"],
     methods: ["GET", "POST", "PUT", "DELETE"],
@@ -338,7 +338,7 @@ app.get("/auth/google",passport.authenticate("google",{
 })) 
 app.get("/auth/google/callback",passport.authenticate("google",{
 session:false,
-failureRedirect:"http://localhost:5173/login",
+failureRedirect:"https://e-commerce-website-cck4.vercel.app/login",
   
 
 }),function (req,res){
@@ -348,7 +348,7 @@ failureRedirect:"http://localhost:5173/login",
   res.cookie("uid",req.user.token,{
     maxAge: 2 * 24 * 60 * 60 * 1000
   });
-  res.redirect("http://localhost:5173/");
+  res.redirect("https://e-commerce-website-cck4.vercel.app/");
 
 })
 function findProductIndex(cart,imageUrl){
