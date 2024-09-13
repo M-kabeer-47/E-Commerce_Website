@@ -2,9 +2,7 @@ import { Link } from 'react-router-dom';
 import './styles.css';
 import { FaFacebookSquare, FaInstagramSquare, FaTwitterSquare, FaLinkedin } from "react-icons/fa";
 
-function handleClick(){
-  window.location.href();
-}
+
 export default function Footer() {
   return (
     <footer>
@@ -13,11 +11,11 @@ export default function Footer() {
         <ul>
           <li>
             <h3>Products</h3>
-            <Link to="/products/playstation" className="footerItems" onClick={handleClick}>Playstation</Link>
-            <Link to="/products/xbox" className="footerItems" onClick={handleClick}>X-Box</Link>
-            <Link to="/products/accessories" className="footerItems" onClick={handleClick}>Accessories</Link>
-            <Link to="/products/gift-cards" className="footerItems" onClick={handleClick}>Gift Cards</Link>
-            <Link to="/products/monitors" className="footerItems" onClick={handleClick}>Monitors</Link>
+            <Link to="/products/playstation" className="footerItems">Playstation</Link>
+            <Link to="/products/mouse" className="footerItems">Mouse</Link>
+            <Link to="/products/keyboards" className="footerItems">Keyboards</Link>
+            <Link to="/products/headphones" className="footerItems">Headphones</Link>
+            <Link to="/products/monitors" className="footerItems">Monitors</Link>
           </li>
           <li>
             <h3>Pre-PC Builds</h3>

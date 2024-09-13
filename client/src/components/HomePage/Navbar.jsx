@@ -156,7 +156,7 @@ else{
 
   useEffect(() => {
     getUser();
-  }, [user]);
+  }, [user,token]);
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
