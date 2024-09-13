@@ -360,7 +360,7 @@ if(!token){
         backgroundColor: "#191919",
         width: "100%",
         paddingBottom: "100px",
-        height: "auto",
+        height: "100vh",
       }}
     >
       <div
