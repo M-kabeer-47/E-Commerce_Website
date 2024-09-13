@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { FaUser } from 'react-icons/fa';
 import { IoMdLogOut } from "react-icons/io";
 import { MdWorkHistory } from "react-icons/md";
-import Cookies from "js-cookie";
+
 const Sidebar = (props) => {
   const user = useSelector((state) => state.user.user);
   const wishlistCount = useSelector((state) => state.Counts.wishlistCount);
@@ -174,7 +174,8 @@ const handleButtonClick = (e) => {
                    <Link >
                     <button type="button" key={index} style={{width:"100%",paddingInline:"30px"}} onClick={()=>{
                       if(option.option === "Logout"){
-                        Cookies.remove("uid");
+                        localStorage.removeItem('uid')
+                        localStorage.removeItem('tokenExpiry')
                         window.location.reload();
                         window.location.href = "/";
                       }
@@ -200,7 +201,7 @@ const handleButtonClick = (e) => {
         ) : (
           <p className="loginOption" onClick={() => navigate("/login")} style={{ position: "relative", left: "-23px" }}>Login/Sign Up</p>
         )}
-        <Link className="login">
+        <Link className="login" to={"/contact-us"}>
           <p style={{ position: "relative", left: "-16px" }}>Contact Us</p>
         </Link>
       </div>

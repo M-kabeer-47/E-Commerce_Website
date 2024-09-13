@@ -342,6 +342,7 @@ failureRedirect:"https://e-commerce-website-cck4.vercel.app/login",
   
 
 }),function (req,res){
+  const token = req.user.token;
   console.log("Google Callback Route");
   
   // console.log(req.user.token.expiresIn);

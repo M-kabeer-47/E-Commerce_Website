@@ -36,7 +36,9 @@ const UserDropdown = ({ shortName }) => {
             Order History
           </li>
           <li className='dropdown-list' onClick={()=>{
-            Cookies.remove("uid");
+            localStorage.removeItem('uid')
+            localStorage.removeItem('tokenExpiry')
+
             window.location.reload();
             
           }} >
