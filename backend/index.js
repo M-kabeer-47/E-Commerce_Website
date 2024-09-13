@@ -344,11 +344,10 @@ failureRedirect:"https://e-commerce-website-cck4.vercel.app/login",
 }),function (req,res){
   console.log("Google Callback Route");
   
-  console.log(req.user.token.expiresIn);
-  res.json( {token: token,
-    maxAge: 2 * 24 * 60 * 60 * 1000,});
+  // console.log(req.user.token.expiresIn);
+    let maxAge= 2 * 24 * 60 * 60 * 1000
 
-  res.redirect("https://e-commerce-website-cck4.vercel.app");
+  res.redirect(`https://e-commerce-website-cck4.vercel.app?token=${token}&maxAge=${maxAge}`);
 
 })
 function findProductIndex(cart,imageUrl){

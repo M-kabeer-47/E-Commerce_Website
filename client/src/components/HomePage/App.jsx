@@ -9,10 +9,9 @@ import VideoDiv from "../videoDiv/VideoDiv.jsx";
 import Footer from "./Footer/Footer.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import './index.css';
-import Cookies from 'js-cookie';
 import axios from "axios";
 import { setUser } from "../../store/user.js";
-
+import { useLocation } from "react-router-dom";
 
 export default function App() {
   const backendUrl = useSelector((state) => state.user.backendUrl);
@@ -20,7 +19,7 @@ export default function App() {
   const popularRef = useRef(null);
   const token = localStorage.getItem("uid");
   const dispatch = useDispatch();
-
+  const query = new URLSearchParams(useLocation().search)
   useEffect(() => {
       
     setTimeout(() => {
@@ -70,6 +69,21 @@ export default function App() {
         dispatch(setUser(res.data));
       })
     }
+    else if(query){
+      const Token = query.get('token');
+      const maxAge = query.get('maxAge')
+      localStorage.setItem('uid',Token)
+      localStorage.setItem('tokenExpiry',maxAge)
+      axios.get(`${backendUrl}/user`,{
+        headers:{
+          "Authorization": `Bearer ${Token}`
+        }
+      }).then((res)=>{
+        dispatch(setUser(res.data))
+      })
+
+    }
+    
 
   },[])
 
