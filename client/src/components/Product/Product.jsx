@@ -13,6 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { incrementCartCount, incrementWishlistCount } from "../../store/Counts";
 import { setProductPageQuantity } from "../../store/product";
 import Footer from "../HomePage/Footer/Footer";
+import isTokenExpired from "../tokenExpiry";
 
 export default function Product() {
   const backendUrl = useSelector((state) => state.user.backendUrl);
@@ -114,7 +115,7 @@ export default function Product() {
                     onClick={async () => {
                       console.log("Hello");
 
-                      if (token) {
+                      if (token && !isTokenExpired()) {
                         
                         let quantityInCart = await axios.get(
                           `${backendUrl}/quantityInCart`,
@@ -222,7 +223,7 @@ export default function Product() {
                   className="redButton"
                   text={"Add to wishlist"}
                   onClick={async () => {
-                    if (token) {
+                    if (token && !isTokenExpired()) {
                       try {
                         let response = await axios.post(
                           `${backendUrl}/addToWishlist`,

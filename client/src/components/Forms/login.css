@@ -11,6 +11,7 @@
   justify-content: center;
   padding-inline: 20px;
   padding-block: 20px;
+  overflow: hidden;
 }
 .login-title{
   

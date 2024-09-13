@@ -14,6 +14,7 @@ import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useInView } from "react-intersection-observer"; 
 import { useSelector } from "react-redux";
+import isTokenExpired from "../tokenExpiry";
 const Product = ({ product, index }) => {
   const backendUrl = useSelector((state) => state.user.backendUrl);
   const dispatch = useDispatch();
@@ -54,7 +55,7 @@ const Product = ({ product, index }) => {
               
               console.log("Hello");
 
-              if (token) {
+              if (token && !isTokenExpired()) {
                 if (product.quantity === 0) {
                   toast.error("Out of Stock", {
                     position: "bottom-right",
@@ -175,7 +176,7 @@ const Product = ({ product, index }) => {
             text={"Add to wishlist"}
             onClick={async () => {
               
-              if (token) {
+              if (token && !isTokenExpired()) {
                 try {
                   let response = await axios.post(
                     `${backendUrl}/addToWishlist`,
