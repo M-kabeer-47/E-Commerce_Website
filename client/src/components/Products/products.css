@@ -204,8 +204,8 @@ img {
 }
 .Dropdown {
   position: relative;
-  max-width: 250px;
-  width: 100%;
+  
+  max-width: 290px;
 }
 .Dropdown > button {
   position: relative;
@@ -244,7 +244,8 @@ img {
   z-index: 1;
   top: 61px;
   left: 0;
-  width: 100%;
+  min-width: 280px;
+  max-width: 280px;
   opacity: 0;
   visibility: hidden;
   border-bottom-left-radius: 16px;
@@ -254,7 +255,7 @@ img {
   translate: 0 -20px;
   transition: 0.4s;
   padding-bottom: 10px;
-  border-radius: 20px;
+  /* border-radius: 20px; */
 }
 .Menu button {
   border: 0;
@@ -379,8 +380,9 @@ img {
       padding: 8px 16px;
       font-size: 14px;
   }
-  .category-products{
-    padding-left: 45px;
+  .productsDiv{
+    padding-left: 5%;
+    /* padding-right: 10px; */
   }
 }
 @media (max-width: 700px) {
@@ -451,10 +453,11 @@ img {
       width: 200px;
       height: 200px;
   }
-  .productsDiv {
+  /* .productsDiv {
       padding-left: 5px;
       padding-right: 5px;
-  }
+  } */
+
   .Product {
       width: 100%;
   }
