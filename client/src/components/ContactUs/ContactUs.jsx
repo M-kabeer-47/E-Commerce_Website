@@ -5,13 +5,15 @@ import { Gamepad2, Mail, MessageSquare, Phone, Star } from "lucide-react";
 import "./ContactPage.css";
 import Footer from "../HomePage/Footer/Footer";
 import axios from "axios";
-import Cookies from "js-cookie";
+
 import { toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 export default function ContactPage() {
+  const backendUrl = useSelector((state) => state.user.backendUrl);
   const [isWideScreen, setIsWideScreen] = useState(window.innerWidth >= 1050);
-  const navigate = useNavigate();
+  
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -85,15 +87,9 @@ export default function ContactPage() {
       console.log(payload);
 
       await axios.post(
-        "https://e-commerce-website-78cl.vercel.app/sendEmail",
+        `${backendUrl}/sendEmail`,
         payload,
         
-
-        {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("uid")}`,
-          },
-        }
       );
       console.log("Form submitted successfully");
       toast.info('Message has been sent successfully', {
@@ -107,7 +103,7 @@ export default function ContactPage() {
         theme: "colored",
         transition: Bounce,
         });
-        navigate("/")
+        window.location.reload();
     } else {
       console.log("Form contains errors");
     }

@@ -69,7 +69,7 @@ export default function App() {
         dispatch(setUser(res.data));
       })
     }
-    else if(query){
+    else if(query.get('token')){
       const Token = query.get('token');
       const maxAge = query.get('maxAge')
       localStorage.setItem('uid',Token)

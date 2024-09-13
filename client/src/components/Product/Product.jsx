@@ -12,6 +12,7 @@ import { toast, Bounce, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { incrementCartCount, incrementWishlistCount } from "../../store/Counts";
 import { setProductPageQuantity } from "../../store/product";
+import Footer from "../HomePage/Footer/Footer";
 
 export default function Product() {
   const backendUrl = useSelector((state) => state.user.backendUrl);
@@ -286,7 +287,9 @@ export default function Product() {
               </div>
             </div>
           </div>
+          <Footer />
         </div>
+        
       )}
     </>
   );

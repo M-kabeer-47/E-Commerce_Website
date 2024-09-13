@@ -349,6 +349,7 @@ img {
   left: 200px;
 }
 @media (max-width: 768px) {
+
   
     .dropdown-button{
       background-color: orange;
@@ -377,6 +378,9 @@ img {
   .hover-button {
       padding: 8px 16px;
       font-size: 14px;
+  }
+  .category-products{
+    padding-left: 20px;
   }
 }
 @media (max-width: 700px) {

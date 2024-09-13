@@ -274,7 +274,7 @@ app.post("/login",async(req,res)=>{
       },process.env.JWT_SECRET);
       console.log(token);
       res.json( {token: token,
-        maxAge: 2 * 24 * 60 * 60 * 1000,data:"Success"});
+        maxAge: 2 * 24 * 60 * 60 * 1000+Date.now(),data:"Success"});
     
       
         
@@ -342,11 +342,10 @@ failureRedirect:"https://e-commerce-website-cck4.vercel.app/login",
   
 
 }),function (req,res){
-  const token = req.user.token;
   console.log("Google Callback Route");
   
-  // console.log(req.user.token.expiresIn);
-    let maxAge= 2 * 24 * 60 * 60 * 1000
+  const token = req.user.token;
+    let maxAge= 2 * 24 * 60 * 60 * 1000+Date.now();
 
   res.redirect(`https://e-commerce-website-cck4.vercel.app?token=${token}&maxAge=${maxAge}`);
 

@@ -36,7 +36,7 @@ export default function Navbar({page}) {
   const [userLoading,setUserLoading] = useState(true);
   const token = localStorage.getItem("uid");
   
-  console.log("The token is",token);
+  
   
   
 

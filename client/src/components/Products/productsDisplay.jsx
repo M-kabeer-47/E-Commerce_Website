@@ -151,7 +151,7 @@ export default function ProductDisplay() {
       
        > 
 
-      <div className="products">
+      <div className="products category-products">
         {loading ? (
           
           <div className="skeleton-container">
