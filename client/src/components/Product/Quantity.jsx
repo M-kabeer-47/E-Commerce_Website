@@ -26,10 +26,11 @@ const IncrementDecrementBtn = ({ count, maxValue, cart, product,requestBackend,s
           { headers: { Authorization: `Bearer ${token}` } }
         );
         console.log("Incremented successfully");
-          setTimeout(()=>{
-            dispatch(toggleLoader())
-          },600);
-        requestBackend();
+          
+        await requestBackend();
+        setTimeout(()=>{
+          dispatch(toggleLoader())
+        },600);
         
 
         setIncrementClicks(0); // Reset quantity after successful increment
@@ -79,10 +80,11 @@ const IncrementDecrementBtn = ({ count, maxValue, cart, product,requestBackend,s
         );
         
         console.log("Decremented successfully");
+        
+        await requestBackend();
         setTimeout(()=>{
           dispatch(toggleLoader())
         },600);
-        requestBackend();
         setDecrementClicks(0); // Reset quantity after successful decrement
       } catch (err) {
         console.error(err);

@@ -223,7 +223,17 @@ useEffect(()=>{
             setStripePromise(loadStripe(response.data.publishableKey));
         } catch (error) {
             console.error("Error fetching publishable key:", error);
-            navigate("/notfound")
+            toast.error("Please try again later",{
+              position: "bottom-right",
+              autoClose: 3000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+              transition: Bounce,
+        });
         }
         }
         fetchPublishableKey();
@@ -243,7 +253,20 @@ useEffect(()=>{
         setClientSecret(response.data.clientSecret);
       } catch (error) {
         console.error("Error fetching client secret:", error);
-        navigate("/notfound")
+        toast.error("Please try again later",
+
+          {
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Bounce,
+          }
+        );
       }
     };
 
