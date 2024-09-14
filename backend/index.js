@@ -146,7 +146,7 @@ app.get("/products/:category", async (req, res) => {
   
   
   if (categoryObject === false) {
-    res.status(404).json({ error: "Category not found." });
+    res.json({ error: "Category not found." });
   } else {
     res.json(categoryObject);
   }
