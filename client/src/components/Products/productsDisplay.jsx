@@ -81,7 +81,10 @@ export default function ProductDisplay() {
       console.log("Initial fetch");
       
       let response = await axios.get(`${backendUrl}/products/${Category}?page=${1}`)
+      console.log(response.data);
+      
       if(response.data.error === "Category not found"){
+        console.log("Category not found");
         navigate("/notfound");
 
       }
@@ -97,6 +100,7 @@ export default function ProductDisplay() {
     }
     catch(er){
       console.log(er);
+      navigate("/notfound");
       
     }
   }
