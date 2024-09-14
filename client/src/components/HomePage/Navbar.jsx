@@ -118,9 +118,9 @@ else{
       }
 
     
-      setTimeout(()=>{
+      
         setUserLoading(false);
-      },700)
+      
       
       
       

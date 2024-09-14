@@ -253,6 +253,7 @@ app.post("/login",async(req,res)=>{
 
   
   const {email,password} = req.body;
+  email = email.toLowerCase();
   if(!await Users.exists({email:email})){
     console.log("User Does Not Exist");
     res.send("User Does Not Exist");

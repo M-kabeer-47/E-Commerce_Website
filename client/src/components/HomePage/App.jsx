@@ -12,6 +12,7 @@ import './index.css';
 import axios from "axios";
 import { setUser } from "../../store/user.js";
 import { useLocation } from "react-router-dom";
+import { setCartCount, setWishlistCount } from "../../store/Counts.js";
 
 export default function App() {
   const backendUrl = useSelector((state) => state.user.backendUrl);
@@ -80,6 +81,8 @@ export default function App() {
         }
       }).then((res)=>{
         dispatch(setUser(res.data))
+        dispatch(setCartCount(res.data.cart.length))
+        dispatch(setWishlistCount(res.data.wishlist.length))
       })
 
     }
