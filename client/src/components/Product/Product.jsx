@@ -191,7 +191,7 @@ export default function Product() {
                           theme: "colored",
                           transition: Bounce,
                         });
-                        dispatch(setProductPageQuantity(0));
+                        window.location.reload();
                           
                         if (
                           response.data !== "Product Already Exists in Cart"
