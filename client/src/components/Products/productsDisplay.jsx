@@ -81,13 +81,19 @@ export default function ProductDisplay() {
       console.log("Initial fetch");
       
       let response = await axios.get(`${backendUrl}/products/${Category}?page=${1}`)
-      console.log(response.data);
+      if(response.data.error){
+        navigate("/notfound");
+        
+      }
+      else{
+
       
       updateTitle(response.data[0].category);
       dispatch(updateCategory(response.data))
       setLoading(false)
       setPage(2); 
       setHasMore(true)
+      }
     }
     catch(er){
       console.log(er);
