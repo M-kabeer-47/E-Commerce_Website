@@ -37,11 +37,7 @@ export default function wishlistPage() {
     setScreenWidth(window.innerWidth);
   };
   const dispatch = useDispatch();
-  useEffect(()=>{
-    let timeout = setTimeout(()=>{
-      setLoading(false)
-    },1000)
-  },[])
+  
   useEffect(() => {
     // Scroll to the top when the component is mounted
     setTimeout(() => {
@@ -70,6 +66,9 @@ export default function wishlistPage() {
       }
       setWishlist(wishlist.data);
       console.log(wishlist.data);
+      setTimeout(() => {
+        setLoading(false);
+      }, 700);
       
     } catch (err) {
       console.error(err);
