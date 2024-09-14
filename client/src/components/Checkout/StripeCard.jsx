@@ -220,6 +220,8 @@ useEffect(()=>{
                 "Authorization": `Bearer ${token}`
               }
             });
+            console.log(response.data.publishableKey);
+            
             setStripePromise(loadStripe(response.data.publishableKey));
         } catch (error) {
             console.error("Error fetching publishable key:", error);
@@ -255,6 +257,8 @@ useEffect(()=>{
           }
         });
         setClientSecret(response.data.clientSecret);
+        console.log(response.data.clientSecret);
+        
       } catch (error) {
         console.error("Error fetching client secret:", error);
         toast.error("Please try again later",
