@@ -234,6 +234,11 @@ const formattedTime = date.toLocaleTimeString('en-US', options);
             "Authorization": `Bearer ${token}`
           }
         })
+        axios.put(`${backendUrl}/orderHistory`, {order: order}, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         dispatch(setCartCount(0))
         setTimeout(()=>{
           console.log("Redirecting to home");
@@ -241,11 +246,7 @@ const formattedTime = date.toLocaleTimeString('en-US', options);
           navigate("/");
         }, 3000)
       }
-       axios.put(`${backendUrl}/orderHistory`, {order: order}, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+       
       
         
       }
