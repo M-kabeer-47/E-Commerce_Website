@@ -225,7 +225,7 @@ useEffect(()=>{
             console.error("Error fetching publishable key:", error);
             toast.error("Please try again later",{
               position: "bottom-right",
-              autoClose: 3000,
+              autoClose: 10000,
               hideProgressBar: true,
               closeOnClick: true,
               pauseOnHover: true,
@@ -234,6 +234,7 @@ useEffect(()=>{
               theme: "colored",
               transition: Bounce,
         });
+            navigate("/");
         }
         }
         fetchPublishableKey();
@@ -257,7 +258,7 @@ useEffect(()=>{
 
           {
             position: "bottom-right",
-            autoClose: 3000,
+            autoClose: 10000,
             hideProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
@@ -267,6 +268,7 @@ useEffect(()=>{
             transition: Bounce,
           }
         );
+        navigate("/");
       }
     };
 
