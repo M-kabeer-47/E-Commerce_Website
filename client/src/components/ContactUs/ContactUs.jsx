@@ -103,7 +103,11 @@ export default function ContactPage() {
         theme: "colored",
         transition: Bounce,
         });
-        window.location.reload();
+        setTimeout(()=>
+        {
+          window.location.reload();
+        }
+        ,3000)
     } else {
       console.log("Form contains errors");
     }

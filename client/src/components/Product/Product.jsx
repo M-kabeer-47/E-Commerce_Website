@@ -191,7 +191,11 @@ export default function Product() {
                           theme: "colored",
                           transition: Bounce,
                         });
-                        window.location.reload();
+                        setTimeout(() => {
+                          window.location.reload();
+                        }
+                        , 1000);
+                        
                           
                         if (
                           response.data !== "Product Already Exists in Cart"
