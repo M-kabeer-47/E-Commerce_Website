@@ -315,6 +315,10 @@ if(!token){
           fontSize: "30px",
           color: "#00a7ff",
         }}
+        onClick={() => {
+          navigate("/");
+        }
+        }
       >
         Glitchware
       </h2>
@@ -361,6 +365,7 @@ if(!token){
         width: "100%",
         paddingBottom: "100px",
         height: "100vh",
+        paddingBottom:"100px"
       }}
     >
       <div
