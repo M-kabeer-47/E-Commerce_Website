@@ -81,9 +81,9 @@ export default function ProductDisplay() {
       console.log("Initial fetch");
       
       let response = await axios.get(`${backendUrl}/products/${Category}?page=${1}`)
-      if(response.data.error){
+      if(response.data.error === "Category not found"){
         navigate("/notfound");
-        
+
       }
       else{
 
