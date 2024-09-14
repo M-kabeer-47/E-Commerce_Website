@@ -15,7 +15,7 @@ import {openCart,} from "../../store/sidebars.js";
 import { useNavigate } from "react-router-dom";
 import { setUser } from "../../store/user.js";
 
-
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { toast,Bounce } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
@@ -35,6 +35,9 @@ export default function Navbar({page}) {
   const dispatch = useDispatch();
   const [userLoading,setUserLoading] = useState(true);
   const token = localStorage.getItem("uid");
+  const query = new URLSearchParams(useLocation().search)
+  const queryToken = query.get("token");
+
   
   
   
@@ -247,7 +250,7 @@ else{
 }
             {(token && !userLoading) && (
               <UserDropdown shortName={shortName} />
-            )} {!token && (
+            )} {(!token && !queryToken) && (
               <p
                 className="loginOption"
                 onClick={() => {
