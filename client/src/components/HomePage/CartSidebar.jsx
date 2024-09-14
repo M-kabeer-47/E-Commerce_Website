@@ -85,7 +85,7 @@ export default function CartSidebar(props) {
     
 
     if (props.isOpen) {
-      
+      setLoading(true);
 
       try {
         let cart = await axios.get(`${backendUrl}/cart`,{
