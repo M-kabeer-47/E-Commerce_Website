@@ -1,15 +1,42 @@
 import mongoose from "mongoose";
 import Product from "./Models/Products.js";
 import User from "./Models/User.js";
+import {v2 as cloudinary} from "cloudinary";
+import dotenv from "dotenv";
+dotenv.config({path:".env"});
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_API_KEY,
+    api_secret: process.env.CLOUD_API_SECRET,
+});
+const upload_on_cloudinary = async (file_path)=>{
+if(!file_path){
+    return null
+}
+else{
+    try{
+        let response = await cloudinary.uploader.upload(file_path)
+        
+        
+        return response.secure_url;
+    }
+    catch(err){
+        console.log(err)
+    }
+}
+}
  const uri = "mongodb+srv://User1:byoabD1X2y7KzU2I@e-commerce.kopglez.mongodb.net/E-Commerce";
  async function Query(){
+    console.log("Api Key: "+process.env.CLOUD_API_KEY);
     await mongoose.connect(uri)
-    await User.updateOne({email:"muhammadkabeer2003@gmail.com"},{
-        $set:{
-            "orderHistory": []
-        }
-    })
-    console.log("Updated");
+    const products = await Product.find({})
     
- }
+    for(let i=0;i<products.length;i++){
+       let file_path = products[i].imageUrl
+        let url = await upload_on_cloudinary(file_path)
+        console.log("Url number: "+i+1)
+        await Product.updateOne({imageUrl:file_path}, {imageUrl:url})
+    }
+     }
 Query()
+
