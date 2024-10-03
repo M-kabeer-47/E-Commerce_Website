@@ -44,7 +44,22 @@ const HomeProducts = ({ product, index, type }) => {
         };
     }, []);
     async function handleAddToCart(){
-        let token = localStorage.getItem("uid");     
+        let token = localStorage.getItem("uid");    
+        if(!token){
+            toast.error('Please login', {
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                transition: Bounce,
+              });
+              return;
+        } 
+        
         let quantityInCart = await axios.get(
             `${backendUrl}/quantityInCart`,
             {
