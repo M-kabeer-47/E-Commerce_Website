@@ -57,8 +57,8 @@ const IncrementDecrementBtn = ({ count, maxValue, cart, product,requestBackend,s
       else{
         debounceTimeout = setTimeout(() => {
           Increment(token); 
-          setIncrementButtonClicked(false); // Reset state
-        }, 800); // Debounce delay
+          setIncrementButtonClicked(false); 
+        }, 800); 
       }
        
      

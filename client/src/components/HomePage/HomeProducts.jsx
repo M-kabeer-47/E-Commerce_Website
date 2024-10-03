@@ -113,7 +113,7 @@ const HomeProducts = ({ product, index, type }) => {
             ref={productRef}
         >
             <div>
-                <img src={product.imageUrl} alt={product.title} className={type === 'prebuild' ? 'productImage' : 'images'} loading='lazy' onClick={()=>{
+                <img src={product.imageUrl} alt={product.title} className={type === 'prebuild' ? 'productImage' : 'images'} onClick={()=>{
                     navigate(`/product/${product._id}`)
                 }}
                 style={{cursor:"pointer"}}

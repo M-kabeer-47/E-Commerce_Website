@@ -1,12 +1,11 @@
 import React from "react";
 import { MdOutlineDelete } from "react-icons/md";
 import axios from "axios";
-import Cookies from "js-cookie";
+
 import IncrementDecrementBtn from "../Product/Quantity";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import isTokenExpired from "../tokenExpiry";
-import { toast } from "react-toastify";
+
 export default function CardLayout({cart,getCart,convertPrice,total}) {
   const navigate = useNavigate();
   const backendUrl = useSelector((state) => state.user.backendUrl);
@@ -114,7 +113,7 @@ const tokenExpiry = localStorage.getItem('tokenExpiry');
           <MdOutlineDelete
             style={{ color: "#E7314E", fontSize: "25px", cursor: "pointer" }}
             onClick={async () => {
-              if (!isTokenExpired()) {
+              if (token && new Date().getTime() < tokenExpiry) {
               await axios.put(
                 `${backendUrl}/remove/${product._id}`,
                 {},
@@ -125,21 +124,6 @@ const tokenExpiry = localStorage.getItem('tokenExpiry');
                 }
               );
               getCart();
-            }
-            else{
-              toast.error("Please login",
-                {
-                  position: "bottom-right",
-                  autoClose: 3000,
-                  hideProgressBar: true,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                  theme: "colored",
-                  transition: Bounce,
-                }    
-            )
             }
             }}
           />

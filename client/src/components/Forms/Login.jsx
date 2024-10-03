@@ -171,7 +171,7 @@ const navigate = useNavigate();
         <h4 style={{color:"white",fontWeight:"normal"}}>or</h4>
         <button  className='login-button google-button' onClick={()=>{
           event.preventDefault();
-          window.location.href = "https://e-commerce-website-phi-vert.vercel.app/auth/google"; //
+          window.location.href = "https://e-commerce-website-phi-vert.vercel.app/auth/google"; 
           
 
 

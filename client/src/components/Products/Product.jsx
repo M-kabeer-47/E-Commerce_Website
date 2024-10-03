@@ -33,7 +33,7 @@ const Product = ({ product, index }) => {
         onMouseLeave={() => setHoveredProduct(null)}
       >
         <Link to={`/product/${product._id}`} onClick={() => {}}>
-          <img loading="lazy" src={"/" + product.imageUrl} className="images" />
+          <img src={product.imageUrl} className="images" />
           <p className="title">{product.name}</p>
           <Tooltip title={product.rating.toFixed(1)}>
             <Rating

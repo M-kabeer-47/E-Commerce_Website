@@ -78,7 +78,7 @@ export default function Product() {
           {isWideScreen ? <Navbar /> : <Navbar2 />}
           <div className="productPageDiv">
             <div className={`productImageDiv fade-in ${animationClass}`}>
-              <img src={"/" + product.imageUrl} alt={product.name} style={{objectFit:"contain",height:"400px"}}/>
+              <img src={product.imageUrl} alt={product.name} style={{objectFit:"contain",height:"400px"}}/>
             </div>
 
             <div className={`productDetailsDiv fade-in ${animationClass}`}>
