@@ -235,7 +235,7 @@ const tokenExpiry = localStorage.getItem('tokenExpiry');
                           }}
                         >
                           <img
-                            src={"/" + product.imageUrl}
+                            src={product.imageUrl}
                             alt=""
                             style={{
                               width: "80%",

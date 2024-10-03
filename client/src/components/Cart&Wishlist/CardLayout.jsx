@@ -52,7 +52,7 @@ const tokenExpiry = localStorage.getItem('tokenExpiry');
         }}>
         <div style={{ display: "flex",  height: "200px", alignItems: "center",width:"200px",justifyContent:"center" }}>
           <img
-            src={"/" + product.imageUrl}
+            src={product.imageUrl}
             alt=""
             style={{ width: "90%", height: "100%", objectFit: "contain" }}
           />

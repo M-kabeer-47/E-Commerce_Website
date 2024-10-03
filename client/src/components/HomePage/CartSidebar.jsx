@@ -196,7 +196,7 @@ export default function CartSidebar(props) {
                   >
                     <div style={{ display: "flex", gap: "5px" }}>
                       <img
-                        src={"/" + product.imageUrl}
+                        src={product.imageUrl}
                         alt=""
                         className="cartSidebar-image"
                         style={{

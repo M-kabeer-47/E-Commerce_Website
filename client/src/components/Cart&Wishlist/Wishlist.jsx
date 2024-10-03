@@ -248,7 +248,7 @@ export default function wishlistPage() {
                         
                         >
                           <img
-                            src={"/" + product.imageUrl}
+                            src={product.imageUrl}
                             alt=""
                             style={{
                               width: "80%",

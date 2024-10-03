@@ -22,7 +22,7 @@ export default function OrderDetails({ cart, total }) {
         {cart.map((product, index) => (
           <div key={index} className="order-details-product">
             <div className="product-info">
-              <img src={"/" + product.imageUrl} alt={product.name} className="product-image" />
+              <img src={product.imageUrl} alt={product.name} className="product-image" />
               <div className="product-details">
                 <p className="product-name">{product.name}</p>
                 <p className="product-price">{"PKR " + (convertPrice(product.price, product.quantityInCart))}</p>

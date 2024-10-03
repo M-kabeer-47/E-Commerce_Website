@@ -50,7 +50,7 @@ export default function WishlistCardLayout({ wishlist, getWishlist, convertPrice
             style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%",cursor:"pointer"}}>
               <div style={{ display: "flex", height: "200px", alignItems: "center", width: "200px", justifyContent: "center" }}>
                 <img
-                  src={"/" + product.imageUrl}
+                  src={product.imageUrl}
                   alt={product.name}
                   style={{ width: "90%", height: "100%", objectFit: "contain" }}
                 />
