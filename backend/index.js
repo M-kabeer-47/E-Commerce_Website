@@ -18,6 +18,7 @@ import bcrypt from "bcrypt";
 import passport from "passport";
 import cookieParser from "cookie-parser"; 
 import google from "./Authentication/google.js";
+import Order from "./Models/Orders.js";
 
 
 
@@ -446,6 +447,18 @@ app.post("/emptyCart",authenticateUser,async(req,res)=>{
   }
   
 })
+app.post("/admin_order",authenticateUser,async(req,res)=>{
+    try{
+      let {order_for_admin} = req.body;
+      await Order.create(order_for_admin);
+      res.status(200).json({message:"Oder confirmed"})
+    }
+    catch(err){
+      res.status(400).json({message:"Fatal error"})
+    }
+}
+
+)
 app.put("/increment/:id",authenticateUser,async(req,res)=>{
   
   console.log(req.body);

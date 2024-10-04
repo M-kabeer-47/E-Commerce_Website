@@ -20,7 +20,7 @@ function CheckoutForm() {
   const location = useLocation();
   const dispatch= useDispatch();
   const token = localStorage.getItem("uid");
-  const { usdAmount, total, subtotal ,order,cart} = location.state || {};
+  const { usdAmount, total, subtotal ,order,cart,order_for_admin} = location.state || {};
   const [paymentSuccess, setPaymentSuccess] = useState(false);  // State for tracking payment success
   const [isLoading,setLoading] = useState(true)
   const handleSubmit = async (event) => {
@@ -79,6 +79,14 @@ function CheckoutForm() {
           "Authorization": `Bearer ${token}`
         }
       })
+      axios.post(`${backendUrl}/admin_order`, {
+        order_for_admin
+        },{
+          headers:{
+            "Authorization": `Bearer ${token}` 
+          }
+        }
+        )
       dispatch(setCartCount(0))
     }
   };

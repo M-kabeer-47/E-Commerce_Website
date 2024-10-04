@@ -208,13 +208,33 @@ const formattedTime = date.toLocaleTimeString('en-US', options);
         payment: paymentMethod,
         total: subtotal,
         items: cart,
+
+      }
+      const order_for_admin = {
+        total: subtotal,
+        items: cart,
+        customer_name: details.name,
+        customer_email: details.email,
+        customer_address: details.address,
+        customer_phone: details.phone,
+        payment_method: paymentMethod,
+        status: "Pending",
+        date: formattedDate,
       }
 
       if (payment === "card") {
         console.log(total, subtotal, usdAmount,cart,order);
+        axios.post(`${backendUrl}/admin_order`, {
+        order_for_admin
+        },{
+          headers:{
+            "Authorization": `Bearer ${token}` 
+          }
+        }
+        )
 
         navigate("/stripe", {
-          state: { total: total, subtotal: subtotal, usdAmount: usdAmount,order:order,cart: cart },
+          state: { total: total, subtotal: subtotal, usdAmount: usdAmount,order:order,cart: cart,order_for_admin:order_for_admin },
         }); 
       } else {
         setOrderPlaced(true);
