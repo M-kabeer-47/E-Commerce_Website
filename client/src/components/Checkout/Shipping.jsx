@@ -178,7 +178,7 @@ export default function Shipping() {
     setFocusedInput(null);
   };
   
-  function handleSubmit(event, payment) {
+  async function handleSubmit(event, payment) {
     event.preventDefault();
     setSubmitOnce(true);
 
@@ -202,6 +202,7 @@ const formattedDate = date.toLocaleDateString('en-GB'); // 'en-GB' locale gives 
 // Get time in 12-hour format with AM/PM
 const options = { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true };
 const formattedTime = date.toLocaleTimeString('en-US', options);
+alert(typeof formattedDate)
       const order = {
         date: formattedDate,
         time: formattedTime,
@@ -224,7 +225,8 @@ const formattedTime = date.toLocaleTimeString('en-US', options);
 
       if (payment === "card") {
         console.log(total, subtotal, usdAmount,cart,order);
-        axios.post(`${backendUrl}/admin_order`, {
+        alert(order_for_admin)
+        let response = await axios.post(`${backendUrl}/admin_order`, {
         order_for_admin: order_for_admin
         },{
           headers:{
@@ -232,12 +234,16 @@ const formattedTime = date.toLocaleTimeString('en-US', options);
           }
         }
         )
+        console.log(response.data)
 
         navigate("/stripe", {
           state: { total: total, subtotal: subtotal, usdAmount: usdAmount,order:order,cart: cart,order_for_admin:order_for_admin },
         }); 
       } else {
+      setTimeout(()=>{
         setOrderPlaced(true);
+      },10000)
+        
         console.log("Placing Order");
         axios.post(`${backendUrl}/emptyCart`,{
         
@@ -264,7 +270,7 @@ const formattedTime = date.toLocaleTimeString('en-US', options);
           console.log("Redirecting to home");
           
           navigate("/");
-        }, 3000)
+        }, 10000)
       }
        
       
