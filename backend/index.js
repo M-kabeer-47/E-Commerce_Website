@@ -450,6 +450,10 @@ app.post("/emptyCart",authenticateUser,async(req,res)=>{
 app.post("/admin_order",authenticateUser,async(req,res)=>{
     try{
       let {order_for_admin} = req.body;
+      order_for_admin = {
+        ...order_for_admin,
+        customer_email:req.user.email,
+      }
       console.log(order_for_admin);
       
       let response = await Order.create(order_for_admin);

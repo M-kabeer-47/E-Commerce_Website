@@ -215,7 +215,6 @@ alert(typeof formattedDate)
         total: subtotal,
         items: cart,
         customer_name: details.name,
-        customer_email: details.email,
         customer_address: details.address,
         customer_phone: details.phone,
         payment_method: paymentMethod,
