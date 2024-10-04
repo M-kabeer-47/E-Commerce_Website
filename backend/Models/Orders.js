@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const Orders = new mongoose.Schema({
     total: {
-        type: Number,
+        type: String,
         required: true,
     },
     items: {
@@ -34,7 +34,7 @@ const Orders = new mongoose.Schema({
         required: true,
     },
     date: {
-        type: Date,
+        type: String,
         required: true,
     },
 })
