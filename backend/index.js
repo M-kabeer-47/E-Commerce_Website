@@ -450,7 +450,11 @@ app.post("/emptyCart",authenticateUser,async(req,res)=>{
 app.post("/admin_order",authenticateUser,async(req,res)=>{
     try{
       let {order_for_admin} = req.body;
-      await Order.create(order_for_admin);
+      console.log(order_for_admin);
+      
+      let response = await Order.create(order_for_admin);
+      console.log(response)
+      
       res.status(200).json({message:"Oder confirmed"})
     }
     catch(err){

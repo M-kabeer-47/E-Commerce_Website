@@ -80,7 +80,7 @@ function CheckoutForm() {
         }
       })
       axios.post(`${backendUrl}/admin_order`, {
-        order_for_admin
+        order_for_admin: order_for_admin
         },{
           headers:{
             "Authorization": `Bearer ${token}` 

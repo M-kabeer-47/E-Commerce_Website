@@ -225,7 +225,7 @@ const formattedTime = date.toLocaleTimeString('en-US', options);
       if (payment === "card") {
         console.log(total, subtotal, usdAmount,cart,order);
         axios.post(`${backendUrl}/admin_order`, {
-        order_for_admin
+        order_for_admin: order_for_admin
         },{
           headers:{
             "Authorization": `Bearer ${token}` 
