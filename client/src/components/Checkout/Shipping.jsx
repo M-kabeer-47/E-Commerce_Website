@@ -23,9 +23,9 @@ export default function Shipping() {
   const token = localStorage.getItem("uid");
   const [orderPlaced, setOrderPlaced] = useState(false);
   const location = useLocation();
-  const [stockLoader,setStockLoader]= useState(true)
-  const [outOfStock,setOutOfStock] = useState(false);
-  const[outOfStockProducts,setOutOfStockProducts] = useState([]);
+  const [stockLoader, setStockLoader] = useState(true);
+  const [outOfStock, setOutOfStock] = useState(false);
+  const [outOfStockProducts, setOutOfStockProducts] = useState([]);
   const { failure } = location.state || {};
   const [paymentMethod, setPaymentMethod] = useState("cash");
   const [focusedInput, setFocusedInput] = useState(null);
@@ -43,7 +43,7 @@ export default function Shipping() {
     phone: "",
   });
   const navigate = useNavigate();
-  
+
   async function convertPKRtoUSD(pkrAmount) {
     const response = await axios.get(
       `https://api.currencyapi.com/v3/latest?apikey=cur_live_k1jO0sXBPn9DlQjS1vtUamQ9Ua3ekv5guYHKovSN`
@@ -63,7 +63,6 @@ export default function Shipping() {
         product.quantityInCart;
     });
 
-    
     const formattedTotal = new Intl.NumberFormat("en-US", {
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
@@ -81,46 +80,40 @@ export default function Shipping() {
     console.log(price);
     setUSDAmount(price);
   }
-  
+
   useEffect(() => {
     setTotal(Total(300));
     setSubtotal(Total(0));
   }, [cart]);
   useEffect(() => {
-      
     setTimeout(() => {
       window.scrollTo({
         top: 0,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
     }, 100);
-  }, []); 
-  
+  }, []);
+
   let verifyStock = async (Cart) => {
-    if(Cart.length>0){
-      console.log("Insdie function verifyStock:" +Cart);
-      
-    
-    let response = await axios.get(`${backendUrl}/verifyStock`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      params:{
-        order:Cart
+    if (Cart.length > 0) {
+      console.log("Insdie function verifyStock:" + Cart);
+
+      let response = await axios.get(`${backendUrl}/verifyStock`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params: {
+          order: Cart,
+        },
+      });
+
+      if (response.data.status) {
+        setOutOfStock(true);
+        setOutOfStockProducts(response.data.products);
+        setStockLoader(false);
       }
-    });
-
-    
-    if(response.data.status){
-      
-      
-      setOutOfStock(true);
-      setOutOfStockProducts(response.data.products);
-      setStockLoader(false)
     }
-  }
-
-  }
+  };
   const requestBackend = async () => {
     console.log("Requesting Backend");
 
@@ -133,13 +126,12 @@ export default function Shipping() {
         },
         withCredentials: true,
       });
-      if(cart.data.length === 0){
+      if (cart.data.length === 0) {
         navigate("/");
       }
-      
+
       await verifyStock(cart.data);
-      setCart(cart.data); 
-      
+      setCart(cart.data);
 
       console.log(cart.data);
     } catch (error) {
@@ -177,7 +169,7 @@ export default function Shipping() {
   const handleBlur = () => {
     setFocusedInput(null);
   };
-  
+
   async function handleSubmit(event, payment) {
     event.preventDefault();
     setSubmitOnce(true);
@@ -196,21 +188,25 @@ export default function Shipping() {
       return;
     } else {
       const date = new Date();
-// Get date in day/month/year format
-const formattedDate = date.toLocaleDateString('en-GB'); // 'en-GB' locale gives dd/mm/yyyy format
+      // Get date in day/month/year format
+      const formattedDate = date.toLocaleDateString("en-GB"); // 'en-GB' locale gives dd/mm/yyyy format
 
-// Get time in 12-hour format with AM/PM
-const options = { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true };
-const formattedTime = date.toLocaleTimeString('en-US', options);
-alert(typeof formattedDate)
+      // Get time in 12-hour format with AM/PM
+      const options = {
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: true,
+      };
+      const formattedTime = date.toLocaleTimeString("en-US", options);
+      alert(typeof formattedDate);
       const order = {
         date: formattedDate,
         time: formattedTime,
         payment: paymentMethod,
         total: subtotal,
         items: cart,
-
-      }
+      };
       const order_for_admin = {
         total: subtotal,
         items: cart,
@@ -220,70 +216,83 @@ alert(typeof formattedDate)
         payment_method: paymentMethod,
         status: "Pending",
         date: formattedDate,
-      }
+      };
 
       if (payment === "card") {
-        console.log(total, subtotal, usdAmount,cart,order);
-        alert(order_for_admin)
-        let response = await axios.post(`${backendUrl}/admin_order`, {
-        order_for_admin: order_for_admin
-        },{
-          headers:{
-            "Authorization": `Bearer ${token}` 
-          }
-        }
-        )
-        console.log(response.data)
+        console.log(total, subtotal, usdAmount, cart, order);
 
         navigate("/stripe", {
-          state: { total: total, subtotal: subtotal, usdAmount: usdAmount,order:order,cart: cart,order_for_admin:order_for_admin },
-        }); 
-      } else {
-      setTimeout(()=>{
-        setOrderPlaced(true);
-      },10000)
-        
-        console.log("Placing Order");
-        axios.post(`${backendUrl}/emptyCart`,{
-        
-        },{
-          headers: {
-            "Authorization": `Bearer ${token}` 
-          }
-        });
-
-        axios.put(`${backendUrl}/updateStocks`,{
-          order:cart
-        },{
-          headers:{
-            "Authorization": `Bearer ${token}`
-          }
-        })
-        axios.put(`${backendUrl}/orderHistory`, {order: order}, {
-          headers: {
-            Authorization: `Bearer ${token}`,
+          state: {
+            total: total,
+            subtotal: subtotal,
+            usdAmount: usdAmount,
+            order: order,
+            cart: cart,
+            order_for_admin: order_for_admin,
           },
         });
-        dispatch(setCartCount(0))
-        setTimeout(()=>{
+      } else {
+        setTimeout(() => {
+          setOrderPlaced(true);
+        }, 3000);
+        let response = await axios.post(
+          `${backendUrl}/admin_order`,
+          {
+            order_for_admin: order_for_admin,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(response.data);
+        console.log("Placing Order");
+        axios.post(
+          `${backendUrl}/emptyCart`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        axios.put(
+          `${backendUrl}/updateStocks`,
+          {
+            order: cart,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        axios.put(
+          `${backendUrl}/orderHistory`,
+          { order: order },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        dispatch(setCartCount(0));
+        setTimeout(() => {
           console.log("Redirecting to home");
-          
+
           navigate("/");
-        }, 10000)
-      }
-       
-      
-        
+        }, 3000);
       }
     }
-    if(!token){
-      navigate("/login");
-    }
-if(!token){
-  return null;
-}  
-
-
+  }
+  if (!token) {
+    navigate("/login");
+  }
+  if (!token) {
+    return null;
+  }
 
   const inputStyle = (inputName) => ({
     width: "100%",
@@ -300,322 +309,389 @@ if(!token){
 
   return (
     <>
-    {orderPlaced && (
-      <>
-      <div style={{height:"100vh",width:"100%",backgroundColor:"#1f1f1f",display:"flex",alignItems:"center",justifyContent:"center"}}>
-      <div className="successBox" style={{width:"300px",backgroundColor:"black"}}>
-        <FaCheckCircle className="tickAnimation" />
-        <h3>Order placed successfully!</h3>
-      </div>
-      </div>
-      </> )
-    }
-    {(!orderPlaced && stockLoader && cart.length ===0) && 
-    (<>
-    <div
-    className="shipping"
-    style={{
-      backgroundColor: "#191919",
-      width: "100%",
-      paddingBottom: "100px",
-      height: "100vh",
-    }}
-  >
-    <div
-      className="shipping-nav"
-      style={{
-        backgroundColor: "black",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        width: "100%",
-        boxSizing: "border-box",
-        height: "70px",
-        paddingTop: "25px",
-        marginBottom: "40px",
-      }}
-    >
-      <h2
-        style={{
-          fontFamily: "Audiowide",
-          fontSize: "30px",
-          color: "#00a7ff",
-        }}
-        onClick={() => {
-          navigate("/");
-        }
-        }
-      >
-        Glitchware
-      </h2>
-    </div>
-    <div style={{display:"flex",justifyContent:"center",alignItems:"center",height:"100%"}}>
-      <CircularProgress />
-      </div>
-    </div>
-    </>
-    )
-    }
-    {(outOfStock && !orderPlaced) && (
-      <div style={{height:"100vh",width:"100%",backgroundColor:"#1f1f1f",display:"flex",alignItems:"center",justifyContent:"center"}}
-      
-      >
-        <div className="outOfStock" style={{minWidth:"40%",backgroundColor:"black",padding:"20px",borderRadius:"10px",boxShadow:"0 0 10px 10px #191919"}}>
-          <h3 style={{color:"#00a7ff",textAlign:"center"}}>Product quantities have updated</h3>
-          <ul style={{color:"white"}}>
-          <div>
-              <ul style={{display:"flex",justifyContent:"space-between",marginBlock:"15px",marginTop:"30px"}}>
-              <li style={{color:"#B4B4B4"}}>Product</li>
-              <li style={{color:"#B4B4B4"}} >Quantity</li>
-              </ul>
-              </div>
-            {outOfStockProducts.map((product)=>(
-              
-              <ul style={{display:"flex",justifyContent:"space-between",paddingRight:"30px",marginBottom:"20px"}}>
-
-              <li key={product._id}>{product.name}</li>
-              <li key={product._id} style={{textAlign:"start",color:"#00a7ff"}}>{product.quantity}</li>
-              </ul>
-              
-            ))}
-          </ul>
-        </div>
-      </div>
-    )}
-    {(!orderPlaced && !outOfStock && cart.length!==0) && (
-      
-    <div
-      className="shipping"
-      style={{
-        backgroundColor: "#191919",
-        width: "100%",
-        paddingBottom: "100px",
-        height: "100vh",
-        paddingBottom:"100px"
-      }}
-    >
-      <div
-        className="shipping-nav"
-        style={{
-          backgroundColor: "black",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          width: "100%",
-          boxSizing: "border-box",
-          height: "70px",
-          paddingTop: "25px",
-          marginBottom: "40px",
-        }}
-      >
-        <h2
+      {orderPlaced && (
+        <>
+          <div
+            style={{
+              height: "100vh",
+              width: "100%",
+              backgroundColor: "#1f1f1f",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              className="successBox"
+              style={{ width: "300px", backgroundColor: "black" }}
+            >
+              <FaCheckCircle className="tickAnimation" />
+              <h3>Order placed successfully!</h3>
+            </div>
+          </div>
+        </>
+      )}
+      {!orderPlaced && stockLoader && cart.length === 0 && (
+        <>
+          <div
+            className="shipping"
+            style={{
+              backgroundColor: "#191919",
+              width: "100%",
+              paddingBottom: "100px",
+              height: "100vh",
+            }}
+          >
+            <div
+              className="shipping-nav"
+              style={{
+                backgroundColor: "black",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+                boxSizing: "border-box",
+                height: "70px",
+                paddingTop: "25px",
+                marginBottom: "40px",
+              }}
+            >
+              <h2
+                style={{
+                  fontFamily: "Audiowide",
+                  fontSize: "30px",
+                  color: "#00a7ff",
+                }}
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                Glitchware
+              </h2>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100%",
+              }}
+            >
+              <CircularProgress />
+            </div>
+          </div>
+        </>
+      )}
+      {outOfStock && !orderPlaced && (
+        <div
           style={{
-            fontFamily: "Audiowide",
-            fontSize: "30px",
-            color: "#00a7ff",
+            height: "100vh",
+            width: "100%",
+            backgroundColor: "#1f1f1f",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
-          Glitchware
-        </h2>
-      </div>
-      <div className="shipping-main" style={{ width: "100%", gap: "50px" }}>
-        <div className="shipping-container" style={{ paddingLeft: "20px" }}>
-          <h3
-            style={{ color: "white", fontWeight: "500", marginBottom: "10px" }}
-          >
-            Shipping Details
-          </h3>
-          <div className="shipping-inputs">
-            {["Name", "City", "Province", "Zip", "Address", "Phone"].map(
-              (input) => (
-                <div className="shipping-input" key={input}>
-                  <label htmlFor={input} style={{ color: "#6f94bc" }}>
-                    {input}
-                  </label>
-                  {input === "Phone" ? (
-                    <>
-                      <PhoneInput
-                        defaultCountry="ua"
-                        value={details.phone}
-                        onChange={(phone) =>
-                          updateDetails({ ...details, phone })
-                        }
-                        inputStyle={{
-                          width: "100%",
-                          height: "36px" /* Match height with other inputs */,
-                          paddingLeft: "8px",
-                          borderRadius: "4px",
-                          // border:
-                          //   focusedInput === "Phone"
-                          //     ? "2px solid #00a7ff"
-                          //     : "2px solid #ccc",
-                          outline: "none",
-                          color: "white",
-                          backgroundColor: "transparent",
-                          boxShadow:
-                            focusedInput === "Phone"
-                              ? "0 0 8px rgba(0, 167, 255, 0.5)"
-                              : "none",
-                        }}
-                        buttonStyle={{
-                          backgroundColor: "orange",
-                          border: // Custom background color
-                          focusedInput === "Phone"
-                              ? "0 0 8px rgba(0, 167, 255, 0.5)"
-                              : "none",
-                          color: "white",
-                        }}
-                        onFocus={() => handleFocus("Phone")}
-                        onBlur={handleBlur}
-                      />
-                      {details.phone === "" && submitOnce && (
-                        <p
-                          style={{
-                            color: "red",
-                            margin: "0",
-                            fontSize: "12px",
-                            textAlign: "start",
-                          }}
-                        >
-                          Phone is required
-                        </p>
-                      )}
-                      {submitOnce && !phoneRegex.test(details.phone) && (
-                        <p
-                          style={{
-                            color: "red",
-                            margin: "0",
-                            fontSize: "12px",
-                            textAlign: "start",
-                          }}
-                        >
-                          Phone number is invalid
-                        </p>
-                      )}
-                    </>
-                  ) : (
-                    <>
-                      <input
-                        type="text"
-                        name={input.toLowerCase()}
-                        id={input}
-                        placeholder={`Enter ${input}`}
-                        style={inputStyle(input)}
-                        onFocus={() => handleFocus(input)}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                      />
-                      {details[input.toLowerCase()] === "" && submitOnce && (
-                        <p
-                          style={{
-                            color: "red",
-                            margin: "0",
-                            fontSize: "12px",
-                            textAlign: "start",
-                          }}
-                        >
-                          {input} is required
-                        </p>
-                      )}
-                    </>
-                  )}
-                </div>
-              )
-            )}
-          </div>
-
-          <h3
-            style={{ color: "white", fontWeight: "500", marginBottom: "10px" }}
-          >
-            Select a payment method
-          </h3>
-          <div className="payment" style={{ gap: "20px", width: "100%" }}>
-            <div
-              className="payment-option"
-              onClick={() => {
-                getTotal(300);
-                setPaymentMethod("card");
-              }}
-              style={
-                paymentMethod === "card" ? { border: "2px solid  #1e88e5" } : {}
-              }
-            >
-              <h4>Credit/Debit Card</h4>
-              <BsCreditCard2Front
-                className="credit-card-icon"
-                style={{ fontSize: "30px" }}
-              />
-            </div>
-            <div
-              className="payment-option"
-              onClick={() => setPaymentMethod("cash")}
-              style={
-                paymentMethod === "cash" ? { border: "2px solid  #1e88e5" } : {}
-              }
-            >
-              <h4>Cash on delivery</h4>
-              <TbTruckDelivery
-                className="credit-card-icon"
-                style={{ fontSize: "30px" }}
-              />
-            </div>
-          </div>
           <div
-            className="placeOrder"
-            style={{ width: "100%", height: "fit-content", marginTop: "50px" }}
+            className="outOfStock"
+            style={{
+              minWidth: "40%",
+              backgroundColor: "black",
+              padding: "20px",
+              borderRadius: "10px",
+              boxShadow: "0 0 10px 10px #191919",
+            }}
           >
-            {paymentMethod === "card" && (
-              <button
-                className="shipping-button"
+            <h3 style={{ color: "#00a7ff", textAlign: "center" }}>
+              Product quantities have updated
+            </h3>
+            <ul style={{ color: "white" }}>
+              <div>
+                <ul
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginBlock: "15px",
+                    marginTop: "30px",
+                  }}
+                >
+                  <li style={{ color: "#B4B4B4" }}>Product</li>
+                  <li style={{ color: "#B4B4B4" }}>Quantity</li>
+                </ul>
+              </div>
+              {outOfStockProducts.map((product) => (
+                <ul
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    paddingRight: "30px",
+                    marginBottom: "20px",
+                  }}
+                >
+                  <li key={product._id}>{product.name}</li>
+                  <li
+                    key={product._id}
+                    style={{ textAlign: "start", color: "#00a7ff" }}
+                  >
+                    {product.quantity}
+                  </li>
+                </ul>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
+      {!orderPlaced && !outOfStock && cart.length !== 0 && (
+        <div
+          className="shipping"
+          style={{
+            backgroundColor: "#191919",
+            width: "100%",
+            paddingBottom: "100px",
+            height: "100vh",
+            paddingBottom: "100px",
+          }}
+        >
+          <div
+            className="shipping-nav"
+            style={{
+              backgroundColor: "black",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+              boxSizing: "border-box",
+              height: "70px",
+              paddingTop: "25px",
+              marginBottom: "40px",
+            }}
+          >
+            <h2
+              style={{
+                fontFamily: "Audiowide",
+                fontSize: "30px",
+                color: "#00a7ff",
+              }}
+            >
+              Glitchware
+            </h2>
+          </div>
+          <div className="shipping-main" style={{ width: "100%", gap: "50px" }}>
+            <div className="shipping-container" style={{ paddingLeft: "20px" }}>
+              <h3
                 style={{
-                  padding: "15px",
-                  backgroundColor: "#00a7ff",
-                  textAlign: "center",
                   color: "white",
-                  marginTop: "70px",
-                }}
-                onClick={() => {
-                  handleSubmit(event, "card");
+                  fontWeight: "500",
+                  marginBottom: "10px",
                 }}
               >
-                Pay with stripe
-              </button>
-            )}
+                Shipping Details
+              </h3>
+              <div className="shipping-inputs">
+                {["Name", "City", "Province", "Zip", "Address", "Phone"].map(
+                  (input) => (
+                    <div className="shipping-input" key={input}>
+                      <label htmlFor={input} style={{ color: "#6f94bc" }}>
+                        {input}
+                      </label>
+                      {input === "Phone" ? (
+                        <>
+                          <PhoneInput
+                            defaultCountry="ua"
+                            value={details.phone}
+                            onChange={(phone) =>
+                              updateDetails({ ...details, phone })
+                            }
+                            inputStyle={{
+                              width: "100%",
+                              height:
+                                "36px" /* Match height with other inputs */,
+                              paddingLeft: "8px",
+                              borderRadius: "4px",
+                              // border:
+                              //   focusedInput === "Phone"
+                              //     ? "2px solid #00a7ff"
+                              //     : "2px solid #ccc",
+                              outline: "none",
+                              color: "white",
+                              backgroundColor: "transparent",
+                              boxShadow:
+                                focusedInput === "Phone"
+                                  ? "0 0 8px rgba(0, 167, 255, 0.5)"
+                                  : "none",
+                            }}
+                            buttonStyle={{
+                              backgroundColor: "orange",
+                              // Custom background color
+                              border:
+                                focusedInput === "Phone"
+                                  ? "0 0 8px rgba(0, 167, 255, 0.5)"
+                                  : "none",
+                              color: "white",
+                            }}
+                            onFocus={() => handleFocus("Phone")}
+                            onBlur={handleBlur}
+                          />
+                          {details.phone === "" && submitOnce && (
+                            <p
+                              style={{
+                                color: "red",
+                                margin: "0",
+                                fontSize: "12px",
+                                textAlign: "start",
+                              }}
+                            >
+                              Phone is required
+                            </p>
+                          )}
+                          {submitOnce && !phoneRegex.test(details.phone) && (
+                            <p
+                              style={{
+                                color: "red",
+                                margin: "0",
+                                fontSize: "12px",
+                                textAlign: "start",
+                              }}
+                            >
+                              Phone number is invalid
+                            </p>
+                          )}
+                        </>
+                      ) : (
+                        <>
+                          <input
+                            type="text"
+                            name={input.toLowerCase()}
+                            id={input}
+                            placeholder={`Enter ${input}`}
+                            style={inputStyle(input)}
+                            onFocus={() => handleFocus(input)}
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                          />
+                          {details[input.toLowerCase()] === "" &&
+                            submitOnce && (
+                              <p
+                                style={{
+                                  color: "red",
+                                  margin: "0",
+                                  fontSize: "12px",
+                                  textAlign: "start",
+                                }}
+                              >
+                                {input} is required
+                              </p>
+                            )}
+                        </>
+                      )}
+                    </div>
+                  )
+                )}
+              </div>
 
-            {paymentMethod === "cash" && (
-              <button
-                className="shipping-button"
+              <h3
                 style={{
-                  padding: "15px",
-                  backgroundColor: "#00a7ff",
-                  textAlign: "center",
                   color: "white",
-                  marginTop: "70px",
-                }}
-                onClick={() => {
-                  handleSubmit(event, "cash");
+                  fontWeight: "500",
+                  marginBottom: "10px",
                 }}
               >
-                Place Order
-              </button>
+                Select a payment method
+              </h3>
+              <div className="payment" style={{ gap: "20px", width: "100%" }}>
+                <div
+                  className="payment-option"
+                  onClick={() => {
+                    getTotal(300);
+                    setPaymentMethod("card");
+                  }}
+                  style={
+                    paymentMethod === "card"
+                      ? { border: "2px solid  #1e88e5" }
+                      : {}
+                  }
+                >
+                  <h4>Credit/Debit Card</h4>
+                  <BsCreditCard2Front
+                    className="credit-card-icon"
+                    style={{ fontSize: "30px" }}
+                  />
+                </div>
+                <div
+                  className="payment-option"
+                  onClick={() => setPaymentMethod("cash")}
+                  style={
+                    paymentMethod === "cash"
+                      ? { border: "2px solid  #1e88e5" }
+                      : {}
+                  }
+                >
+                  <h4>Cash on delivery</h4>
+                  <TbTruckDelivery
+                    className="credit-card-icon"
+                    style={{ fontSize: "30px" }}
+                  />
+                </div>
+              </div>
+              <div
+                className="placeOrder"
+                style={{
+                  width: "100%",
+                  height: "fit-content",
+                  marginTop: "50px",
+                }}
+              >
+                {paymentMethod === "card" && (
+                  <button
+                    className="shipping-button"
+                    style={{
+                      padding: "15px",
+                      backgroundColor: "#00a7ff",
+                      textAlign: "center",
+                      color: "white",
+                      marginTop: "70px",
+                    }}
+                    onClick={() => {
+                      handleSubmit(event, "card");
+                    }}
+                  >
+                    Pay with stripe
+                  </button>
+                )}
+
+                {paymentMethod === "cash" && (
+                  <button
+                    className="shipping-button"
+                    style={{
+                      padding: "15px",
+                      backgroundColor: "#00a7ff",
+                      textAlign: "center",
+                      color: "white",
+                      marginTop: "70px",
+                    }}
+                    onClick={() => {
+                      handleSubmit(event, "cash");
+                    }}
+                  >
+                    Place Order
+                  </button>
+                )}
+              </div>
+            </div>
+            {cart.length !== 0 && (
+              <>
+                <div
+                  style={{ border: "1px solid #ccc", height: "fit-content" }}
+                  className="order-details-div"
+                >
+                  <OrderDetails cart={cart} total={Total} />
+                </div>
+              </>
             )}
           </div>
         </div>
-        {cart.length!==0 &&(
-          <>
-        <div
-          style={{ border: "1px solid #ccc", height: "fit-content" }}
-          className="order-details-div"
-        >
-          
-          <OrderDetails cart={cart} total={Total} />
-
-        </div>
-        </>
-        )}
-      </div>
-    </div>
-    )}
+      )}
     </>
   );
 }
