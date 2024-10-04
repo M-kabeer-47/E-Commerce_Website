@@ -199,7 +199,7 @@ export default function Shipping() {
         hour12: true,
       };
       const formattedTime = date.toLocaleTimeString("en-US", options);
-      alert(typeof formattedDate);
+      
       const order = {
         date: formattedDate,
         time: formattedTime,
@@ -234,7 +234,7 @@ export default function Shipping() {
       } else {
         setTimeout(() => {
           setOrderPlaced(true);
-        }, 3000);
+        }, 2000);
         let response = await axios.post(
           `${backendUrl}/admin_order`,
           {
