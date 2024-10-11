@@ -200,14 +200,8 @@ export default function Shipping() {
       };
       const formattedTime = date.toLocaleTimeString("en-US", options);
       
+      
       const order = {
-        date: formattedDate,
-        time: formattedTime,
-        payment: paymentMethod,
-        total: subtotal,
-        items: cart,
-      };
-      const order_for_admin = {
         total: subtotal,
         items: cart,
         customer_name: details.name,
@@ -228,7 +222,8 @@ export default function Shipping() {
             usdAmount: usdAmount,
             order: order,
             cart: cart,
-            order_for_admin: order_for_admin,
+            order_for_admin: order,
+            
           },
         });
       } else {
@@ -238,7 +233,7 @@ export default function Shipping() {
         let response = await axios.post(
           `${backendUrl}/admin_order`,
           {
-            order_for_admin: order_for_admin,
+            order_for_admin: order,
           },
           {
             headers: {
