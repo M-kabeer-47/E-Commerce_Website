@@ -45,7 +45,7 @@ export default function Navbar2() {
     setIsSidebarOpen(true);
   };
   const handleCartClick = () => {
-    if(!token){
+    if(!token || isTokenExpired()){
       toast.info('Please Login', {
         position: "top-right",
         autoClose: 3000,

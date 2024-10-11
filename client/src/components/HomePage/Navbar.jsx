@@ -62,7 +62,7 @@ export default function Navbar({page}) {
       return;
     }
 
-    if(!token){
+    if(!token || isTokenExpired()){
       toast.info('Please Login', {
         position: "top-right",
         autoClose: 3000,
@@ -251,7 +251,7 @@ else{
 }
             {(token && !userLoading && !isTokenExpired()) && (
               <UserDropdown shortName={shortName} />
-            )} {(!token && !queryToken) && (
+            )} {(!token && !queryToken && isTokenExpired()) && (
               <p
                 className="loginOption"
                 onClick={() => {
@@ -268,15 +268,15 @@ else{
                 navigate("/wishlist");
               }
               else{
-                toast.info('Please Login', {
-                  position: "top-right",
+                toast.error('Please Login', {
+                  position: "bottom-right",
                   autoClose: 3000,
                   hideProgressBar: true,
                   closeOnClick: true,
                   pauseOnHover: true,
                   draggable: true,
                   progress: undefined,
-                  theme: "colored",
+                  theme: "coloured",
                   transition: Bounce,
                   });
               }

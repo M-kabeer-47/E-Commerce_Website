@@ -142,7 +142,14 @@ const handleButtonClick = (e) => {
         </ul>
       </div>
       <div className="lowerSidebar">
-        <Link className="link" to={"/wishlist"} style={{ width: "100%" }}>
+        <Link className="link" onClick={()=>{
+          if(props.shortName !== ""){
+            navigate("/wishlist")
+          }
+          else{
+            return;
+          }
+        }} style={{ width: "100%" }}>
           <div className="iconText" style={{ display: "flex", justifyContent: "space-between" }}>
             <p style={{ position: "relative", left: "80px" }}>Wishlist</p>
             <div className="icon-container">
