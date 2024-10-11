@@ -22,6 +22,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { setCartCount, setWishlistCount } from "../../store/Counts.js";
 import UserDropdown from "./userDropdown/UserDropdown.jsx";
+import isTokenExpired from "../tokenExpiry.js";
 export default function Navbar({page}) {
   
   const backendUrl = useSelector((state) => state.user.backendUrl);
@@ -85,7 +86,7 @@ else{
   async function getUser() {
     
 
-    if (token) {
+    if (token && !isTokenExpired()) {
 
       if (user === null) {
         let User = await axios.get(`${backendUrl}/user`, {
@@ -242,13 +243,13 @@ else{
           </div>
           <SearchBar expanded={true} /> {/* Use the SearchBar component */}
           <div className="lastOptions">
-            {(token && userLoading) && (<div
+            {(token && userLoading && !isTokenExpired()) && (<div
                 className="user-skeleton"
               >
                 
               </div>)
 }
-            {(token && !userLoading) && (
+            {(token && !userLoading && !isTokenExpired()) && (
               <UserDropdown shortName={shortName} />
             )} {(!token && !queryToken) && (
               <p
@@ -263,7 +264,7 @@ else{
             <div
               className="icon-container"
               onClick={() => {
-                if(token){
+                if(token && !isTokenExpired()){
                 navigate("/wishlist");
               }
               else{

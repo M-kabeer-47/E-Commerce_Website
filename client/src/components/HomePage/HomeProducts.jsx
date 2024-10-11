@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import{ incrementCartCount } from '../../store/Counts';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import isTokenExpired from '../tokenExpiry';
 const HomeProducts = ({ product, index, type }) => {
     const backendUrl = useSelector((state) => state.user.backendUrl);
     const [hoveredProduct, setHoveredProduct] = useState(null);
@@ -45,7 +46,7 @@ const HomeProducts = ({ product, index, type }) => {
     }, []);
     async function handleAddToCart(){
         let token = localStorage.getItem("uid");    
-        if(!token){
+        if(!token || isTokenExpired()){
             toast.error('Please login', {
                 position: "bottom-right",
                 autoClose: 3000,
