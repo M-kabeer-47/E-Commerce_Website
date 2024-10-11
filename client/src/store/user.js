@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     user: null,
-    backendUrl: "https://e-commerce-website-phi-vert.vercel.app"
+    backendUrl: "http://localhost:3000"
     
 };
 const userSlice = createSlice({
@@ -18,3 +18,4 @@ const userSlice = createSlice({
 });
 export const { setUser } = userSlice.actions;
 export default userSlice.reducer;
+// https://e-commerce-website-phi-vert.vercel.app
