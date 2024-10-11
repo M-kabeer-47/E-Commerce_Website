@@ -5,7 +5,7 @@ import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import CartSidebar from "./CartSidebar";
-
+import isTokenExpired from "../tokenExpiry";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -88,7 +88,7 @@ else{
     
     console.log("hui");
     
-    if(token){
+    if(token && !isTokenExpired()){
       
       console.log(user);
       
