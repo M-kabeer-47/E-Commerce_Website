@@ -63,8 +63,8 @@ export default function Navbar({page}) {
     }
 
     if(!token || isTokenExpired()){
-      toast.info('Please Login', {
-        position: "top-right",
+      toast.error('Please Login', {
+        position: "bottom-right",
         autoClose: 3000,
         hideProgressBar: true,
         closeOnClick: true,
@@ -251,7 +251,7 @@ else{
 }
             {(token && !userLoading && !isTokenExpired()) && (
               <UserDropdown shortName={shortName} />
-            )} {(!token && !queryToken && isTokenExpired()) && (
+            )} {(!token  || isTokenExpired()) && (
               <p
                 className="loginOption"
                 onClick={() => {
@@ -276,7 +276,7 @@ else{
                   pauseOnHover: true,
                   draggable: true,
                   progress: undefined,
-                  theme: "coloured",
+                  theme: "colored",
                   transition: Bounce,
                   });
               }

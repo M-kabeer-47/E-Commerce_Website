@@ -46,8 +46,8 @@ export default function Navbar2() {
   };
   const handleCartClick = () => {
     if(!token || isTokenExpired()){
-      toast.info('Please Login', {
-        position: "top-right",
+      toast.error('Please Login', {
+        position: "bottom-right",
         autoClose: 3000,
         hideProgressBar: true,
         closeOnClick: true,
