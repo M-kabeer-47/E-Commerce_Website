@@ -71,6 +71,7 @@ const [platform,setPlatform] = useState("");
     }
     let Email = email.toLowerCase();
     let response = await axios.post(`${backendUrl}/login`,{ email: Email, password: password })
+    alert(JSON.stringify(response.data));
     if(response.data === "User Does Not Exist"){
       setUserExists(false);
       console.log("User Does Not Exist");

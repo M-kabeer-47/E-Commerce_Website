@@ -31,7 +31,7 @@ const OrderCard = ({ order, index }) => {
         <div className={"orderHeader"}>
           <div className={"orderInfo"}>
             <span className={"orderId"}>Order #{index}</span>
-            <span className={"orderDate"}>{order.date + " " + order.time}</span>
+            <span className={"orderDate"}>{order.date}</span>
           </div>
           <div className={"orderTotal"}>
             Total: <span>Rs {order.total}</span>
@@ -39,7 +39,7 @@ const OrderCard = ({ order, index }) => {
         </div>
         <div className={"orderDetails"}>
           <div className={"paymentMethod"}>
-            <span className={"label"}>Payment Method:</span> {order.payment}
+            <span className={"label"}>Payment Method:</span> {order.payment_method}
           </div>
           <div className={"itemsHeader"}>
             <span className="span-item">Item</span>
@@ -126,6 +126,7 @@ const OrderHistoryPage = () => {
           },
         }
       );
+      alert(JSON.stringify(response.data))
       setLoading(false);
       if (response.data.length === 0) {
         setHasMore(false);

@@ -73,6 +73,7 @@ export default function App() {
     else if(query.get('token')){
       const Token = query.get('token');
       const maxAge = query.get('maxAge')
+      alert("maxAge: "+maxAge)
       localStorage.setItem('uid',Token)
       localStorage.setItem('tokenExpiry',maxAge)
       axios.get(`${backendUrl}/user`,{
