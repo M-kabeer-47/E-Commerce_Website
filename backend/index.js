@@ -254,7 +254,7 @@ app.post("/login",async(req,res)=>{
   try{
 
   
-  const {email,password} = req.body;
+  let {email,password} = req.body;
   email = email.toLowerCase();
   if(!await Users.exists({email:email})){
     console.log("User Does Not Exist");
@@ -459,7 +459,7 @@ app.post("/admin_order",authenticateUser,async(req,res)=>{
       let response = await Order.create(order_for_admin);
       console.log(response)
       
-      res.status(200).json({message:"Oder confirmed"})
+      res.status(200).json({message:"Oder confirmed",id:response._id});
     }
     catch(err){
       res.status(400).json({message:"Fatal error"})
@@ -678,6 +678,10 @@ app.get("/orderHistory",authenticateUser,async(req,res)=>{
   let {page} = req.query;
   page = parseInt(page);
   const orderHistory = req.user.orderHistory;
+  if(req.user.orderHistory.length === 0){
+    res.send([]);
+    return;
+  }
   const start = (page - 1) * 3;
   const end = page * 3;
   const orders = orderHistory.slice(start,end);
@@ -820,6 +824,18 @@ catch(err){
   res.send("Error Verifying Stock");
 }
 })
+app.get("/getOrder/:id",async(req,res)=>{
+  try{
+  let {id} = req.params;
+  const order = await Order.findById(id);
+  res.send(order);
+}
+catch(err){
+  console.log(err);
+  res.send("Error Fetching Order");
+}
+}
+)
 app.get("/", (req, res) => {
   res.send("Hello from the server");
 }

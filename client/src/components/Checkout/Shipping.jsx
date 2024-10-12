@@ -241,6 +241,7 @@ export default function Shipping() {
             },
           }
         );
+        let id = response.data.id;
         console.log(response.data);
         console.log("Placing Order");
         axios.post(
@@ -266,7 +267,7 @@ export default function Shipping() {
         );
         axios.put(
           `${backendUrl}/orderHistory`,
-          { order: order },
+          { order: id },
           {
             headers: {
               Authorization: `Bearer ${token}`,

@@ -65,9 +65,17 @@ function CheckoutForm() {
           "Authorization": `Bearer ${token}` 
         }
       })
+      let response = await axios.post(`${backendUrl}/admin_order`, {
+        order_for_admin: order_for_admin
+        },{
+          headers:{
+            "Authorization": `Bearer ${token}` 
+          }
+        }
+        )
       await axios.put(`${backendUrl}/orderHistory`, 
         
-        {order: order}, {
+        {order: response.data.id}, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -79,14 +87,7 @@ function CheckoutForm() {
           "Authorization": `Bearer ${token}`
         }
       })
-      axios.post(`${backendUrl}/admin_order`, {
-        order_for_admin: order_for_admin
-        },{
-          headers:{
-            "Authorization": `Bearer ${token}` 
-          }
-        }
-        )
+      
       dispatch(setCartCount(0))
     }
   };

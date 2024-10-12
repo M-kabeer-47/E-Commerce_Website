@@ -107,7 +107,7 @@ export default function RegisterUser() {
     });
     if (response.data.data === "Google") {
       setPlatform("google");
-      return false;
+      return true;
     }
     return response.data;
   }
@@ -381,7 +381,7 @@ console.log(user);
                     Enter a valid Email
                   </p>
                 )}
-              {emailExists && user.email != "" && submitOnce && (
+              {emailExists && user.email != "" && submitOnce && platform!=="google" &&(
                 <p
                   style={{
                     color: "red",

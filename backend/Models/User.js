@@ -33,6 +33,7 @@ import Orders from "./Orders.js";
             required:true,
         },
         orderHistory: [{
+            default:[],
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Orders',  // Reference to the 'Order' model
         }],
