@@ -5,45 +5,36 @@ import { MdOutlineEmail } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
 
 import { FaGoogle } from "react-icons/fa";
+import z from "zod"
 
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import {useForm} from "react-hook-form"
+import {zodResolver} from "@hookform/resolvers/zod"
 axios.defaults.withCredentials = true;
 export default function Login() {
   const backendUrl = useSelector((state) => state.user.backendUrl);
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [email, updateEmail] = useState("");
-  const [password, updatePassword] = useState("");
+  
+  
   const [showPopup, setShowPopup] = useState(false);
-  const [submit,setSubmit] = useState(false);
+  
 const [isEmailFocused, setIsEmailFocused] = useState(false);
 const [isPasswordFocused, setIsPasswordFocused] = useState(false);  
-const [userExists, setUserExists] = useState(true);
-const [incorrectPassword, setIncorrectPassword] = useState(false);
+
 const [platform,setPlatform] = useState("");
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
-
-  function handleChange(event) {
-    const { value, name } = event.target;
-    switch (name) {
-      case "email":
-        updateEmail(value);
-        if(submit){
-          setUserExists(true);
-          
-        }
-        break;
-      case "password":
-        updatePassword(value);
-        if(submit){
-          setIncorrectPassword(false);
-        }
-        break;
-    }
-  }
+  const userSchema = z.object({
+    email: z.string().min(1,{message: "Email is required" }).email({message: "Invalid email"}),
+    password: z.string().min(1,{message:"Password is required"}).min(8,{message: "Password must be 8 characters long"})
+  })
+const {register,handleSubmit,formState: {errors},setError} = useForm({
+  resolver: zodResolver(userSchema)
+})
+ 
 
   const eyeSvgClosed = (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="20" height="20">
@@ -58,58 +49,56 @@ const [platform,setPlatform] = useState("");
       </g>
     </svg>
   );
-  useEffect(() => {
-    console.log(platform);
 
-  },[platform]
-    )
-  const handleSubmit = async (event) => {
-    setSubmit(true);
-    event.preventDefault();
-    if(email === "" || password === ""){
-      return
-    }
+  const onSubmit = async (data) => {
+    
+    const {email,password} = data;
     let Email = email.toLowerCase();
+    
+    
+    try{
+
+    
     let response = await axios.post(`${backendUrl}/login`,{ email: Email, password: password })
-    alert(JSON.stringify(response.data));
-    if(response.data === "User Does Not Exist"){
-      setUserExists(false);
-      console.log("User Does Not Exist");
-      
-      
-      return;
-  }
+    
+   
   if(response.data.data === "Google"){
-    console.log("jello");
+    
     
     setPlatform("google");
   return;
 }
-   else  if(response.data === "Incorrect Password"){
-
-      setUserExists(true);
-      setIncorrectPassword(true);
-      console.log("Incorrect Password");
-      return
-  }
+   
     else if(response.data.data === "Success"){
-      setUserExists(true);
-      setIncorrectPassword(false);
+      
+      
       localStorage.setItem("uid",response.data.token);
       localStorage.setItem("tokenExpiry",response.data.maxAge);
-      window.location.href = "https://e-commerce-website-cck4.vercel.app/";
-      
-      
-        
-      
-  
+      window.location.href = "http://localhost:5173";
+       
   }
+}
+catch(error){
+  if(error.response.data === "User Does Not Exist"){
+    
+    
+    setError("email",{type:"manual",message: "User doesn't exist"})
+    
+    return;
+}
+ else if(error.response.data === "Incorrect Password"){
+    
+    
+    setError("password",{type:"manual",message:"Incorrect Password"})
+    return
+} 
+}
 
 }
 const navigate = useNavigate();
   return (
     <div className="body">
-      <form autoComplete="off" onSubmit={handleSubmit}>
+      <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
         <h2 className="login-title">Glitchware</h2>
         <p className="signin">Login</p>
         
@@ -128,12 +117,12 @@ const navigate = useNavigate();
               type="text"
               name="email"
               autoComplete="off"
-              onChange={handleChange}
-              value={email}
+              {...register("email")}
+              
             />
-            {(email === "" && userExists && submit && platform  !== "google") && <p style={{color: "red",fontSize: "10px", position: "absolute",left:"0px",top:"44px",fontWeight:"normal"}}>Email is required</p>}
-            {(!userExists && email !=="" && submit && platform  !== "google") && <p style={{color: "red",fontSize: "10px", position: "absolute",left:"0px",top:"44px",fontWeight:"normal"}}>User doesn't exist</p>}
-            {(userExists && email !=="" && submit && platform  === "google") && <p style={{color: "red",fontSize: "10px", position: "absolute",left:"0px",top:"44px",fontWeight:"normal"}}>This email is already associated with a Google account</p>}
+            {(errors.email && platform!="google") && <p style={{color: "red",fontSize: "10px", position: "absolute",left:"0px",top:"44px",fontWeight:"normal"}}>{errors.email.message}</p>}
+            
+            {(errors.email && platform  === "google") && <p style={{color: "red",fontSize: "10px", position: "absolute",left:"0px",top:"44px",fontWeight:"normal"}}>This email is already associated with a Google account</p>}
 
           </div>
           <div className="input-container password" onFocus={()=>{
@@ -151,11 +140,11 @@ const navigate = useNavigate();
               type={passwordVisible ? 'text' : 'password'}
               name="password"
               autoComplete="new-password"
-              onChange={handleChange}
-              value={password}
+              {...register("password")}
+              
             />
-            {(password === "" && !incorrectPassword && submit) && <p style={{color: "red",fontSize: "10px", position: "absolute",left:"0px",top:"44px",fontWeight:"normal"}}>Password is required</p>}
-            {((incorrectPassword && password !== "" && platform != "google")&& submit) && <p style={{color: "red",fontSize: "10px", position: "absolute",left:"0px",top:"44px",fontWeight:"normal"}}>Incorrect Password</p>}
+            {(errors.password && platform!="google") && <p style={{color: "red",fontSize: "10px", position: "absolute",left:"0px",top:"44px",fontWeight:"normal"}}>{errors.password.message}</p>}
+            
             <div
               onClick={togglePasswordVisibility}
               style={{ position: 'absolute', right: '10px', top: '10px', cursor: 'pointer' }}

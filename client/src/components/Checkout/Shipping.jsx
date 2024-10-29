@@ -202,14 +202,14 @@ export default function Shipping() {
       
       
       const order = {
-        total: subtotal,
+        total: total,
         items: cart,
         customer_name: details.name,
         customer_address: details.address,
         customer_phone: details.phone,
         payment_method: paymentMethod,
-        status: "Pending",
-        date: formattedDate,
+        status: "Processing",
+        date: formattedDate,  
       };
 
       if (payment === "card") {
@@ -278,7 +278,7 @@ export default function Shipping() {
         setTimeout(() => {
           console.log("Redirecting to home");
 
-          navigate("/");
+          navigate("/");  
         }, 3000);
       }
     }
@@ -444,7 +444,7 @@ export default function Shipping() {
           style={{
             backgroundColor: "#191919",
             width: "100%",
-            paddingBottom: "100px",
+            
             height: "100vh",
             paddingBottom: "100px",
           }}

@@ -7,55 +7,60 @@ import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import z from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 export default function RegisterUser() {
   const [submit, updateSubmit] = useState(false);
   const backendUrl = useSelector((state) => state.user.backendUrl);
   const navigate = useNavigate();
   const [emailExists, setEmailExists] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
-  
-  const [user, updateUser] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-  });
+
   const [focused, setFocused] = useState({
     firstName: true,
     lastName: false,
-  
+
     email: false,
     password: false,
     confirmPassword: false,
-})
+  });
 
   const [platform, setPlatform] = useState("");
 
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [invalidEmail, setInvalidEmail] = useState(false);
 
-  const [submitOnce, setSubmitOnce] = useState(false);
+  const userSchema = z
+    .object({
+      firstName: z.string().min(1, { message: "First Name is required" }),
+      lastName: z.string().min(1, { message: "Last Name is required" }),
+      email: z
+        .string()
+        .min(1, { message: "Email is required" })
+        .email({ message: "Invalid email" }),
+      password: z
+        .string()
+        .min(1, { message: "Password is required" })
+        .min(8, { message: "Password must be 8 characters long" }),
+      confirmPassword: z
+        .string()
+        .min(1, { message: "Confirm Password is required" })
+        .min(8, { message: "Password must be 8 characters long" }),
+      // confirm password must match password
+    })
+    .refine((data) => data.confirmPassword === data.password, {
+      message: "Passwords do not match",
+      path: ["confirmPassword"],
+    });
+
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
   const toggleConfirmPasswordVisibility = () => {
     setConfirmPasswordVisible(!confirmPasswordVisible);
   };
-
-  function handleChange(event) {
-    const { value, name, checked, type } = event.target;
-    setSubmitOnce(false);
-    if (name === "confirmPassword") {
-      setConfirmPassword(value);
-    }
-    updateUser((prevValue) => {
-      if (type === "checkbox") {
-        return { ...prevValue, isActive: checked };
-      }
-      return { ...prevValue, [name]: value };
-    });
-  }
 
   const eyeSvgClosed = (
     <svg
@@ -94,14 +99,8 @@ export default function RegisterUser() {
     </svg>
   );
 
-  function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    return emailRegex.test(email);
-  }
-  async function emailExistsCheck() {
-    let email = user.email.toLowerCase();
-
+  async function emailExistsCheck(email) {
+    let email = email.toLowerCase();
     let response = await axios.post(`${backendUrl}/checkEmail`, {
       email,
     });
@@ -112,39 +111,29 @@ export default function RegisterUser() {
     return response.data;
   }
 
-    
-  const handleSubmit = async (event) => {
-    console.log("I got clicked");
-
-    setSubmitOnce(true);
-
-    event.preventDefault();
-
-    if (
-      user.firstName === "" ||
-      user.lastName === "" ||
-      user.email === "" ||
-      user.password === "" ||
-      user.password.length < 8 ||
-      invalidEmail
-    ) {
-      return;
-    }
+  const onSubmit = async () => {
     if (await emailExistsCheck()) {
-      console.log("Email already exists");
-      setEmailExists(true);
+      setError("email", { type: "manual", message: "Email already exists" });
       return;
     }
-    if (confirmPassword != user.password) {
-      console.log("Passwords do not match");
-      return;
-    } else {
-      updateSubmit(true);
-      console.log("Submitted");
-    }
+    sendData(data);
+    toast.success("User Registered Successfully", {
+      position: "bottom-right",
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      transition: Bounce,
+    });
+    setTimeout(() => {
+      navigate("/login");
+    }, 3000);
   };
 
-  async function sendData() {
+  async function sendData(user) {
     let email = user.email.toLowerCase();
     let User = {
       firstName: user.firstName,
@@ -166,31 +155,14 @@ export default function RegisterUser() {
       });
   }
 
-  useEffect(() => {
-    console.log(submit);
-
-    if (submit) {
-      console.log("HELLO");
-console.log(user);
-
-      sendData();
-      toast.success("User Registered Successfully", {
-        position: "bottom-right",
-        autoClose: 3000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        transition: Bounce,
-      });
-      setTimeout(() => {
-        navigate("/login")
-      }, 3000);
-    }
-  }, [submit]);
-
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+  } = useForm({
+    resolver: zodResolver(userSchema),
+  });
   return (
     <>
       <ToastContainer />
@@ -218,8 +190,6 @@ console.log(user);
           <div className="inputs reg-inputs ">
             <div
               className="input-container fName"
-              
-              
               style={
                 focused.firstName
                   ? {
@@ -239,18 +209,20 @@ console.log(user);
                 type="text"
                 name="firstName"
                 autoComplete="off"
-                onChange={handleChange}
-                onFocus={()=>{setFocused((prev) => {
-                  return { ...prev, firstName: true };
-                })}
-              }
-                onBlur={()=>{setFocused((prev) => {
-                  return { ...prev, firstName: false };
-                })}
-              }
+                {...register("firstName")}
+                onFocus={() => {
+                  setFocused((prev) => {
+                    return { ...prev, firstName: true };
+                  });
+                }}
+                onBlur={() => {
+                  setFocused((prev) => {
+                    return { ...prev, firstName: false };
+                  });
+                }}
               />
 
-              {user.firstName === "" && submitOnce ? (
+              {errors.firstName && (
                 <p
                   style={{
                     color: "red",
@@ -260,10 +232,8 @@ console.log(user);
                     top: "44px",
                   }}
                 >
-                  First Name is required
+                  {errors.firstName.message}
                 </p>
-              ) : (
-                ""
               )}
             </div>
             <div
@@ -276,7 +246,6 @@ console.log(user);
                     }
                   : {}
               }
-              
             >
               <label htmlFor="lName" className="input-label ">
                 Last Name
@@ -288,18 +257,20 @@ console.log(user);
                 type="text"
                 name="lastName"
                 autoComplete="off"
-                onFocus={()=>{setFocused((prev) => {
-                  return { ...prev, lastName: true };
-                })}
-              }
-                onBlur={()=>{setFocused((prev) => {
-                  return { ...prev, lastName: false };
-                })}
-              }
-                onChange={handleChange}
+                onFocus={() => {
+                  setFocused((prev) => {
+                    return { ...prev, lastName: true };
+                  });
+                }}
+                onBlur={() => {
+                  setFocused((prev) => {
+                    return { ...prev, lastName: false };
+                  });
+                }}
+                {...register("lastName")}
               />
 
-              {user.lastName === "" && submitOnce ? (
+              {errors.lastName ? (
                 <p
                   style={{
                     color: "red",
@@ -309,16 +280,14 @@ console.log(user);
                     top: "44px",
                   }}
                 >
-                  Last Name is required
+                  {error.lastName.message}{" "}
                 </p>
               ) : (
                 ""
               )}
             </div>
             <div
-              className={`input-container email ${
-                emailExists && user.email !== "" && "exists"
-              }`}
+              className={`input-container email ${errors.email && "exists"}`}
               style={
                 focused.email
                   ? {
@@ -327,7 +296,6 @@ console.log(user);
                     }
                   : {}
               }
-              
             >
               <label htmlFor="email" className="input-label ">
                 Email
@@ -339,18 +307,20 @@ console.log(user);
                 type="text"
                 name="email"
                 autoComplete="off"
-                onFocus={()=>{setFocused((prev) => {
-                  return { ...prev, email: true };
-                })}
-              }
-                onBlur={()=>{setFocused((prev) => {
-                  return { ...prev, email: false };
-                })}
-              }
-                onChange={handleChange}
+                onFocus={() => {
+                  setFocused((prev) => {
+                    return { ...prev, email: true };
+                  });
+                }}
+                onBlur={() => {
+                  setFocused((prev) => {
+                    return { ...prev, email: false };
+                  });
+                }}
+                {...register("email")}
               />
 
-              {user.email === "" && submitOnce && (
+              {errors.email && platform != "google" && (
                 <p
                   style={{
                     color: "red",
@@ -361,41 +331,11 @@ console.log(user);
                     fontWeight: "normal",
                   }}
                 >
-                  Email is required
+                  {errors.email.message}
                 </p>
               )}
-              {!isValidEmail(user.email) &&
-                user.email != "" &&
-                platform !== "google" &&
-                submitOnce && (
-                  <p
-                    style={{
-                      color: "red",
-                      fontSize: "10px",
-                      position: "absolute",
-                      left: "0px",
-                      top: "44px",
-                      fontWeight: "normal",
-                    }}
-                  >
-                    Enter a valid Email
-                  </p>
-                )}
-              {emailExists && user.email != "" && submitOnce && platform!=="google" &&(
-                <p
-                  style={{
-                    color: "red",
-                    fontSize: "10px",
-                    position: "absolute",
-                    left: "0px",
-                    top: "44px",
-                    fontWeight: "normal",
-                  }}
-                >
-                  Email already exists
-                </p>
-              )}
-              {platform === "google" && user.email != "" && submitOnce && (
+
+              {platform === "google" && !errors.email && (
                 <p
                   style={{
                     color: "red",
@@ -412,7 +352,6 @@ console.log(user);
             </div>
             <div
               className="input-container password"
-              
               style={
                 focused.password
                   ? {
@@ -432,18 +371,20 @@ console.log(user);
                 type={passwordVisible ? "text" : "password"}
                 name="password"
                 autoComplete="new-password"
-                onFocus={()=>{setFocused((prev) => {
-                  return { ...prev, password: true };
-                })}
-              }
-                onBlur={()=>{setFocused((prev) => {
-                  return { ...prev, password: false };
-                })}
-              }
-                onChange={handleChange}
+                onFocus={() => {
+                  setFocused((prev) => {
+                    return { ...prev, password: true };
+                  });
+                }}
+                onBlur={() => {
+                  setFocused((prev) => {
+                    return { ...prev, password: false };
+                  });
+                }}
+                {...register("password")}
               />
 
-              {user.password === "" && submitOnce && (
+              {errors.password && (
                 <p
                   style={{
                     color: "red",
@@ -454,26 +395,8 @@ console.log(user);
                     fontWeight: "normal",
                   }}
                 >
-                  Password is required
+                  {errors.password.message}{" "}
                 </p>
-              )}
-              {user.password !== "" &&
-              user.password.length < 8 &&
-              submitOnce ? (
-                <p
-                  style={{
-                    color: "red",
-                    fontSize: "10px",
-                    position: "absolute",
-                    left: "0px",
-                    top: "44px",
-                    fontWeight: "normal",
-                  }}
-                >
-                  Password should have 8 characters{" "}
-                </p>
-              ) : (
-                ""
               )}
 
               <div
@@ -490,7 +413,6 @@ console.log(user);
             </div>
             <div
               className="input-container confirmPassword"
-              
               style={
                 focused.confirmPassword
                   ? {
@@ -510,15 +432,17 @@ console.log(user);
                 type={confirmPasswordVisible ? "text" : "password"}
                 name="confirmPassword"
                 autoComplete="new-password"
-                onChange={handleChange}
-                onFocus={()=>{setFocused((prev) => {
-                  return { ...prev, confirmPassword: true };
-                })}
-              }
-                onBlur={()=>{setFocused((prev) => {
-                  return { ...prev, confirmPassword: false };
-                })}
-              }
+                {...register("confirmPassword")}
+                onFocus={() => {
+                  setFocused((prev) => {
+                    return { ...prev, confirmPassword: true };
+                  });
+                }}
+                onBlur={() => {
+                  setFocused((prev) => {
+                    return { ...prev, confirmPassword: false };
+                  });
+                }}
               />
 
               <div
@@ -533,23 +457,7 @@ console.log(user);
                 {confirmPasswordVisible ? eyeSvgOpen : eyeSvgClosed}
               </div>
               {}
-              {user.password != confirmPassword &&
-                confirmPassword.length != 0 &&
-                submitOnce && (
-                  <p
-                    style={{
-                      color: "red",
-                      fontSize: "10px",
-                      position: "absolute",
-                      left: "0px",
-                      top: "44px",
-                      fontWeight: "normal",
-                    }}
-                  >
-                    Passwords do not match
-                  </p>
-                )}
-              {confirmPassword === "" && submitOnce && (
+              {errors.confirmPassword && (
                 <p
                   style={{
                     color: "red",
@@ -560,7 +468,7 @@ console.log(user);
                     fontWeight: "normal",
                   }}
                 >
-                  Confirm password is required
+                  {errors.confirmPassword.message}
                 </p>
               )}
             </div>

@@ -59,14 +59,14 @@ export default function Product() {
     window.addEventListener("resize", handleResize);
     fetchProduct();
 
-    // Apply animation class after component mounts
+    
     const timer = setTimeout(() => {
       setAnimationClass("visible");
-    }, 100); // Delay to ensure loading is complete
+    }, 100); 
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      clearTimeout(timer); // Clean up timer on unmount
+      clearTimeout(timer); 
     };
   }, [location.search, id]);
 

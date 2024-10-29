@@ -7,97 +7,135 @@ import Navbar from "../HomePage/Navbar";
 import Navbar2 from "../HomePage/Navbar2";
 import Footer from "../HomePage/Footer/Footer";
 import { useSelector } from "react-redux";
+import { CircularProgress } from "@mui/material";
 
 
 const OrderCard = ({ order, index }) => {
-
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
   useEffect(() => {
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
     };
-    
+
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
-
     };
   }, []);
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "Delivered":
+        return "#32CD32"; // Bright Green
+      case "Cancelled":
+        return "#FF4500"; // Bright Red
+      case "Processing":
+        return "#ffc107"; // Yellowish Gold
+      case "Shipped":
+        return "#00a7ff"; // Light Blue
+      default:
+        return "#D3D3D3"; // Light Gray for unknown statuses
+    }
+  };
+
   if (!order) return null;
 
   return (
-    <>
-      <div className={"orderCard"}>
-        <div className={"orderHeader"}>
-          <div className={"orderInfo"}>
-            <span className={"orderId"}>Order #{index}</span>
-            <span className={"orderDate"}>{order.date}</span>
-          </div>
-          <div className={"orderTotal"}>
-            Total: <span>Rs {order.total}</span>
-          </div>
+    <div className={"orderCard"}>
+      <div className={"orderHeader"}>
+        <div className={"orderInfo"}>
+          <span className={"orderId"}>Order #{index}</span>
+          <span className={"orderDate"}>{order.date}</span>
         </div>
-        <div className={"orderDetails"}>
-          <div className={"paymentMethod"}>
-            <span className={"label"}>Payment Method:</span> {order.payment_method}
-          </div>
-          <div className={"itemsHeader"}>
-            <span className="span-item">Item</span>
-            <span className="span-price">Price</span>
-            <span className="span-Quantity">Quantity</span>
-            <span className="span-Subtotal">Subtotal</span>
-          </div>
-          <ul className={"itemList"}>
-            {Array.isArray(order.items) &&
-              order.items.map((item, index) => (
-                <li key={index} className={"item"}>
-                  {screenWidth < 480 ? (
-                    <div className="span-row">
-                      <span className={"itemLabel"}>Item:</span>
-                      <span className="span-item">{item.name}</span>
-                    </div>
-                  ) : (
-                    <span>{item.name}</span>
-                  )}
-                  {screenWidth < 480 ? (
-                    <div className="span-row">
-                      <span className={"itemLabel"}>Price:</span>
-                      <span className="span-price">{item.price}</span>
-                    </div>
-                  ) : (
-                    <span className="span-price">{item.price}</span>
-                  )}
-
-                  {screenWidth < 480 ? (
-                    <div className="span-row">
-                      <span className={"itemLabel"}>Quantity:</span>
-                      <span className="span-quantity">{item.quantityInCart}</span>
-                    </div>
-                  ) : (
-                    <span className="span-quantity">{item.quantityInCart}</span>
-                  )}
-                  {screenWidth < 480 ? (
-                    <div className="span-row">
-                      <span className={"itemLabel"}>Subtotal:</span>
-                      <span className="span-subtotal">
-                        {parseFloat(item.price.replace(/[^0-9.-]+/g, "")) *
-                          item.quantity.toFixed(0)}
-                      </span>
-                    </div>
-                  ) : (
-                    <span className="span-subtotal">
-                      {parseFloat(item.price.replace(/[^0-9.-]+/g, "")) *
-                        item.quantityInCart.toFixed(0)}
-                    </span>
-                  )}
-                </li>
-              ))}
-          </ul>
+        <div className={"orderTotal"}>
+          Total: <span>Rs {order.total}</span>
         </div>
       </div>
-    </>
+      <div className={"orderDetails"}>
+        <div className={"paymentMethod"}>
+          <div style={{ display: "flex", gap: "5px" }}>
+            <span className={"label"}>Payment Method: </span> {order.payment_method}
+          </div>
+          <div style={{ display: "flex", alignItems: "center",gap:"5px" }}>
+            
+            <div
+              style={{
+                height: "22px",
+                padding: "5px",
+                paddingInline:"7px",
+                width: "95px",
+                borderRadius: "10px",
+                textAlign:"center",
+                display:"flex",
+                color:"black",
+                fontStyle: "bold",
+                alignItems:"center",
+                justifyContent:"center",
+                fontSize:"14px",
+                backgroundColor: getStatusColor(order.status),
+              }}
+            >
+              {order.status}
+            </div>
+          </div>
+        </div>
+        <div className={"itemsHeader"}>
+          <span className="span-item">Item</span>
+          <span className="span-price">Price</span>
+          <span className="span-Quantity">Quantity</span>
+          <span className="span-Subtotal">Subtotal</span>
+        </div>
+        <ul className={"itemList"}>
+          {Array.isArray(order.items) &&
+            order.items.map((item, index) => (
+              <li key={index} className={"item"}>
+                {screenWidth < 480 ? (
+                  <div className="span-row">
+                    <span className={"itemLabel"}>Item:</span>
+                    <span className="span-item">{item.name}</span>
+                  </div>
+                ) : (
+                  <span>{item.name}</span>
+                )}
+                {screenWidth < 480 ? (
+                  <div className="span-row">
+                    <span className={"itemLabel"}>Price:</span>
+                    <span className="span-price">{item.price}</span>
+                  </div>
+                ) : (
+                  <span className="span-price">{item.price}</span>
+                )}
+                {screenWidth < 480 ? (
+                  <div className="span-row">
+                    <span className={"itemLabel"}>Quantity:</span>
+                    <span className="span-quantity">{item.quantityInCart}</span>
+                  </div>
+                ) : (
+                  <span className="span-quantity">{item.quantityInCart}</span>
+                )}
+                {screenWidth < 480 ? (
+                  <div className="span-row">
+                    <span className={"itemLabel"}>Subtotal:</span>
+                    <span className="span-subtotal">
+                      {parseFloat(item.price.replace(/[^0-9.-]+/g, "")) *
+                        item.quantity.toFixed(0)}
+                    </span>
+                  </div>
+                ) : (
+                  <span className="span-subtotal">
+                    {parseFloat(item.price.replace(/[^0-9.-]+/g, "")) *
+                      item.quantityInCart.toFixed(0)}
+                  </span>
+                )}
+              </li>
+            ))}
+        </ul>
+      </div>
+    </div>
   );
 };
+
 
 const OrderHistoryPage = () => {
   const [orders, setOrders] = useState([]);
@@ -126,8 +164,10 @@ const OrderHistoryPage = () => {
           },
         }
       );
-      alert(JSON.stringify(response.data))
-      setLoading(false);
+      setTimeout(()=>{
+        setLoading(false)
+      },600)
+      
       if (response.data.length === 0) {
         setHasMore(false);
       } else {
@@ -153,7 +193,7 @@ const OrderHistoryPage = () => {
     <div className={"orderHistoryPage"}>
       {isWideScreen ? <Navbar /> : <Navbar2 /> }
       <h1 className={"order-title"}>Your Order History</h1>
-      {!loading && <>
+      {loading ? <CircularProgress style={{position:"absolute",left:"48%",top:"40%"}} /> : <>
       <InfiniteScroll
       dataLength={orders.length}
       next={getOrders}

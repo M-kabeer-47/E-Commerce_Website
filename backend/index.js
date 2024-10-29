@@ -81,7 +81,7 @@ async function fetchProduct(id) {
 const app = express();
 app.use(
   cors({
-    origin:"https://e-commerce-website-cck4.vercel.app",
+    origin:"http://localhost:5175",
     credentials: true, 
     allowedHeaders: ["Content-Type", "Authorization"],
     methods: ["GET", "POST", "PUT", "DELETE"],
@@ -258,7 +258,7 @@ app.post("/login",async(req,res)=>{
   email = email.toLowerCase();
   if(!await Users.exists({email:email})){
     console.log("User Does Not Exist");
-    res.send("User Does Not Exist");
+    res.status(404).json("User Does Not Exist");
 
   }
   else{
@@ -286,7 +286,7 @@ app.post("/login",async(req,res)=>{
     
     else{
       console.log("Incorrect Password");
-      res.send("Incorrect Password");
+      res.status(400).json("Incorrect Password");
     }
   }
 }
@@ -685,8 +685,13 @@ app.get("/orderHistory",authenticateUser,async(req,res)=>{
   const start = (page - 1) * 3;
   const end = page * 3;
   const orders = orderHistory.slice(start,end);
-  res.send(orders);
+  let orderDetails = [];
+  for(let i = 0;i<orders.length;i++){
+    const order = await Order.findById(orders[i]);
+    orderDetails.push(order);
   }
+  res.send(orderDetails);
+}
   catch(err){
     console.log(err);
     res.send("Error Fetching Order History");
@@ -844,3 +849,6 @@ app.listen(3000, () => {
   console.log("Server is listening on Port 3000");
 });
 export default app;
+
+
+// https://e-commerce-website-cck4.vercel.app
