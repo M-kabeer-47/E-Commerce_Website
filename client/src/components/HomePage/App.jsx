@@ -56,40 +56,40 @@ export default function App() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  useEffect(()=>{
+  // useEffect(()=>{
     
    
     
-    if(token){
-      axios.get(`${backendUrl}/user`,{
-        headers: {
-          "Authorization": `Bearer ${token}`
-        }
-      }).then((res)=>{
+  //   if(token){
+  //     axios.get(`${backendUrl}/user`,{
+  //       headers: {
+  //         "Authorization": `Bearer ${token}`
+  //       }
+  //     }).then((res)=>{
         
-        dispatch(setUser(res.data));
-      })
-    }
-    else if(query.get('token')){
-      const Token = query.get('token');
-      const maxAge = query.get('maxAge')
-      alert("maxAge: "+maxAge)
-      localStorage.setItem('uid',Token)
-      localStorage.setItem('tokenExpiry',maxAge)
-      axios.get(`${backendUrl}/user`,{
-        headers:{
-          "Authorization": `Bearer ${Token}`
-        }
-      }).then((res)=>{
-        dispatch(setUser(res.data))
-        dispatch(setCartCount(res.data.cart.length))
-        dispatch(setWishlistCount(res.data.wishlist.length))
-      })
+  //       dispatch(setUser(res.data));
+  //     })
+  //   }
+  //   else if(query.get('token')){
+  //     const Token = query.get('token');
+  //     const maxAge = query.get('maxAge')
+  //     alert("maxAge: "+maxAge)
+  //     localStorage.setItem('uid',Token)
+  //     localStorage.setItem('tokenExpiry',maxAge)
+  //     axios.get(`${backendUrl}/user`,{
+  //       headers:{
+  //         "Authorization": `Bearer ${Token}`
+  //       }
+  //     }).then((res)=>{
+  //       dispatch(setUser(res.data))
+  //       dispatch(setCartCount(res.data.cart.length))
+  //       dispatch(setWishlistCount(res.data.wishlist.length))
+  //     })
 
-    }
+  //   }
     
 
-  },[query])
+  // },[query])
 
   
   
