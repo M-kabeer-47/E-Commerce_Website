@@ -15,7 +15,7 @@ export default function RegisterUser() {
   const [submit, updateSubmit] = useState(false);
   const backendUrl = useSelector((state) => state.user.backendUrl);
   const navigate = useNavigate();
-  const [emailExists, setEmailExists] = useState(false);
+  
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const [focused, setFocused] = useState({
@@ -30,7 +30,7 @@ export default function RegisterUser() {
   const [platform, setPlatform] = useState("");
 
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
-  const [confirmPassword, setConfirmPassword] = useState("");
+  
 
   const userSchema = z
     .object({
@@ -99,11 +99,12 @@ export default function RegisterUser() {
     </svg>
   );
 
-  async function emailExistsCheck(email) {
-    let email = email.toLowerCase();
+  async function emailExistsCheck(EMAIL) {
+    let Email = EMAIL.toLowerCase();
     let response = await axios.post(`${backendUrl}/checkEmail`, {
-      email,
+      email:Email,
     });
+    alert(response.data)
     if (response.data.data === "Google") {
       setPlatform("google");
       return true;
@@ -111,8 +112,8 @@ export default function RegisterUser() {
     return response.data;
   }
 
-  const onSubmit = async () => {
-    if (await emailExistsCheck()) {
+  const onSubmit = async (data) => {
+    if (await emailExistsCheck(data.email)) {
       setError("email", { type: "manual", message: "Email already exists" });
       return;
     }
@@ -167,7 +168,7 @@ export default function RegisterUser() {
     <>
       <ToastContainer />
       <div className="body" style={{ paddingTop: "60px" }}>
-        <form autoComplete="off" onSubmit={handleSubmit}>
+        <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
           <h3
             className="login-title"
             style={{ textAlign: "start", width: "100%" }}
@@ -189,6 +190,16 @@ export default function RegisterUser() {
 
           <div className="inputs reg-inputs ">
             <div
+            onFocus={() => {
+              setFocused((prev) => {
+                return { ...prev, firstName: true };
+              });
+            }}
+            onBlur={() => {
+              setFocused((prev) => {
+                return { ...prev, firstName: false };
+              });
+            }}
               className="input-container fName"
               style={
                 focused.firstName
@@ -210,16 +221,7 @@ export default function RegisterUser() {
                 name="firstName"
                 autoComplete="off"
                 {...register("firstName")}
-                onFocus={() => {
-                  setFocused((prev) => {
-                    return { ...prev, firstName: true };
-                  });
-                }}
-                onBlur={() => {
-                  setFocused((prev) => {
-                    return { ...prev, firstName: false };
-                  });
-                }}
+                
               />
 
               {errors.firstName && (
@@ -238,6 +240,17 @@ export default function RegisterUser() {
             </div>
             <div
               className="input-container lName"
+              onFocus={() => {
+                setFocused((prev) => {
+                  return { ...prev, lastName: true };
+                });
+              }}
+              onBlur={() => {
+                
+                setFocused((prev) => {
+                  return { ...prev, lastName: false };
+                });
+              }}
               style={
                 focused.lastName
                   ? {
@@ -257,16 +270,7 @@ export default function RegisterUser() {
                 type="text"
                 name="lastName"
                 autoComplete="off"
-                onFocus={() => {
-                  setFocused((prev) => {
-                    return { ...prev, lastName: true };
-                  });
-                }}
-                onBlur={() => {
-                  setFocused((prev) => {
-                    return { ...prev, lastName: false };
-                  });
-                }}
+                
                 {...register("lastName")}
               />
 
@@ -280,14 +284,24 @@ export default function RegisterUser() {
                     top: "44px",
                   }}
                 >
-                  {error.lastName.message}{" "}
+                  {errors.lastName.message}{" "}
                 </p>
               ) : (
                 ""
               )}
             </div>
             <div
-              className={`input-container email ${errors.email && "exists"}`}
+             onFocus={() => {
+              setFocused((prev) => {
+                return { ...prev, email: true };
+              });
+            }}
+            onBlur={() => {
+              setFocused((prev) => {
+                return { ...prev, email: false };
+              });
+            }}
+              className={`input-container email `}
               style={
                 focused.email
                   ? {
@@ -307,16 +321,7 @@ export default function RegisterUser() {
                 type="text"
                 name="email"
                 autoComplete="off"
-                onFocus={() => {
-                  setFocused((prev) => {
-                    return { ...prev, email: true };
-                  });
-                }}
-                onBlur={() => {
-                  setFocused((prev) => {
-                    return { ...prev, email: false };
-                  });
-                }}
+               
                 {...register("email")}
               />
 
@@ -350,7 +355,18 @@ export default function RegisterUser() {
                 </p>
               )}
             </div>
+
             <div
+            onFocus={() => {
+              setFocused((prev) => {
+                return { ...prev, password: true };
+              });
+            }}
+            onBlur={() => {
+              setFocused((prev) => {
+                return { ...prev, password: false };
+              });
+            }}
               className="input-container password"
               style={
                 focused.password
@@ -371,16 +387,7 @@ export default function RegisterUser() {
                 type={passwordVisible ? "text" : "password"}
                 name="password"
                 autoComplete="new-password"
-                onFocus={() => {
-                  setFocused((prev) => {
-                    return { ...prev, password: true };
-                  });
-                }}
-                onBlur={() => {
-                  setFocused((prev) => {
-                    return { ...prev, password: false };
-                  });
-                }}
+                
                 {...register("password")}
               />
 
@@ -413,6 +420,16 @@ export default function RegisterUser() {
             </div>
             <div
               className="input-container confirmPassword"
+              onFocus={() => {
+                setFocused((prev) => {
+                  return { ...prev, confirmPassword: true };
+                });
+              }}
+              onBlur={() => {
+                setFocused((prev) => {
+                  return { ...prev, confirmPassword: false };
+                });
+              }}
               style={
                 focused.confirmPassword
                   ? {
@@ -433,16 +450,7 @@ export default function RegisterUser() {
                 name="confirmPassword"
                 autoComplete="new-password"
                 {...register("confirmPassword")}
-                onFocus={() => {
-                  setFocused((prev) => {
-                    return { ...prev, confirmPassword: true };
-                  });
-                }}
-                onBlur={() => {
-                  setFocused((prev) => {
-                    return { ...prev, confirmPassword: false };
-                  });
-                }}
+              
               />
 
               <div

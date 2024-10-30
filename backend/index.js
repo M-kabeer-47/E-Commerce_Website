@@ -81,7 +81,7 @@ async function fetchProduct(id) {
 const app = express();
 app.use(
   cors({
-    origin:"http://localhost:5175",
+    origin:"https://e-commerce-website-cck4.vercel.app",
     credentials: true, 
     allowedHeaders: ["Content-Type", "Authorization"],
     methods: ["GET", "POST", "PUT", "DELETE"],
@@ -199,7 +199,9 @@ app.post("/checkEmail",async(req,res)=>{
 
   
   const {email} = req.body;
+  log
   const user = await Users.findOne({email:email});
+  console.log(user);
   if(user){
     if(user.platform === "Google"){
       res.send({data:user.platform});
@@ -851,4 +853,3 @@ app.listen(3000, () => {
 export default app;
 
 
-// https://e-commerce-website-cck4.vercel.app
