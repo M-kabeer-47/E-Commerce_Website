@@ -256,7 +256,7 @@ else{
 }
             {((token || query.get("token")) && !userLoading && !isTokenExpired()) && (
               <UserDropdown shortName={shortName} />
-            )} {((!token  || isTokenExpired())) && (
+            )} {((!token  || isTokenExpired() || !query.get("token"))) && (
               <p
                 className="loginOption"
                 onClick={() => {
