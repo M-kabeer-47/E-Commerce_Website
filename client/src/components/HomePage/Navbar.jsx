@@ -34,7 +34,7 @@ export default function Navbar({page}) {
   const dealsRef = useRef(null); 
   const [isCartOpen, setIsCartOpen] = useState(false);
   const dispatch = useDispatch();
-  const [userLoading,setUserLoading] = useState(true);
+  const [userLoading,setUserLoading] = useState(false);
   const token = localStorage.getItem("uid");
   const query = new URLSearchParams(useLocation().search)
   const queryToken = query.get("token");
@@ -256,7 +256,7 @@ else{
 }
             {((token || query.get("token")) && !userLoading && !isTokenExpired()) && (
               <UserDropdown shortName={shortName} />
-            )} {((!token  || isTokenExpired() || !query.get("token"))) && (
+            )} {((!token  || isTokenExpired() || !query.get("token")) && !userLoading) && (
               <p
                 className="loginOption"
                 onClick={() => {
