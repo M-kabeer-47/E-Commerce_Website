@@ -100,6 +100,8 @@ else{
         setUserLoading(false);
 
       }else if(user === null && Token){
+        localStorage.setItem("uid",Token);
+        localStorage.setItem("tokenExpiry",query.get("maxAge"));
         setUserLoading(true);
          User = await axios.get(`${backendUrl}/user`, {  
           headers: {
@@ -246,13 +248,13 @@ else{
           </div>
           <SearchBar expanded={true} /> {/* Use the SearchBar component */}
           <div className="lastOptions">
-            {(token && userLoading && !isTokenExpired()) && (<div
+            {((token || query.get("token")) && userLoading && !isTokenExpired()) && (<div
                 className="user-skeleton"
               >
                 
               </div>)
 }
-            {(token && !userLoading && !isTokenExpired()) && (
+            {((token || query.get("token")) && !userLoading && !isTokenExpired()) && (
               <UserDropdown shortName={shortName} />
             )} {((!token  || isTokenExpired())) && (
               <p
@@ -267,7 +269,7 @@ else{
             <div
               className="icon-container"
               onClick={() => {
-                if(token && !isTokenExpired()){
+                if((token || query.get("token")) && !isTokenExpired()){
                 navigate("/wishlist");
               }
               else{
