@@ -242,7 +242,7 @@ else{
 }
             {(token && !userLoading && !isTokenExpired()) && (
               <UserDropdown shortName={shortName} />
-            )} {((!token  || isTokenExpired()) && !userLoading) && (
+            )} {((!token  || isTokenExpired())) && (
               <p
                 className="loginOption"
                 onClick={() => {
