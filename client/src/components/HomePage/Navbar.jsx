@@ -86,7 +86,7 @@ else{
   async function getUser() {
     let User;
     let Token = query.get("token");
-    alert("TOken: "+Token);
+    
     if ((token && !isTokenExpired()) || Token) {
 
       if (user === null && token) {
