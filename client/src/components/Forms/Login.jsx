@@ -74,7 +74,7 @@ const {register,handleSubmit,formState: {errors},setError} = useForm({
       
       localStorage.setItem("uid",response.data.token);
       localStorage.setItem("tokenExpiry",response.data.maxAge);
-      window.location.href = "http://localhost:5173";
+      window.location.href = "https://e-commerce-website-cck4.vercel.app";
        
   }
 }
