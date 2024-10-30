@@ -84,21 +84,35 @@ else{
     
   };
   async function getUser() {
-    
+    let User;
     let Token = query.get("token");
     alert("TOken: "+Token);
     if ((token && !isTokenExpired()) || Token) {
 
-      if (user === null) {
-        let User = await axios.get(`${backendUrl}/user`, {
+      if (user === null && token) {
+        setUserLoading(true);
+        User = await axios.get(`${backendUrl}/user`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
+      
+        setUserLoading(false);
 
-        dispatch(setUser(User.data));
+      }else if(user === null && Token){
+        setUserLoading(true);
+         User = await axios.get(`${backendUrl}/user`, {  
+          headers: {
+            Authorization: `Bearer ${Token}`,
+          },
+        });
+        setUserLoading(false);
+      }
+
+       dispatch(setUser(User.data));
         dispatch(setCartCount(User.data.cart.length)); 
       dispatch(setWishlistCount(User.data.wishlist.length));
+      
       if (!Object.hasOwn(User.data, "lastName")) {
         setShortName(
           User.data.firstName[0].toUpperCase() + User.data.firstName[1].toUpperCase()
@@ -108,7 +122,7 @@ else{
           User.data.firstName[0].toUpperCase() + User.data.lastName[0].toUpperCase()
         );
       }
-      }
+      
       if (!Object.hasOwn(user, "lastName")) {
         setShortName(
           user.firstName[0].toUpperCase() + user.firstName[1].toUpperCase()
@@ -118,12 +132,9 @@ else{
           user.firstName[0].toUpperCase() + user.lastName[0].toUpperCase()
         );
       }
-
-    
-      
-        setUserLoading(false);
-      
-    } else {
+ 
+    }  
+    else {
       dispatch(setUser(null));
     }
   }
