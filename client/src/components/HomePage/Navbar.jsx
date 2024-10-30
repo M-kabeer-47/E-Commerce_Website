@@ -85,8 +85,8 @@ else{
   };
   async function getUser() {
     
-
-    if (token && !isTokenExpired()) {
+    
+    if (token && !isTokenExpired() || queryToken) {
 
       if (user === null) {
         let User = await axios.get(`${backendUrl}/user`, {
@@ -121,15 +121,6 @@ else{
     
       
         setUserLoading(false);
-      
-      
-      
-      
-      
-      
-      
-        
-      
       
     } else {
       dispatch(setUser(null));
