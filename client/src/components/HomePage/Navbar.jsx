@@ -248,6 +248,7 @@ else{
           </div>
           <SearchBar expanded={true} /> {/* Use the SearchBar component */}
           <div className="lastOptions">
+          
   {(() => {
     if ((token || query.get("token")) && userLoading && !isTokenExpired()) {
       // Display loading skeleton when token exists, user is loading, and token is valid
@@ -269,7 +270,7 @@ else{
       );
     }
   })()}
-</div>
+
 
             <div
               className="icon-container"
