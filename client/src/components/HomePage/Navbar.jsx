@@ -99,7 +99,8 @@ else{
       
         setUserLoading(false);
 
-      }else if(user === null && Token){
+      }
+      else if(user === null && Token){
         localStorage.setItem("uid",Token);
         localStorage.setItem("tokenExpiry",query.get("maxAge"));
         setUserLoading(true);
@@ -112,8 +113,8 @@ else{
       }
 
        dispatch(setUser(User.data));
-        dispatch(setCartCount(User.data.cart.length)); 
-      dispatch(setWishlistCount(User.data.wishlist.length));
+       dispatch(setCartCount(User.data.cart.length)); 
+       dispatch(setWishlistCount(User.data.wishlist.length));
       
       if (!Object.hasOwn(User.data, "lastName")) {
         setShortName(
@@ -125,22 +126,24 @@ else{
         );
       }
       
-      if (!Object.hasOwn(user, "lastName")) {
-        setShortName(
-          user.firstName[0].toUpperCase() + user.firstName[1].toUpperCase()
-        );
-      } else {
-        setShortName(
-          user.firstName[0].toUpperCase() + user.lastName[0].toUpperCase()
-        );
-      }
+      
  
     }  
     else {
       dispatch(setUser(null));
     }
   }
-  
+useEffect(()=>{
+  if (!Object.hasOwn(user, "lastName")) {
+    setShortName(
+      user.firstName[0].toUpperCase() + user.firstName[1].toUpperCase()
+    );
+  } else {
+    setShortName(
+      user.firstName[0].toUpperCase() + user.lastName[0].toUpperCase()
+    );
+  }
+},[])
   
   
   const iconStyle = (iconName) => ({
