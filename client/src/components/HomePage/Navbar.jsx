@@ -248,24 +248,29 @@ else{
           </div>
           <SearchBar expanded={true} /> {/* Use the SearchBar component */}
           <div className="lastOptions">
-            {((token || query.get("token")) && userLoading && !isTokenExpired()) && (<div
-                className="user-skeleton"
-              >
-                
-              </div>)
-}
-            {((token || query.get("token")) && !userLoading && !isTokenExpired()) && (
-              <UserDropdown shortName={shortName} />
-            )} {((!token  || isTokenExpired() || !query.get("token")) && !userLoading) && (
-              <p
-                className="loginOption"
-                onClick={() => {
-                  navigate("/login");
-                }}
-              >
-                Login/Sign Up
-              </p>
-            )}
+  {(() => {
+    if ((token || query.get("token")) && userLoading && !isTokenExpired()) {
+      // Display loading skeleton when token exists, user is loading, and token is valid
+      return <div className="user-skeleton"></div>;
+    } else if ((token || query.get("token")) && !userLoading && !isTokenExpired()) {
+      // Display user dropdown when token exists, user is not loading, and token is valid
+      return <UserDropdown shortName={shortName} />;
+    } else {
+      // Display login/signup option if token is missing, expired, or query token is missing
+      return (
+        <p
+          className="loginOption"
+          onClick={() => {
+            navigate("/login");
+          }}
+        >
+          Login/Sign Up
+        </p>
+      );
+    }
+  })()}
+</div>
+
             <div
               className="icon-container"
               onClick={() => {
