@@ -89,7 +89,7 @@ export default function Navbar2({ isWideScreen }) {
         setUserLoading(true);
         User = await axios.get(`${backendUrl}/user`, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token || Token}`,
           },
         });
 
@@ -130,7 +130,7 @@ export default function Navbar2({ isWideScreen }) {
 
   useEffect(() => {
     getUser();
-  }, [user, token]);
+  }, []);
   useEffect(() => {
     if (isSidebarOpen) {
       document.addEventListener("click", handleOutsideClick);
