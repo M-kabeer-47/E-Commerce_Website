@@ -10,6 +10,7 @@ import{ incrementCartCount } from '../../store/Counts';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import isTokenExpired from '../tokenExpiry';
+import { useLocation } from 'react-router-dom';
 const HomeProducts = ({ product, index, type }) => {
     const backendUrl = useSelector((state) => state.user.backendUrl);
     const [hoveredProduct, setHoveredProduct] = useState(null);
