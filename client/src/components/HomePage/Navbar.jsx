@@ -128,6 +128,9 @@ else{
       dispatch(setUser(null));
     }
   }
+  useEffect(() => {
+    getUser();
+  }, []);
 useEffect(()=>{
   if(user!=undefined || user!=null){
     if (!Object.hasOwn(user, "lastName")) {
@@ -140,7 +143,7 @@ useEffect(()=>{
       );
     }
   }
-},[])
+},[user])
   
   
   const iconStyle = (iconName) => ({
@@ -163,9 +166,7 @@ useEffect(()=>{
     }
   };
 
-  useEffect(() => {
-    getUser();
-  }, [user,token]);
+  
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
