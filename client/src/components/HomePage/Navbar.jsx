@@ -97,7 +97,7 @@ else{
         setUserLoading(true);
         User = await axios.get(`${backendUrl}/user`, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token || Token}`,
           },
         });
         setUserLoading(false);
