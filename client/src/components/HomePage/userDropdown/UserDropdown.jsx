@@ -39,7 +39,7 @@ const UserDropdown = ({ shortName }) => {
             localStorage.removeItem('uid')
             localStorage.removeItem('tokenExpiry')
 
-            window.location.href = "htpps://e-commerce-website-cck4.vercel.app";  // htpps://e-commerce-website-cck4.vercel.app
+            window.location.href = "https://e-commerce-website-cck4.vercel.app";  // htpps://e-commerce-website-cck4.vercel.app
 
             
           }} >
