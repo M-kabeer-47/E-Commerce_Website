@@ -37,35 +37,21 @@ export default function App() {
   }, []); 
 
   async function getUser() {
-    let User;
+   
     let Token = query.get("token");
     
     if ((token && !isTokenExpired()) || Token) {
 
-      if (user === null && token) {
+      if (user === null && token || Token) {
         setUserLoading(true);
-        User = await axios.get(`${backendUrl}/user`, {
+        let User = await axios.get(`${backendUrl}/user`, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token || Token}`,
           },
         });
-      
+        alert("Inside if "+JSON.stringify(User.data))
         setUserLoading(false);
-
-      }
-      else if(user === null && Token){
-        localStorage.setItem("uid",Token);
-        localStorage.setItem("tokenExpiry",query.get("maxAge"));
-        setUserLoading(true);
-         User = await axios.get(`${backendUrl}/user`, {  
-          headers: {
-            Authorization: `Bearer ${Token}`,
-          },
-        });
-        setUserLoading(false);
-      }
-
-       dispatch(setUser(User.data));
+        dispatch(setUser(User.data));
        dispatch(setCartCount(User.data.cart.length)); 
        dispatch(setWishlistCount(User.data.wishlist.length));
       
@@ -80,6 +66,12 @@ export default function App() {
       }
       
       
+
+      
+      
+      }
+      
+       
  
     }  
     else {
@@ -134,7 +126,7 @@ export default function App() {
   
   return (
     <>
-      {isWideScreen ? <Navbar isWideScreen={isWideScreen} userLoading={userLoading} setUserLoading={setUserLoading} /> : <Navbar2 isWideScreen={isWideScreen}/>}
+      {isWideScreen ? <Navbar isWideScreen={isWideScreen} userLoading={userLoading} setUserLoading={setUserLoading} shortName={shortName} /> : <Navbar2 isWideScreen={isWideScreen} shortName={shortName}/>}
       
       
       
