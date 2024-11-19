@@ -92,7 +92,7 @@ const backendUrl = useSelector((state) => state.user.backendUrl);
 
       {/* Render suggestions if available */}
       {suggestions.length > 0 && isExpanded && (
-        <div className="suggestions-list">
+        <div className="suggestions-list" style={{color:"black"}}>
           {suggestions.map((product) => (
             <div
               key={product.id}

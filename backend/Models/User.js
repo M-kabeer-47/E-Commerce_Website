@@ -35,7 +35,7 @@ import Orders from "./Orders.js";
         orderHistory: [{
             default:[],
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Orders',  // Reference to the 'Order' model
+            ref: 'Orders',  
         }],
         
     });
