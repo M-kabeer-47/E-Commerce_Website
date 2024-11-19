@@ -49,7 +49,7 @@ export default function App() {
             Authorization: `Bearer ${token || Token}`,
           },
         });
-        alert("Inside if "+JSON.stringify(User.data))
+        
         setUserLoading(false);
         dispatch(setUser(User.data));
        dispatch(setCartCount(User.data.cart.length)); 
