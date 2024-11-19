@@ -31,7 +31,7 @@ else{
     console.log("Api Key: "+process.env.CLOUD_API_KEY);
     await mongoose.connect(uri)
     console.log("Connected to Database");
-    await Order.updateMany({},{$set:{status:"Processing"}});
+    await Product.updateMany({},{$set:{reviews:[]}});
      }
 Query()
 

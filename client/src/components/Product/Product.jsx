@@ -1,19 +1,22 @@
-import { act, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../HomePage/Navbar";
 import Navbar2 from "../HomePage/Navbar2";
 import "./product.css";
 import { useLocation, useParams } from "react-router-dom";
 import axios from "axios";
-import Cookies from "js-cookie";
+import SimilarProducts from "./SimilarProducts.jsx";
+import ProductReviews from "./ProductReviews";
 import Button from "../Products/Button";
 import IncrementDecrementBtn from "./Quantity";
 import { useSelector, useDispatch } from "react-redux";
 import { toast, Bounce, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { incrementCartCount, incrementWishlistCount } from "../../store/Counts";
-import { setProductPageQuantity } from "../../store/product";
+
 import Footer from "../HomePage/Footer/Footer";
 import isTokenExpired from "../tokenExpiry";
+import { Rating } from "@mui/material";
+
 
 export default function Product() {
   const backendUrl = useSelector((state) => state.user.backendUrl);
@@ -22,6 +25,7 @@ export default function Product() {
   const [isLoading, updateLoading] = useState(true);
   const [animationClass, setAnimationClass] = useState(""); // State for animation class
   const location = useLocation();
+  const [reviews, setReviews] = useState([]);
   const token = localStorage.getItem("uid");
   const { product: id } = useParams();
   const dispatch = useDispatch();
@@ -45,9 +49,11 @@ export default function Product() {
   // Fetch product data
   async function fetchProduct() {
     try {
-      let pr = await axios.get(`${backendUrl}/product/${id}`);
-      updateProduct(pr.data);
-      console.log(pr.data.quantity);
+      let product = await axios.get(`${backendUrl}/product/${id}`);
+      updateProduct(product.data);
+      setReviews(product.data.reviews);
+
+      
 
       updateLoading(false);
     } catch (error) {
@@ -70,9 +76,20 @@ export default function Product() {
     };
   }, [location.search, id]);
 
+  const fetchReviews = async () => {
+    try {
+      const response = await axios.get(`${backendUrl}/reviews/${id}`);
+      setReviews(response.data);
+      
+    } catch (error) {
+      console.error("Error fetching reviews:", error);
+      return [];
+    }
+  }
+
   return (
     <>
-      <ToastContainer />
+      
       {!isLoading && (
         <div className="homePage">
           {isWideScreen ? <Navbar /> : <Navbar2 />}
@@ -91,6 +108,11 @@ export default function Product() {
                   <li key={index}>{item}</li>
                 ))}
               </div>
+              
+               <Rating name="size-large" precision={0.5} value={product.rating} size="medium" style={{position:"relative",top:"10px"}}  readOnly/>
+              <p className="productPrice" style={{fontSize:"20px",fontWeight:"bold",color:"#00a7ff"}}>
+                Price: <span style={{color:"white"}}>{product.price }</span> 
+              </p>
               {product.quantity !== 0 ? (
                 <div className="BUTTONDIV button-div">
                   <IncrementDecrementBtn
@@ -104,7 +126,7 @@ export default function Product() {
                   Out of stock
                 </p>
               )}
-
+           
               <div
                 className="BUTTONDIV"
                 style={{ display: "flex", justifyContent: "start" }}
@@ -292,6 +314,8 @@ export default function Product() {
               </div>
             </div>
           </div>
+          <ProductReviews productId={id} backendUrl={backendUrl} reviews={reviews} fetchReviews={fetchReviews} />
+          <SimilarProducts category={product.category} currentProductId={id} backendUrl={backendUrl} />
           <Footer />
         </div>
         

@@ -6,7 +6,7 @@ import { TbTruckDelivery } from "react-icons/tb";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 import axios from "axios";
-import Cookies from "js-cookie";
+
 import { FaCheckCircle } from "react-icons/fa";
 import "./checkout.css";
 import { useNavigate } from "react-router-dom";
@@ -18,6 +18,7 @@ import { setCartCount } from "../../store/Counts";
 
 import { CircularProgress } from "@mui/material";
 import { useSelector } from "react-redux";
+import { set } from "mongoose";
 export default function Shipping() {
   const backendUrl = useSelector((state) => state.user.backendUrl);
   const token = localStorage.getItem("uid");
@@ -34,7 +35,9 @@ export default function Shipping() {
   const [total, setTotal] = useState(0);
   const [subtotal, setSubtotal] = useState(0);
   const [usdAmount, setUSDAmount] = useState(0);
+  const [placingOrder, setPlacingOrder] = useState(false);
   const [details, updateDetails] = useState({
+    
     name: "",
     city: "",
     province: "",
@@ -135,7 +138,15 @@ export default function Shipping() {
 
       console.log(cart.data);
     } catch (error) {
-      console.error(error);
+      toast.error("Error fetching cart", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined
+      });
     }
   };
   useEffect(() => {
@@ -227,9 +238,10 @@ export default function Shipping() {
           },
         });
       } else {
-        setTimeout(() => {
-          setOrderPlaced(true);
-        }, 2000);
+        try{
+
+        
+        setPlacingOrder(true);
         let response = await axios.post(
           `${backendUrl}/admin_order`,
           {
@@ -244,7 +256,7 @@ export default function Shipping() {
         let id = response.data.id;
         console.log(response.data);
         console.log("Placing Order");
-        axios.post(
+        await axios.post(
           `${backendUrl}/emptyCart`,
           {},
           {
@@ -254,7 +266,7 @@ export default function Shipping() {
           }
         );
 
-        axios.put(
+        await axios.put(
           `${backendUrl}/updateStocks`,
           {
             order: cart,
@@ -265,7 +277,7 @@ export default function Shipping() {
             },
           }
         );
-        axios.put(
+        await axios.put(
           `${backendUrl}/orderHistory`,
           { order: id },
           {
@@ -274,6 +286,11 @@ export default function Shipping() {
             },
           }
         );
+
+        setTimeout(() => {
+          setOrderPlaced(true);
+          setPlacingOrder(false);
+        }, 2000);
         dispatch(setCartCount(0));
         setTimeout(() => {
           console.log("Redirecting to home");
@@ -281,6 +298,20 @@ export default function Shipping() {
           navigate("/");  
         }, 3000);
       }
+      catch(error){
+        setPlacingOrder(false);
+        toast.error("Error fetching cart", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined
+        });
+      }
+    }
+    
     }
   }
   if (!token) {
@@ -670,7 +701,9 @@ export default function Shipping() {
                       handleSubmit(event, "cash");
                     }}
                   >
-                    Place Order
+                    {placingOrder ? "Placing Order..." : "Place Order"
+
+                      }
                   </button>
                 )}
               </div>

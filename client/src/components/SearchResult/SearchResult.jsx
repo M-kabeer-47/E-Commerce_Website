@@ -1,7 +1,5 @@
 import Navbar from '../HomePage/Navbar';
 import Navbar2 from '../HomePage/Navbar2';
-
-
 import Footer from "../HomePage/Footer/Footer.jsx"
 import axios from 'axios';
 import { useState, useEffect } from 'react';
@@ -12,22 +10,78 @@ import FilterDiv from '../Products/FilterDiv.jsx';
 
 import {updateSearch} from '../../store/search.js';
 import SearchResulsDisplay from '../Products/SearchResultsDisplay.jsx';
-
-
+import { set } from 'mongoose';
 export default function SearchResult() {
   const backendUrl = useSelector((state) => state.user.backendUrl);
-    
   const [title, updateTitle] = useState("");
-  
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
+  const [hasMore, setHasMore] = useState(false);
 
   const searchResults = useSelector((state) => state.search.searchResult);
 const navigate =useNavigate()
 const queryParams = new URLSearchParams(useLocation().search);
 const query = queryParams.get('text');
+const renderPagination = () => {  
+  const showNextButton = !loading && (searchResults.length >= 9 || hasMore);
+
+  return (
+    <div className="pagination" style={{position: "relative",left:"30%",width:"70%",top:"50px"}}>
+      <button
+        onClick={() => setPage(page - 1)}
+        disabled={page === 1}
+        className="pagination-button"
+      >
+        Previous
+      </button>
+
+      {page > 2 && (
+        <>
+          <button
+            onClick={() => setPage(1)}
+            className="pagination-button"
+          >
+            1
+          </button>
+          {page > 2 && <span className="pagination-dots">...</span>}
+        </>
+      )}
+
+      {page > 1 && (
+        <button
+          onClick={() => setPage(page - 1)}
+          className="pagination-button"
+        >
+          {page - 1}
+        </button>
+      )}
+
+      <button className="pagination-button active">
+        {page}
+      </button>
+
+      {showNextButton && (
+        <button
+          onClick={() => setPage(page + 1)}
+          className="pagination-button"
+        > 
+          {page + 1}
+        </button>
+      )}
+
+      <button
+        onClick={() => setPage(page + 1)}
+        disabled={!showNextButton}
+        className="pagination-button"
+      >
+        Next
+      </button>
+    </div>
+  );
+};
+
+
   const requestBackend = async (query) => {
     try {
       
@@ -40,14 +94,21 @@ const query = queryParams.get('text');
         setHasMore(false);
       }
       else{
-        results = results.data;
         
+        if(results.data.total_pages <= page){
+          setHasMore(false);
+        }
+        else{
+          setHasMore(true);
+        }
+        results = results.data.searchResults;
+        setLoading(false);
+       
         updateTitle(query);
-        dispatch(updateSearch([...searchResults,...results]));
-        setPage(prev => prev + 1);
+        dispatch(updateSearch([...results]));
         
         
-        
+    
         
       }     
       }
@@ -85,6 +146,7 @@ const query = queryParams.get('text');
       setLoading(false);
     }
   }
+
   const location = useLocation();
 useEffect(()=>{
   setLoading(true);
@@ -97,25 +159,26 @@ useEffect(()=>{
   };
 
   useEffect(() => {
+    setLoading(true);
     window.scrollTo({
       top: 0,
-      behavior: 'smooth' // Enables smooth scrolling
+      behavior: 'smooth' 
     });
     
   window.addEventListener("resize", handleResize);
-  let timeout = setTimeout(()=>{
-  const query = queryParams.get('text');
   
-    initialFetch();
-    setHasMore(true);
     
-  },1000)
+    const query = queryParams.get('text');
+    requestBackend(query)
+    
+    
+  
   return () => {
     window.removeEventListener("resize", handleResize);
-    clearTimeout(timeout)
+    
   };
 
-  }, [location.search,query]);
+  }, [location.search,query,page]);
 
   
 
@@ -136,16 +199,13 @@ useEffect(()=>{
             hasMore={hasMore}
             query={queryParams.get('text')}
             loading={loading}
-              
-
-              
-            
-            
-
+            renderPagination={renderPagination}
+          
           />
           </>
         
         </div>
+
         <Footer />
       </div>
       

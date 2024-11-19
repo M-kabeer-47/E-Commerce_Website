@@ -89,8 +89,8 @@
 .main {
   display: flex;
   flex-direction: row;
-  height: fit-content;
-  overflow-y: auto;
+  /* height: fit-content; */
+  /* overflow-y: auto; */
 }
 .filterDiv {
   display: flex;
@@ -159,13 +159,52 @@ img {
 .productsDiv {
   margin-top: 40px;
   width: 100%;
-  height: fit-content;
+  
   
 
   display: flex;
   flex-direction: column;
   padding-left: 10px;
   padding-top: 20px;
+}
+.pagination-container {
+  margin-top: 100px;
+  /* margin: 20px 0; */
+  display: flex;
+  justify-content: center;
+}
+
+.pagination {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.pagination-button {
+  padding: 8px 16px;
+  
+  background: white;
+  color: white;
+  background-color: rgb(40, 40, 40);
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+
+
+.pagination-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-button.active {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.pagination-dots {
+  padding: 0 5px;
 }
 .products {
   display: flex;
@@ -202,6 +241,7 @@ img {
 .title, .category, .price {
   margin: 10px 0;
 }
+
 .Dropdown {
   position: relative;
   
@@ -282,7 +322,7 @@ img {
 .hover-button {
   position: relative;
   display: inline-block;
-  padding: 10px 20px;
+  padding: 6px 15px;
   background-color: rgb(40, 40, 40);
   color: black;
   border: 1px solid #000;

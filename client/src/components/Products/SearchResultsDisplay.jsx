@@ -2,24 +2,16 @@ import { useSelector } from "react-redux";
 import './products.css';
 import Product from "./Product";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useNavigate,useLocation } from "react-router-dom";
+
 import { useDispatch } from "react-redux";
-import { useCallback, useEffect, useState } from "react";
+import {useEffect, useState } from "react";
 
 
 
 
 
-export default function SearchResultsDisplay({title,requestBackend,hasMore,query,loading}) {
-  
-  
-  
-  
-  
-  
-  
-  
-  
+export default function SearchResultsDisplay({title,requestBackend,hasMore,query,loading,renderPagination}) {
+
   const isFiltered = useSelector((state) => state.search.isFiltered);
   let searchResults;
   if (isFiltered) {
@@ -34,34 +26,27 @@ export default function SearchResultsDisplay({title,requestBackend,hasMore,query
   },[])
   
   
-
+  
   return (
-    <div className="productsDiv">
+    <div className="productsDiv" style={{maxWidth:"100%",minHeight:"1000px"}}>
       {loading ? (
         <div className="skeleton skeleton-title"></div>
       ) : (
-        <h2 className={"category"}>{title}</h2>
+        <h2 className="category" style={{maxWidth:"100vw"}}>{title}</h2>
       )}
       {!loading && <hr className="line" /> }
-      <InfiniteScroll dataLength={searchResults.length} next={()=>{
-
       
-        
-          requestBackend(query)
-      }
         
         
 
 
-      } 
       
       
       
-      hasMore={hasMore}
       
-       > 
+      
 
-      <div className="products">
+      <div className="products" >
         {loading ? (
           
           <div className="skeleton-container">
@@ -96,7 +81,8 @@ export default function SearchResultsDisplay({title,requestBackend,hasMore,query
           ))
         )}
       </div>
-      </InfiniteScroll>
+      {!loading && searchResults.length > 0 && (renderPagination())}
+      
     </div>
   );
 }

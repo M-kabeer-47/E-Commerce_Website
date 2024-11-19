@@ -87,7 +87,7 @@ const handleButtonClick = (e) => {
     <aside className={`sidebar ${props.isOpen ? 'active' : ''}`}>
       <div className="upperSidebar">
         <header>
-          <SearchBar expanded={false} />
+          <SearchBar expanded={false} isWideScreen={props.isWideScreen} />
         </header>
         <ul>
           <li>
@@ -206,7 +206,10 @@ const handleButtonClick = (e) => {
             </div>
           </li>
         ) : (
-          <p className="loginOption" onClick={() => navigate("/login")} style={{ position: "relative", left: "-23px" }}>Login/Sign Up</p>
+          <p className="loginOption" onClick={() => {
+            localStorage.removeItem("uid");
+            localStorage.removeItem("tokenExpiry");
+            navigate("/login")}} style={{ position: "relative", left: "-23px" }}>Login/Sign Up</p>
         )}
         <Link className="login" to={"/contact-us"}>
           <p style={{ position: "relative", left: "-16px" }}>Contact Us</p>

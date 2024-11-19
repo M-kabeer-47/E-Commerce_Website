@@ -23,7 +23,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { setCartCount, setWishlistCount } from "../../store/Counts.js";
 import UserDropdown from "./userDropdown/UserDropdown.jsx";
 import isTokenExpired from "../tokenExpiry.js";
-export default function Navbar({page}) {
+export default function Navbar({page,isWideScreen}) {
   
   const backendUrl = useSelector((state) => state.user.backendUrl);
   const [hoveredIcon, setHoveredIcon] = useState(null);
@@ -37,7 +37,7 @@ export default function Navbar({page}) {
   const [userLoading,setUserLoading] = useState(false);
   const token = localStorage.getItem("uid");
   const query = new URLSearchParams(useLocation().search)
-  const queryToken = query.get("token");
+  
 
   
   
@@ -145,7 +145,6 @@ useEffect(()=>{
       );
     }
   }
-  
 },[])
   
   
@@ -252,7 +251,7 @@ useEffect(()=>{
               <SmallDropdown isVisible={isSmallDropdownVisible} />
             </div>
           </div>
-          <SearchBar expanded={true} /> {/* Use the SearchBar component */}
+          <SearchBar expanded={true} isWideScreen={isWideScreen} /> {/* Use the SearchBar component */}
           <div className="lastOptions">
           
   {(() => {
@@ -268,6 +267,8 @@ useEffect(()=>{
         <p
           className="loginOption"
           onClick={() => {
+            localStorage.removeItem("uid");
+            localStorage.removeItem("tokenExpiry");
             navigate("/login");
           }}
         >

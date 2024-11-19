@@ -128,6 +128,7 @@ li{
 }
 
 .search.expanded{
+  position: relative;
   width: 30%;
   transition: 0.3s ease all;
   
@@ -147,6 +148,36 @@ li{
   
   
 }
+.suggestions-list {
+  position: absolute;
+  top: 30px;
+  left: -2px;
+  
+
+  
+  
+  
+  
+  border: 1px solid #ccc;
+  max-height: 200px;
+  overflow-y: auto;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+
+  background-color: white;
+  width: 101%;
+  z-index: 1000000;
+}
+
+.suggestion-item {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.suggestion-item:hover {
+  background-color: #f0f0f0;
+}
+
 
 .logo h2{ 
   font-size: 30px;
@@ -858,6 +889,7 @@ html {
   }
   
   .search {
+    position: relative;
     width: 90%;
   }
   

@@ -7,8 +7,9 @@ import jwt from 'jsonwebtoken';
 import Stripe from "stripe";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
+import fs from "fs";
 dotenv.config();
-
+import {v2 as cloudinary} from 'cloudinary';
 
 
 
@@ -19,10 +20,16 @@ import passport from "passport";
 import cookieParser from "cookie-parser"; 
 import google from "./Authentication/google.js";
 import Order from "./Models/Orders.js";
+import upload from "./middlewares/multer.js";
+import { log } from "console";
 
 
 
-
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
 
 const connectDB = async () => {
   try {
@@ -81,7 +88,7 @@ async function fetchProduct(id) {
 const app = express();
 app.use(
   cors({
-    origin:"https://e-commerce-website-cck4.vercel.app",
+    origin:"http://localhost:5173",
     credentials: true, 
     allowedHeaders: ["Content-Type", "Authorization"],
     methods: ["GET", "POST", "PUT", "DELETE"],
@@ -141,6 +148,7 @@ app.get("/products/:category", async (req, res) => {
   
   const { category } = req.params;
   const {page} = req.query || 1;
+  console.log("Inside Products: "+page+" "+category);
   
 
   const categoryObject = await fetchCategory(category,page);
@@ -179,6 +187,7 @@ app.get("/search/:text", async (req, res) => {
     if (results.length === 0) {
       res.send(false);
     } else {
+      let total_pages = Math.ceil(results.length/9);
       let start = (page - 1) * 9;
       if(start>= results.length){
         return []
@@ -188,10 +197,10 @@ app.get("/search/:text", async (req, res) => {
         end = results.length;
       }
       let searchResults = results.slice(start,end);
-      res.json(searchResults);
+      res.json({searchResults:searchResults,total_pages:total_pages});
     }
   } catch (error) {
-    res.status(500).json({ error: "An error occurred during search." });
+    res.status(500).json({ error: error.message });
   }
 });
 app.post("/checkEmail",async(req,res)=>{
@@ -843,6 +852,107 @@ catch(err){
 }
 }
 )
+app.post("/reviews",authenticateUser,async(req,res)=>{
+  try{
+  console.log("Reviews Route");
+  console.log(JSON.stringify(req.body)+ "Body");
+  let {review} = req.body;
+  console.log(review+ "Review");
+  const product = await products.findById(review.productId);
+  let reviews = product.reviews;
+  reviews.push(review);
+  await products.updateOne({_id:review.productId},{reviews:reviews});
+  res.send("Success");
+}
+catch(err){
+  console.log(err);
+  res.send("Error Adding Review");
+}
+}
+)
+app.get("/reviews/:id",async(req,res)=>{
+  try{
+  console.log("Reviews Route");
+  let {id} = req.params;
+  const product = await products.findById(id);
+  res.send(product.reviews);
+}
+catch(err){
+  console.log(err);
+  res.send("Error Fetching Reviews");
+}
+}
+)
+
+app.post("/uploadImages", upload.array("images", 10), async (req, res) => {
+  try {
+    console.log("API:" + process.env.CLOUD_API_KEY);
+    console.log("Files: " + JSON.stringify(req.files));
+
+    let urls = [];
+    for (const file of req.files) {
+      // Upload file to cloudinary (or another service)
+      let url = await upload_on_cloudinary(`images/${file.filename}`);
+      urls.push(url);
+
+      // Remove file from server after upload
+      fs.unlink(`images/${file.filename}`, (err) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+    }
+
+    console.log("URLs:", urls);
+    res.status(200).json({ urls: urls });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json("Error Downloading Image");
+  }
+});
+
+const upload_on_cloudinary = async (file_path)=>{
+if(!file_path){
+  return null
+}
+else{
+  try{
+      let response = await cloudinary.uploader.upload(file_path)
+      
+      console.log("Response: "+JSON.stringify(response));
+      return response.secure_url;
+  }
+  catch(err){
+      console.log(err)
+  }
+}
+}
+app.get("/api/products/search", async (req, res) => {
+  let { query } = req.query;
+  console.log("Query: "+query);
+  
+  if (!query) {
+    return res.status(400).json({ message: 'Query is required' });
+  }
+
+  try {
+    
+    const filter = {
+      $or: [
+        { name: { $regex: query, $options: 'i' } },  // Case-insensitive search on name
+        { category: { $regex: query, $options: 'i' } } // Case-insensitive search on category
+      ]
+    };
+    const Products = await products.find(filter).limit(10);
+
+    
+
+    res.status(200).json(Products);
+  } catch (error) {
+    console.error('Error fetching search suggestions:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+})
 app.get("/", (req, res) => {
   res.send("Hello from the server");
 }

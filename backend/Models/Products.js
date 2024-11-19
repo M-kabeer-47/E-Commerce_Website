@@ -27,7 +27,7 @@ const ProductSchema = new mongoose.Schema({
     },
     rating: {
         type: Number,
-        required: true,
+        default: 0,
     },
     
         longDescription: {
@@ -35,7 +35,10 @@ const ProductSchema = new mongoose.Schema({
             required: true,
             
     },
-
+    reviews:{
+        type:Array,
+        default:[]
+    },
     quantity: {
         type: Number,
         required: true,
