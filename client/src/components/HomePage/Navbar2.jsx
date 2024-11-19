@@ -126,7 +126,7 @@ export default function Navbar2({ isWideScreen }) {
         );
       }
     }
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     getUser();
