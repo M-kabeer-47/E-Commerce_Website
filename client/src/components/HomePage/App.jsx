@@ -13,6 +13,7 @@ import axios from "axios";
 import { setUser } from "../../store/user.js";
 import { useLocation } from "react-router-dom";
 import { setCartCount, setWishlistCount } from "../../store/Counts.js";
+import isTokenExpired from "../tokenExpiry.js";
 
 export default function App() {
   const backendUrl = useSelector((state) => state.user.backendUrl);
@@ -23,6 +24,7 @@ export default function App() {
   const dispatch = useDispatch();
   const query = new URLSearchParams(useLocation().search)
   const user = useSelector((state) => state.user.user);
+
   useEffect(() => {
       
     setTimeout(() => {
