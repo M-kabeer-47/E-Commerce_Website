@@ -18,7 +18,10 @@ export default function Navbar2({isWideScreen,shortName,token}) {
   const [hoveredIcon, setHoveredIcon] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  
+  useEffect(()=>{
+    alert("Token: " + token)
+
+  },[])
   
   
   

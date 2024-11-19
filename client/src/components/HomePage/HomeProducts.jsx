@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { IoCartOutline } from "react-icons/io5";
-import { FaShoppingCart } from "react-icons/fa";
-import { toast, Bounce, ToastContainer } from "react-toastify";
+
+import { toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from 'axios';
 import Cookies from "js-cookie"
@@ -19,8 +19,8 @@ const HomeProducts = ({ product, index, type }) => {
     const productRef = useRef(null); // Ref for the product element
     const dispatch = useDispatch()
     const navigate = useNavigate();
-    const query = new URLSearchParams(useLocation().search)
-    const Token = query.get("token");
+
+    
     useEffect(() => {
         const handleResize = () => {
             setScreenWidth(window.innerWidth);
@@ -48,7 +48,7 @@ const HomeProducts = ({ product, index, type }) => {
         };
     }, []);
     async function handleAddToCart(){
-        let token = localStorage.getItem("uid") || Token;
+        let token = localStorage.getItem("uid");
         if(!token || isTokenExpired()){
             toast.error('Please login', {
                 position: "bottom-right",
