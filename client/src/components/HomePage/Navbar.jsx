@@ -23,7 +23,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { setCartCount, setWishlistCount } from "../../store/Counts.js";
 import UserDropdown from "./userDropdown/UserDropdown.jsx";
 import isTokenExpired from "../tokenExpiry.js";
-export default function Navbar({page,isWideScreen}) {
+export default function Navbar({page,isWideScreen,shortName}) {
   
   const backendUrl = useSelector((state) => state.user.backendUrl);
   const [hoveredIcon, setHoveredIcon] = useState(null);
@@ -44,7 +44,7 @@ export default function Navbar({page,isWideScreen}) {
   
   
 
-  const [shortName, setShortName] = useState("");
+  
   const cartCount = useSelector((state) => state.Counts.cartCount);
   const wishlistCount = useSelector((state) => state.Counts.wishlistCount);
   
@@ -83,69 +83,8 @@ else{
 
     
   };
-  async function getUser() {
-    let User;
-    let Token = query.get("token");
-    
-    if ((token && !isTokenExpired()) || Token) {
+  
 
-      if (user === null && token) {
-        setUserLoading(true);
-        User = await axios.get(`${backendUrl}/user`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-      
-        setUserLoading(false);
-
-      }
-      else if(user === null && Token){
-        localStorage.setItem("uid",Token);
-        localStorage.setItem("tokenExpiry",query.get("maxAge"));
-        setUserLoading(true);
-         User = await axios.get(`${backendUrl}/user`, {  
-          headers: {
-            Authorization: `Bearer ${Token}`,
-          },
-        });
-        setUserLoading(false);
-      }
-
-       dispatch(setUser(User.data));
-       dispatch(setCartCount(User.data.cart.length)); 
-       dispatch(setWishlistCount(User.data.wishlist.length));
-      
-      if (!Object.hasOwn(User.data, "lastName")) {
-        setShortName(
-          User.data.firstName[0].toUpperCase() + User.data.firstName[1].toUpperCase()
-        );
-      } else {
-        setShortName(
-          User.data.firstName[0].toUpperCase() + User.data.lastName[0].toUpperCase()
-        );
-      }
-      
-      
- 
-    }  
-    else {
-      dispatch(setUser(null));
-    }
-  }
-useEffect(()=>{
-  if(user!=undefined || user!=null){
-    if (!Object.hasOwn(user, "lastName")) {
-      setShortName(
-        user.firstName[0].toUpperCase() + user.firstName[1].toUpperCase()
-      );
-    } else {
-      setShortName(
-        user.firstName[0].toUpperCase() + user.lastName[0].toUpperCase()
-      );
-    }
-  }
-},[])
   
   
   const iconStyle = (iconName) => ({
@@ -168,9 +107,7 @@ useEffect(()=>{
     }
   };
 
-  useEffect(() => {
-    getUser();
-  }, [user,token]);
+  
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);

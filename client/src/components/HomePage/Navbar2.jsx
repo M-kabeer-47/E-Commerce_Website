@@ -6,26 +6,22 @@ import { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import CartSidebar from "./CartSidebar";
 import isTokenExpired from "../tokenExpiry";
-import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import { toast,Bounce } from 'react-toastify';
-
 import 'react-toastify/dist/ReactToastify.css';
-import { setCartCount, setWishlistCount } from "../../store/Counts.js";
-import { setUser } from "../../store/user";
 
-export default function Navbar2() {
+
+export default function Navbar2({isWideScreen,shortName}) {
   const backendUrl = useSelector((state) => state.user.backendUrl);
   const cartCount = useSelector((state) => state.Counts.cartCount);
   const wishlistCount = useSelector((state) => state.Counts.wishlistCount);
   const [hoveredIcon, setHoveredIcon] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const user = useSelector((state) => state.user.user);
-  const token = localStorage.getItem("uid");
-  console.log("The token is",token);
-  const [shortName,setShortName]  = useState("");
+  
+  
+  
+  
   const handleMouseEnter = (iconName) => {
     setHoveredIcon(iconName);
   };
@@ -84,59 +80,7 @@ else{
     };
   }, [isSidebarOpen]);
 
-  async function getUser(){
-    
-    console.log("hui");
-    
-    if(token && !isTokenExpired()){
-      
-      console.log(user);
-      
-      if(user===null){
-        
-        console.log("nigga");
-          
-        let res = await axios.get(`${backendUrl}/user`,{
-          headers: {
-            "Authorization": `Bearer ${token}`
-          }
-        })
-          console.log(res.data);
-          dispatch(setUser(res.data));
-          console.log("cha haal aa");        
-          dispatch(setCartCount(res.data.cart.length)); 
-          dispatch(setWishlistCount(res.data.wishlist.length));
-          if(!Object.hasOwn(res.data,"lastName")){
-            setShortName(res.data.firstName[0].toUpperCase()+res.data.firstName[1].toUpperCase())
-          }
-          else{
-            setShortName(res.data.firstName[0].toUpperCase()+res.data.lastName[0].toUpperCase())
-          }
-        }
-      
-      
-       
-      else{
-        if(!Object.hasOwn(user,"lastName")){
-          setShortName(user.firstName[0].toUpperCase()+user.firstName[1].toUpperCase())
-        }
-        else{
-          setShortName(user.firstName[0].toUpperCase()+user.lastName[0].toUpperCase())
-        }
-      }
-      
-    
-  }
-  else{
-    dispatch(setUser(null))
-  }
-    
-  
-  }
-  
-    useEffect(()=>{
-     getUser()
-    },[user])
+ 
   return (
     <div>
       {isCartOpen && <div className="overlay"></div>}
@@ -147,7 +91,7 @@ else{
             style={{ color: "white", fontSize: "20px" }}
             onClick={handleHamburgerClick}
           />
-          <Sidebar isOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} shortName={shortName} wishlistCount={wishlistCount}/>
+          <Sidebar isOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} shortName={shortName} wishlistCount={wishlistCount} isWideScreen={isWideScreen}/>
           <div className="logo">
             <Link to={"/"}>
               <h2>GlitchWare</h2>

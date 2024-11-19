@@ -17,10 +17,12 @@ import { setCartCount, setWishlistCount } from "../../store/Counts.js";
 export default function App() {
   const backendUrl = useSelector((state) => state.user.backendUrl);
   const [isWideScreen, setIsWideScreen] = useState(window.innerWidth >= 1050);
+  const [shortName, setShortName] = useState("");
   const popularRef = useRef(null);
   const token = localStorage.getItem("uid");
   const dispatch = useDispatch();
   const query = new URLSearchParams(useLocation().search)
+  const user = useSelector((state) => state.user.user);
   useEffect(() => {
       
     setTimeout(() => {
@@ -31,7 +33,74 @@ export default function App() {
     }, 200);
   }, []); 
 
-  
+  async function getUser() {
+    let User;
+    let Token = query.get("token");
+    
+    if ((token && !isTokenExpired()) || Token) {
+
+      if (user === null && token) {
+        setUserLoading(true);
+        User = await axios.get(`${backendUrl}/user`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      
+        setUserLoading(false);
+
+      }
+      else if(user === null && Token){
+        localStorage.setItem("uid",Token);
+        localStorage.setItem("tokenExpiry",query.get("maxAge"));
+        setUserLoading(true);
+         User = await axios.get(`${backendUrl}/user`, {  
+          headers: {
+            Authorization: `Bearer ${Token}`,
+          },
+        });
+        setUserLoading(false);
+      }
+
+       dispatch(setUser(User.data));
+       dispatch(setCartCount(User.data.cart.length)); 
+       dispatch(setWishlistCount(User.data.wishlist.length));
+      
+      if (!Object.hasOwn(User.data, "lastName")) {
+        setShortName(
+          User.data.firstName[0].toUpperCase() + User.data.firstName[1].toUpperCase()
+        );
+      } else {
+        setShortName(
+          User.data.firstName[0].toUpperCase() + User.data.lastName[0].toUpperCase()
+        );
+      }
+      
+      
+ 
+    }  
+    else {
+      dispatch(setUser(null));
+    }
+  }
+  useEffect(()=>{
+    if(user!=undefined || user!=null){
+      if (!Object.hasOwn(user, "lastName")) {
+        setShortName(
+          user.firstName[0].toUpperCase() + user.firstName[1].toUpperCase()
+        );
+      } else {
+        setShortName(
+          user.firstName[0].toUpperCase() + user.lastName[0].toUpperCase()
+        );
+      }
+    }
+
+  },[])
+  useEffect(() => {
+    getUser();
+  }, [user,token]);
+
   const handleResize = () => {
     setIsWideScreen(window.innerWidth >= 1050);
   };
@@ -56,46 +125,13 @@ export default function App() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  // useEffect(()=>{
-    
-   
-    
-  //   if(token){
-  //     axios.get(`${backendUrl}/user`,{
-  //       headers: {
-  //         "Authorization": `Bearer ${token}`
-  //       }
-  //     }).then((res)=>{
-        
-  //       dispatch(setUser(res.data));
-  //     })
-  //   }
-  //   else if(query.get('token')){
-  //     const Token = query.get('token');
-  //     const maxAge = query.get('maxAge')
-  //     alert("maxAge: "+maxAge)
-  //     localStorage.setItem('uid',Token)
-  //     localStorage.setItem('tokenExpiry',maxAge)
-  //     axios.get(`${backendUrl}/user`,{
-  //       headers:{
-  //         "Authorization": `Bearer ${Token}`
-  //       }
-  //     }).then((res)=>{
-  //       dispatch(setUser(res.data))
-  //       dispatch(setCartCount(res.data.cart.length))
-  //       dispatch(setWishlistCount(res.data.wishlist.length))
-  //     })
-
-  //   }
-    
-
-  // },[query])
+  
 
   
   
   return (
     <>
-      {isWideScreen ? <Navbar /> : <Navbar2 />}
+      {isWideScreen ? <Navbar isWideScreen={isWideScreen} /> : <Navbar2 isWideScreen={isWideScreen}/>}
       
       
       
