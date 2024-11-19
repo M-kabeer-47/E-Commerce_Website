@@ -173,13 +173,7 @@ export default function CartSidebar(props) {
              <>
            <div
               className="cartSidebar-products"
-              style={{
-                overflowY: "auto",
-                maxHeight: "400px",
-                display: "flex",
-                flexDirection: "column",
-                gap: "20px",
-              }}
+              
             >
               {cart.map((product, index) => (
                 <div>
@@ -327,13 +321,16 @@ export default function CartSidebar(props) {
                 <button
                   className=""
                   style={{
+                    
                     marginTop:"20px",
                     width: "100%",
-                    padding: "15px",
+                    padding: "8px 15px",
                     backgroundColor: "#00a7ff",
                     textAlign: "center",
                     color: "white",
-                    marginBottom:"10px"
+                    marginBottom:"10px",
+                    borderRadius:"5px"
+
                   }}
                   onClick={() => {
                     dispatch(closeCart());
@@ -343,12 +340,13 @@ export default function CartSidebar(props) {
                   View cart
                 </button>
                 <button
-                  className="checkout-button"
+                  className="checkout-button cart-checkout"
+                  style={{maxWidth:"100%"}}
                   onClick={() => {
                     dispatch(closeCart());
                     navigate("/shipping");
                   }}
-                  style={{ maxWidth: "100%", padding: "15px" }}
+                  
                 >
                   Proceed to checkout
                 </button>

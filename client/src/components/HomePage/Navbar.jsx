@@ -9,61 +9,53 @@ import Dropdown from "./Dropdown";
 import SmallDropdown from "./SmallDropdown.jsx";
 import SearchBar from "./SearchBar";
 import CartSidebar from "./CartSidebar.jsx";
-import "./index.css"; 
+import "./index.css";
 import { useDispatch, useSelector } from "react-redux";
-import {openCart,} from "../../store/sidebars.js";
+import { openCart } from "../../store/sidebars.js";
 import { useNavigate } from "react-router-dom";
 import { setUser } from "../../store/user.js";
 
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import { toast,Bounce } from 'react-toastify';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast, Bounce } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { setCartCount, setWishlistCount } from "../../store/Counts.js";
 import UserDropdown from "./userDropdown/UserDropdown.jsx";
 import isTokenExpired from "../tokenExpiry.js";
-export default function Navbar({page,isWideScreen,shortName,userLoading}) {
-  
+export default function Navbar({ page, isWideScreen }) {
   const backendUrl = useSelector((state) => state.user.backendUrl);
   const [hoveredIcon, setHoveredIcon] = useState(null);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isSmallDropdownVisible, setIsSmallDropdownVisible] = useState(false);
   const dropdownRef = useRef(null);
-  const productsRef = useRef(null); 
-  const dealsRef = useRef(null); 
+  const productsRef = useRef(null);
+  const dealsRef = useRef(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const dispatch = useDispatch();
-  
+  const [userLoading, setUserLoading] = useState(false);
   const token = localStorage.getItem("uid");
-  const query = new URLSearchParams(useLocation().search)
-  
+  const query = new URLSearchParams(useLocation().search);
 
-  
-  
-  
-  
-
-  
+  const [shortName, setShortName] = useState("");
   const cartCount = useSelector((state) => state.Counts.cartCount);
   const wishlistCount = useSelector((state) => state.Counts.wishlistCount);
-  
 
   const handleMouseEnter = (iconName) => {
     setHoveredIcon(iconName);
   };
-  
+  const user = useSelector((state) => state.user.user);
   const handleMouseLeave = () => {
     setHoveredIcon(null);
   };
 
   const handleCartClick = () => {
-    if(page === "cart"){
+    if (page === "cart") {
       return;
     }
 
-    if(!token || isTokenExpired()){
-      toast.error('Please Login', {
+    if (!token || isTokenExpired()) {
+      toast.error("Please Login", {
         position: "bottom-right",
         autoClose: 3000,
         hideProgressBar: true,
@@ -73,20 +65,64 @@ export default function Navbar({page,isWideScreen,shortName,userLoading}) {
         progress: undefined,
         theme: "colored",
         transition: Bounce,
-        });
+      });
+    } else {
+      setIsCartOpen(true);
+      dispatch(openCart());
     }
-else{
-  setIsCartOpen(true);
-    dispatch(openCart());
-}
-    
-
-    
   };
-  
+  async function getUser() {
+    let User;
+    let Token = query.get("token");
 
-  
-  
+    if ((token && !isTokenExpired()) || Token) {
+      if ((user === null && token) || Token) {
+        if (Token) {
+          localStorage.setItem("uid", Token);
+          localStorage.setItem("tokenExpiry", query.get("maxAge"));
+        }
+        setUserLoading(true);
+        User = await axios.get(`${backendUrl}/user`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setUserLoading(false);
+        dispatch(setUser(User.data));
+        dispatch(setCartCount(User.data.cart.length));
+        dispatch(setWishlistCount(User.data.wishlist.length));
+
+        if (!Object.hasOwn(User.data, "lastName")) {
+          setShortName(
+            User.data.firstName[0].toUpperCase() +
+              User.data.firstName[1].toUpperCase()
+          );
+        } else {
+          setShortName(
+            User.data.firstName[0].toUpperCase() +
+              User.data.lastName[0].toUpperCase()
+          );
+        }
+      }
+    } else {
+      dispatch(setUser(null));
+    }
+  }
+  useEffect(() => {
+    if (user != undefined || user != null) {
+      if (!Object.hasOwn(user, "lastName")) {
+        setShortName(
+          user.firstName[0].toUpperCase() + user.firstName[1].toUpperCase()
+        );
+      } else {
+        setShortName(
+          user.firstName[0].toUpperCase() + user.lastName[0].toUpperCase()
+        );
+      }
+    }
+  }, []);
+
   const iconStyle = (iconName) => ({
     color: hoveredIcon === iconName ? "#FF6347" : null,
     transition: "color 0.3s ease",
@@ -102,12 +138,14 @@ else{
       dealsRef.current &&
       !dealsRef.current.contains(event.target)
     ) {
-      setIsDropdownVisible(false); 
-      setIsSmallDropdownVisible(false); 
+      setIsDropdownVisible(false);
+      setIsSmallDropdownVisible(false);
     }
   };
 
-  
+  useEffect(() => {
+    getUser();
+  }, [user, token]);
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -117,163 +155,159 @@ else{
   }, []);
 
   const handleProductsClick = () => {
-    setIsDropdownVisible((prev) => !prev); 
+    setIsDropdownVisible((prev) => !prev);
   };
 
   const handleDealsClick = () => {
-    setIsSmallDropdownVisible((prev) => !prev); 
+    setIsSmallDropdownVisible((prev) => !prev);
   };
 
   const navigate = useNavigate();
   return (
     <>
-   
-    <ToastContainer />
-    <div>
-      {isCartOpen && <div className="overlay"></div>}
-      <div className="navbar">
-        <div className="navbar NAVBAR ">
-          <div className="logo">
-            <h2>GlitchWare</h2>
-          </div>
-          <div className="navOptions">
-            <p
-              onClick={() => {
-                navigate("/");
-              }}
-            >
-              HOME
-            </p>
-            <div
-              className=""
-              onClick={handleProductsClick}
-              ref={productsRef} 
-            >
-              <div
-                className="prod"
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  gap: "5px",
-                  alignItems: "center",
+      <ToastContainer />
+      <div>
+        {isCartOpen && <div className="overlay"></div>}
+        <div className="navbar">
+          <div className="navbar NAVBAR ">
+            <div className="logo">
+              <h2>GlitchWare</h2>
+            </div>
+            <div className="navOptions">
+              <p
+                onClick={() => {
+                  navigate("/");
                 }}
               >
-                <p>PRODUCTS</p>
-                <FontAwesomeIcon
-                  icon={faCaretDown}
-                  style={{ color: "#ffffff", fontSize: "11px" }}
-                />
+                HOME
+              </p>
+              <div className="" onClick={handleProductsClick} ref={productsRef}>
+                <div
+                  className="prod"
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: "5px",
+                    alignItems: "center",
+                  }}
+                >
+                  <p>PRODUCTS</p>
+                  <FontAwesomeIcon
+                    icon={faCaretDown}
+                    style={{ color: "#ffffff", fontSize: "11px" }}
+                  />
+                </div>
+                <Dropdown isVisible={isDropdownVisible} ref={dropdownRef} />
               </div>
-              <Dropdown isVisible={isDropdownVisible} ref={dropdownRef} />
+              <div className="deals" onClick={handleDealsClick} ref={dealsRef}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: "5px",
+                    alignItems: "center",
+                  }}
+                >
+                  <p>Pre BUILD PC</p>
+                  <FontAwesomeIcon
+                    icon={faCaretDown}
+                    style={{ color: "#ffffff", fontSize: "11px" }}
+                  />
+                </div>
+                <SmallDropdown isVisible={isSmallDropdownVisible} />
+              </div>
             </div>
-            <div
-              className="deals"
-              onClick={handleDealsClick}
-              ref={dealsRef} 
-            >
+            <SearchBar expanded={true} isWideScreen={isWideScreen} />{" "}
+            {/* Use the SearchBar component */}
+            <div className="lastOptions">
+              {(() => {
+                if (
+                  (token || query.get("token")) &&
+                  userLoading &&
+                  !isTokenExpired()
+                ) {
+                  // Display loading skeleton when token exists, user is loading, and token is valid
+                  return <div className="user-skeleton"></div>;
+                } else if (
+                  (token || query.get("token")) &&
+                  !userLoading &&
+                  !isTokenExpired()
+                ) {
+                  // Display user dropdown when token exists, user is not loading, and token is valid
+                  return <UserDropdown shortName={shortName} />;
+                } else {
+                  // Display login/signup option if token is missing, expired, or query token is missing
+                  return (
+                    <p
+                      className="loginOption"
+                      onClick={() => {
+                        localStorage.removeItem("uid");
+                        localStorage.removeItem("tokenExpiry");
+                        navigate("/login");
+                      }}
+                    >
+                      Login/Sign Up
+                    </p>
+                  );
+                }
+              })()}
+
               <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  gap: "5px",
-                  alignItems: "center",
+                className="icon-container"
+                onClick={() => {
+                  if ((token || query.get("token")) && !isTokenExpired()) {
+                    navigate("/wishlist");
+                  } else {
+                    toast.error("Please Login", {
+                      position: "bottom-right",
+                      autoClose: 3000,
+                      hideProgressBar: true,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: "colored",
+                      transition: Bounce,
+                    });
+                  }
                 }}
               >
-                <p>Pre BUILD PC</p>
                 <FontAwesomeIcon
-                  icon={faCaretDown}
-                  style={{ color: "#ffffff", fontSize: "11px" }}
+                  icon={faHeart}
+                  className="icons lastIcons"
+                  style={iconStyle("heart")}
+                  onMouseEnter={() => handleMouseEnter("heart")}
+                  onMouseLeave={handleMouseLeave}
                 />
+                {wishlistCount > 0 && (
+                  <span className="badge badge2">{wishlistCount}</span>
+                )}
               </div>
-              <SmallDropdown isVisible={isSmallDropdownVisible} />
-            </div>
-          </div>
-          <SearchBar expanded={true} isWideScreen={isWideScreen} /> {/* Use the SearchBar component */}
-          <div className="lastOptions">
-          
-  {(() => {
-    if ((token || query.get("token")) && userLoading && !isTokenExpired()) {
-      // Display loading skeleton when token exists, user is loading, and token is valid
-      return <div className="user-skeleton"></div>;
-    } else if ((token || query.get("token")) && !userLoading && !isTokenExpired()) {
-      // Display user dropdown when token exists, user is not loading, and token is valid
-      return <UserDropdown shortName={shortName} />;
-    } else {
-      // Display login/signup option if token is missing, expired, or query token is missing
-      return (
-        <p
-          className="loginOption"
-          onClick={() => {
-            localStorage.removeItem("uid");
-            localStorage.removeItem("tokenExpiry");
-            navigate("/login");
-          }}
-        >
-          Login/Sign Up
-        </p>
-      );
-    }
-  })()}
-
-
-            <div
-              className="icon-container"
-              onClick={() => {
-                if((token || query.get("token")) && !isTokenExpired()){
-                navigate("/wishlist");
-              }
-              else{
-                toast.error('Please Login', {
-                  position: "bottom-right",
-                  autoClose: 3000,
-                  hideProgressBar: true,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                  theme: "colored",
-                  transition: Bounce,
-                  });
-              }
-            }
-            }
-            >
-              <FontAwesomeIcon
-                icon={faHeart}
-                className="icons lastIcons"
-                style={iconStyle("heart")}
-                onMouseEnter={() => handleMouseEnter("heart")}
-                onMouseLeave={handleMouseLeave}
-              />
-                          {wishlistCount > 0 && (
-            <span className="badge badge2">{wishlistCount}</span>
-          )}
-            </div>
-            <div
-              className="icon-container"
-              style={{ cursor: "pointer" }}
-              onClick={handleCartClick}
-            >
-              <FontAwesomeIcon
-                icon={faCartShopping}
-                className="icons lastIcons"
-                style={hoveredIcon === "cart" ? { color: "#00a7ff" } : null}
-                onMouseEnter={() => handleMouseEnter("cart")}
-                onMouseLeave={handleMouseLeave}
-              />
-                          {cartCount > 0 && (
-            <span className="badge badge2">{cartCount}</span>
-          )}
+              <div
+                className="icon-container"
+                style={{ cursor: "pointer" }}
+                onClick={handleCartClick}
+              >
+                <FontAwesomeIcon
+                  icon={faCartShopping}
+                  className="icons lastIcons"
+                  style={hoveredIcon === "cart" ? { color: "#00a7ff" } : null}
+                  onMouseEnter={() => handleMouseEnter("cart")}
+                  onMouseLeave={handleMouseLeave}
+                />
+                {cartCount > 0 && (
+                  <span className="badge badge2">{cartCount}</span>
+                )}
+              </div>
             </div>
           </div>
         </div>
+        <CartSidebar
+          isOpen={isCartOpen}
+          setIsCartOpen={setIsCartOpen}
+          navbar={true}
+        />
       </div>
-      <CartSidebar
-        isOpen={isCartOpen}
-        setIsCartOpen={setIsCartOpen}
-        navbar={true}
-      />
-    </div>
     </>
   );
 }

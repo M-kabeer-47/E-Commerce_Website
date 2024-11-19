@@ -25,7 +25,7 @@ export default function App() {
   const dispatch = useDispatch();
   const query = new URLSearchParams(useLocation().search)
   const user = useSelector((state) => state.user.user);
-  const [Token, setToken] = useState(null);
+  const Token = query.get("token");
 
   useEffect(() => {
       
@@ -42,11 +42,8 @@ export default function App() {
     let Token = query.get("token");
     
     if ((token && !isTokenExpired()) || Token) {
-      
+
       if (user === null && token || Token) {
-        if(Token){
-          setToken(Token);
-        }
         setUserLoading(true);
         let User = await axios.get(`${backendUrl}/user`, {
           headers: {

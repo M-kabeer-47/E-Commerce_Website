@@ -227,6 +227,18 @@ button {
   cursor: pointer;
   
 }
+.checkout-button{
+  
+  
+  background-color: #3c4856;
+  color:white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  padding: 8px 15px;
+  transition: 0.3s ease all;
+}
 button:hover {
   border-color: #646cff;
 }
@@ -268,18 +280,7 @@ button:focus-visible {
   z-index: 10;;
 }
 
-.checkout-button{
-  height: 60px;
-  width: 100%;
-  background-color: #3c4856;
-  color:white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 5px;
-  padding: 5px;
-  transition: 0.3s ease all;
-}
+
 .wishlistPage{
   min-height: 700px;
 }
@@ -702,12 +703,22 @@ html {
   z-index: 100000;
 }
 
+.cartSidebar-products{
+  overflow-y: auto;
+  max-height: 410px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 .cartSidebar.active {
   transform: translateX(0); /* Slide in from the right */
 }
 
 .checkout-button{
   max-width:50%
+}
+.cart-checkout{
+  width: 100%;
 }
 .sidebar.active {
     transform: translateX(0);
@@ -740,7 +751,11 @@ html {
   height: 100px;
   
 }
-
+@media(max-width:1300px){
+  .cartSidebar-products{
+    max-height: 330px;
+  }
+}
 @media(max-width:1050px){
   .cartPage{
     min-height: 1100px;

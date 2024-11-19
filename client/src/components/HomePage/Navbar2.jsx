@@ -6,25 +6,30 @@ import { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import CartSidebar from "./CartSidebar";
 import isTokenExpired from "../tokenExpiry";
+import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
-import { toast,Bounce } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios";
+import { toast, Bounce } from "react-toastify";
+import { useLocation } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import { setCartCount, setWishlistCount } from "../../store/Counts.js";
+import { setUser } from "../../store/user";
+import { use } from "passport";
 
-
-export default function Navbar2({isWideScreen,shortName,token}) {
+export default function Navbar2({ isWideScreen }) {
   const backendUrl = useSelector((state) => state.user.backendUrl);
   const cartCount = useSelector((state) => state.Counts.cartCount);
   const wishlistCount = useSelector((state) => state.Counts.wishlistCount);
   const [hoveredIcon, setHoveredIcon] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  useEffect(()=>{
-    alert("Token: " + token)
+  const [userLoading, setUserLoading] = useState(false);
+  const [shortName, setShortName] = useState("");
 
-  },[])
-  
-  
-  
+  const token = localStorage.getItem("uid");
+  const user = useSelector((state) => state.user.user);
+  const query = new URLSearchParams(useLocation().search);
+
   const handleMouseEnter = (iconName) => {
     setHoveredIcon(iconName);
   };
@@ -44,8 +49,8 @@ export default function Navbar2({isWideScreen,shortName,token}) {
     setIsSidebarOpen(true);
   };
   const handleCartClick = () => {
-    if(!token || isTokenExpired()){
-      toast.error('Please Login', {
+    if (!token || isTokenExpired()) {
+      toast.error("Please Login", {
         position: "bottom-right",
         autoClose: 3000,
         hideProgressBar: true,
@@ -55,12 +60,10 @@ export default function Navbar2({isWideScreen,shortName,token}) {
         progress: undefined,
         theme: "colored",
         transition: Bounce,
-        });
+      });
+    } else {
+      setIsCartOpen(true);
     }
-else{
-  setIsCartOpen(true);
-}
-    
   };
   const handleOutsideClick = (event) => {
     if (
@@ -72,6 +75,62 @@ else{
     setIsSidebarOpen(false);
   };
 
+  async function getUser() {
+    let User;
+    let Token = query.get("token");
+
+    if ((token && !isTokenExpired()) || Token) {
+      if ((user === null && token) || Token) {
+        if (Token) {
+          localStorage.setItem("uid", Token);
+          localStorage.setItem("tokenExpiry", query.get("maxAge"));
+        }
+
+        setUserLoading(true);
+        User = await axios.get(`${backendUrl}/user`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setUserLoading(false);
+        dispatch(setUser(User.data));
+        dispatch(setCartCount(User.data.cart.length));
+        dispatch(setWishlistCount(User.data.wishlist.length));
+
+        if (!Object.hasOwn(User.data, "lastName")) {
+          setShortName(
+            User.data.firstName[0].toUpperCase() +
+              User.data.firstName[1].toUpperCase()
+          );
+        } else {
+          setShortName(
+            User.data.firstName[0].toUpperCase() +
+              User.data.lastName[0].toUpperCase()
+          );
+        }
+      }
+    } else {
+      dispatch(setUser(null));
+    }
+  }
+  useEffect(() => {
+    if (user != undefined || user != null) {
+      if (!Object.hasOwn(user, "lastName")) {
+        setShortName(
+          user.firstName[0].toUpperCase() + user.firstName[1].toUpperCase()
+        );
+      } else {
+        setShortName(
+          user.firstName[0].toUpperCase() + user.lastName[0].toUpperCase()
+        );
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    getUser();
+  }, [user, token]);
   useEffect(() => {
     if (isSidebarOpen) {
       document.addEventListener("click", handleOutsideClick);
@@ -83,7 +142,6 @@ else{
     };
   }, [isSidebarOpen]);
 
- 
   return (
     <div>
       {isCartOpen && <div className="overlay"></div>}
@@ -94,13 +152,23 @@ else{
             style={{ color: "white", fontSize: "20px" }}
             onClick={handleHamburgerClick}
           />
-          <Sidebar isOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} shortName={shortName} wishlistCount={wishlistCount} isWideScreen={isWideScreen}/>
+          <Sidebar
+            isOpen={isSidebarOpen}
+            setIsSidebarOpen={setIsSidebarOpen}
+            shortName={shortName}
+            wishlistCount={wishlistCount}
+            isWideScreen={isWideScreen}
+          />
           <div className="logo">
             <Link to={"/"}>
               <h2>GlitchWare</h2>
             </Link>
           </div>
-          <div className="icon-container" onClick={handleCartClick} style={{cursor:"pointer"}}>
+          <div
+            className="icon-container"
+            onClick={handleCartClick}
+            style={{ cursor: "pointer" }}
+          >
             <FontAwesomeIcon
               icon={faCartShopping}
               className="icons lastIcons"
@@ -108,12 +176,9 @@ else{
               onMouseEnter={() => handleMouseEnter("cart")}
               onMouseLeave={handleMouseLeave}
             />
-            {cartCount > 0 && (
-            <span className="badge badge2">{cartCount}</span>
-          )}
+            {cartCount > 0 && <span className="badge badge2">{cartCount}</span>}
           </div>
         </div>
-        
       </div>
       <CartSidebar isOpen={isCartOpen} setIsCartOpen={setIsCartOpen} />
     </div>
