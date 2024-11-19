@@ -280,7 +280,7 @@ export default function CartSidebar(props) {
                 className="cartSidebar-footer"
                 style={{
                   marginTop:"10px",
-                  marginBottom:"50px",
+                  
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
