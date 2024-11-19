@@ -48,7 +48,7 @@ const HomeProducts = ({ product, index, type }) => {
         };
     }, []);
     async function handleAddToCart(){
-        let token = localStorage.getItem("uid");
+        let token = localStorage.getItem("uid")
         if(!token || isTokenExpired()){
             toast.error('Please login', {
                 position: "bottom-right",
