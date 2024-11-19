@@ -25,6 +25,7 @@ export default function App() {
   const dispatch = useDispatch();
   const query = new URLSearchParams(useLocation().search)
   const user = useSelector((state) => state.user.user);
+  const Token = query.get("token");
 
   useEffect(() => {
       
@@ -126,7 +127,7 @@ export default function App() {
   
   return (
     <>
-      {isWideScreen ? <Navbar isWideScreen={isWideScreen} userLoading={userLoading} setUserLoading={setUserLoading} shortName={shortName} /> : <Navbar2 isWideScreen={isWideScreen} shortName={shortName}/>}
+      {isWideScreen ? <Navbar isWideScreen={isWideScreen} userLoading={userLoading} setUserLoading={setUserLoading} shortName={shortName} /> : <Navbar2 isWideScreen={isWideScreen} shortName={shortName} token={token || Token}/>}
       
       
       
