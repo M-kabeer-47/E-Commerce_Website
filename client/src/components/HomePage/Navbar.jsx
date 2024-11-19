@@ -253,7 +253,7 @@ useEffect(()=>{
           
   {(() => {
     if ((token || query.get("token")) && userLoading && !isTokenExpired()) {
-      alert("token: "+token+" query: "+query.get("token"));
+      alert("token: "+token.substring(0,3)+" query: "+query.get("token").substring(0,4));
       // Display loading skeleton when token exists, user is loading, and token is valid
       return <div className="user-skeleton"></div>;
     } else if ((token || query.get("token")) && !userLoading && !isTokenExpired()) {
