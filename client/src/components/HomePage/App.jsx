@@ -17,15 +17,15 @@ import isTokenExpired from "../tokenExpiry.js";
 
 export default function App() {
   const backendUrl = useSelector((state) => state.user.backendUrl);
-  const [userLoading,setUserLoading] = useState(false);
+  
   const [isWideScreen, setIsWideScreen] = useState(window.innerWidth >= 1050);
-  const [shortName, setShortName] = useState("");
+  
   const popularRef = useRef(null);
-  const token = localStorage.getItem("uid");
-  const dispatch = useDispatch();
+  
+  
   const query = new URLSearchParams(useLocation().search)
-  const user = useSelector((state) => state.user.user);
-  const Token = query.get("token");
+  
+  
 
   useEffect(() => {
       
@@ -37,65 +37,8 @@ export default function App() {
     }, 200);
   }, []); 
 
-  async function getUser() {
-   
-    let Token = query.get("token");
-    
-    if ((token && !isTokenExpired()) || Token) {
 
-      if (user === null && token || Token) {
-        setUserLoading(true);
-        let User = await axios.get(`${backendUrl}/user`, {
-          headers: {
-            Authorization: `Bearer ${token || Token}`,
-          },
-        });
-        
-        setUserLoading(false);
-        dispatch(setUser(User.data));
-       dispatch(setCartCount(User.data.cart.length)); 
-       dispatch(setWishlistCount(User.data.wishlist.length));
-      
-      if (!Object.hasOwn(User.data, "lastName")) {
-        setShortName(
-          User.data.firstName[0].toUpperCase() + User.data.firstName[1].toUpperCase()
-        );
-      } else {
-        setShortName(
-          User.data.firstName[0].toUpperCase() + User.data.lastName[0].toUpperCase()
-        );
-      }
-      
-      
-
-      
-      
-      }
-      
-       
- 
-    }  
-    else {
-      dispatch(setUser(null));
-    }
-  }
-  useEffect(()=>{
-    if(user!=undefined || user!=null){
-      if (!Object.hasOwn(user, "lastName")) {
-        setShortName(
-          user.firstName[0].toUpperCase() + user.firstName[1].toUpperCase()
-        );
-      } else {
-        setShortName(
-          user.firstName[0].toUpperCase() + user.lastName[0].toUpperCase()
-        );
-      }
-    }
-
-  },[])
-  useEffect(() => {
-    getUser();
-  }, [user,token]);
+  
 
   const handleResize = () => {
     setIsWideScreen(window.innerWidth >= 1050);
@@ -127,7 +70,7 @@ export default function App() {
   
   return (
     <>
-      {isWideScreen ? <Navbar isWideScreen={isWideScreen} userLoading={userLoading} setUserLoading={setUserLoading} shortName={shortName} /> : <Navbar2 isWideScreen={isWideScreen} shortName={shortName} token={token || Token}/>}
+      {isWideScreen ? <Navbar isWideScreen={isWideScreen} /> : <Navbar2 isWideScreen={isWideScreen} />}
       
       
       
