@@ -17,6 +17,7 @@ import isTokenExpired from "../tokenExpiry.js";
 
 export default function App() {
   const backendUrl = useSelector((state) => state.user.backendUrl);
+  const [userLoading,setUserLoading] = useState(false);
   const [isWideScreen, setIsWideScreen] = useState(window.innerWidth >= 1050);
   const [shortName, setShortName] = useState("");
   const popularRef = useRef(null);
@@ -133,7 +134,7 @@ export default function App() {
   
   return (
     <>
-      {isWideScreen ? <Navbar isWideScreen={isWideScreen} /> : <Navbar2 isWideScreen={isWideScreen}/>}
+      {isWideScreen ? <Navbar isWideScreen={isWideScreen} userLoading={userLoading} setUserLoading={setUserLoading} /> : <Navbar2 isWideScreen={isWideScreen}/>}
       
       
       

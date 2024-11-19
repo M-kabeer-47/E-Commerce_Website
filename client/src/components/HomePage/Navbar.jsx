@@ -23,7 +23,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { setCartCount, setWishlistCount } from "../../store/Counts.js";
 import UserDropdown from "./userDropdown/UserDropdown.jsx";
 import isTokenExpired from "../tokenExpiry.js";
-export default function Navbar({page,isWideScreen,shortName}) {
+export default function Navbar({page,isWideScreen,shortName,userLoading}) {
   
   const backendUrl = useSelector((state) => state.user.backendUrl);
   const [hoveredIcon, setHoveredIcon] = useState(null);
@@ -34,7 +34,7 @@ export default function Navbar({page,isWideScreen,shortName}) {
   const dealsRef = useRef(null); 
   const [isCartOpen, setIsCartOpen] = useState(false);
   const dispatch = useDispatch();
-  const [userLoading,setUserLoading] = useState(false);
+  
   const token = localStorage.getItem("uid");
   const query = new URLSearchParams(useLocation().search)
   
@@ -52,7 +52,7 @@ export default function Navbar({page,isWideScreen,shortName}) {
   const handleMouseEnter = (iconName) => {
     setHoveredIcon(iconName);
   };
-  const user = useSelector((state) => state.user.user);
+  
   const handleMouseLeave = () => {
     setHoveredIcon(null);
   };
