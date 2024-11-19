@@ -18,6 +18,8 @@ const HomeProducts = ({ product, index, type }) => {
     const productRef = useRef(null); // Ref for the product element
     const dispatch = useDispatch()
     const navigate = useNavigate();
+    const query = new URLSearchParams(useLocation().search)
+    const Token = query.get("token");
     useEffect(() => {
         const handleResize = () => {
             setScreenWidth(window.innerWidth);
@@ -45,7 +47,7 @@ const HomeProducts = ({ product, index, type }) => {
         };
     }, []);
     async function handleAddToCart(){
-        let token = localStorage.getItem("uid");    
+        let token = localStorage.getItem("uid") || Token;
         if(!token || isTokenExpired()){
             toast.error('Please login', {
                 position: "bottom-right",

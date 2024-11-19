@@ -11,7 +11,7 @@ import { toast,Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-export default function Navbar2({isWideScreen,shortName}) {
+export default function Navbar2({isWideScreen,shortName,token}) {
   const backendUrl = useSelector((state) => state.user.backendUrl);
   const cartCount = useSelector((state) => state.Counts.cartCount);
   const wishlistCount = useSelector((state) => state.Counts.wishlistCount);
