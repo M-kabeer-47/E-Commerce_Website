@@ -56,7 +56,7 @@ const handleButtonClick = (e) => {
   if (isActive) {
     subMenu.style.height = "0px";
     button.classList.remove("active");
-    document.body.style.overflow = "hidden";
+    
   } else {
     // Close all other sub-menus
     document.querySelectorAll(".sub-menu").forEach((menu) => {
@@ -69,7 +69,7 @@ const handleButtonClick = (e) => {
     // Open the clicked sub-menu and set its height dynamically
     subMenu.style.height = `${subMenu.querySelector("ul").clientHeight}px`;
     button.classList.add("active");
-    document.body.style.overflow = "auto";
+    
   }
 };
 
