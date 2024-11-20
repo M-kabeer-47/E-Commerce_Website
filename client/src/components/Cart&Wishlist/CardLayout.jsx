@@ -80,7 +80,7 @@ const tokenExpiry = localStorage.getItem('tokenExpiry');
         
           <p className="cardsTitle" >Total</p>
           <p style={{ fontSize: "14px", color: "#6f94bc" }}>
-            {"PKR " + convertPrice(product.price, product.quantity)}
+            {"PKR " + convertPrice(product.price, product.quantityInCart)}
           </p>
         
         </div>
