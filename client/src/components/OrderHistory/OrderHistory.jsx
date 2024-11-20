@@ -203,7 +203,7 @@ const OrderHistoryPage = () => {
       dataLength={orders.length}
       next={getOrders}
       hasMore={hasMore}
-      scrollableTarget={"orderList"}
+      scrollThreshold={0.7}
       // loader={<h4 style={{position:"relative",left:"50%",width:"100px"}}>Loading...</h4>}
       
 
