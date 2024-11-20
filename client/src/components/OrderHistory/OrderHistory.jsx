@@ -14,7 +14,7 @@ const OrderCard = ({ order, index }) => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
   function convertPrice(price) {
-    const formattedTotal = new Intl.NumberFormat('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(Price);
+    const formattedTotal = new Intl.NumberFormat('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(price);
     return formattedTotal;
   }
 
@@ -203,7 +203,7 @@ const OrderHistoryPage = () => {
       dataLength={orders.length}
       next={getOrders}
       hasMore={hasMore}
-      scrollableTarget={".orderList"}
+      scrollableTarget={"orderList"}
       // loader={<h4 style={{position:"relative",left:"50%",width:"100px"}}>Loading...</h4>}
       
 
@@ -213,7 +213,7 @@ const OrderHistoryPage = () => {
       >
         
         
-        <div className={"orderList"}>
+        <div className={"orderList"} id="orderList">
           {orders.length > 0 ? (
             orders.map((order, index) => (
               <OrderCard key={order.id} order={order} index={index + 1000} />
