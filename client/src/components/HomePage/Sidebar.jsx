@@ -33,7 +33,7 @@ const Sidebar = (props) => {
   // Hardware, Accessories, Console, Deals arrays
   const hardware = ["Processors", "Power supply", "Cases", "Graphic Cards", "Motherboards", "RAMS", "HDDs", "SSDs", "Monitors"];
   const accessories = ["Keyboards", "Mouse", "Headphones", "Cables", "Microphones", "Webcams", "Speakers"];
-  const console = ["Playstation", "Xbox", "Nintendo", "PS Games", "X-Box Games", "Gift cards"];
+  const console = ["Playstation", "Xbox", "Nintendo","PS Games", "X-Box Games", "Gift cards", "PS Games", "X-Box Games", "Gift cards"];
   const allOptions = [...hardware, ...accessories, ...console];
   const deals = ["Value deals", "Smash deals", "Rapid deals", "Xtreme deals"];
 
@@ -154,7 +154,7 @@ const handleButtonClick = (e) => {
           }
         }} style={{ width: "100%" }}>
           <div className="iconText" style={{ display: "flex", justifyContent: "space-between" }}>
-            <p style={{ position: "relative", left: "80px" }}>Wishlist</p>
+            <p style={{ position: "relative", left: "75px",fontSize:"1.1rem" }}>Wishlist</p>
             <div className="icon-container">
               <FontAwesomeIcon
                 icon={faHeart}
@@ -212,10 +212,10 @@ const handleButtonClick = (e) => {
           <p className="loginOption" onClick={() => {
             localStorage.removeItem("uid");
             localStorage.removeItem("tokenExpiry");
-            navigate("/login")}} style={{ position: "relative", left: "-23px" }}>Login/Sign Up</p>
+            navigate("/login")}} style={{ position: "relative", left: "-21px" }}>Login/Sign Up</p>
         )}
         <Link className="login" to={"/contact-us"}>
-          <p style={{ position: "relative", left: "-16px" }}>Contact Us</p>
+          <p style={{ position: "relative", left: "-15px" }}>Contact Us</p>
         </Link>
       </div>
     </aside>
