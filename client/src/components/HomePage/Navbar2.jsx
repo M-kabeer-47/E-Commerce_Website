@@ -64,6 +64,7 @@ export default function Navbar2({ isWideScreen }) {
       });
     } else {
       setIsCartOpen(true);
+      document.body.style.overflow = "hidden";
     }
   };
   const handleOutsideClick = (event) => {
