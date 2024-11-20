@@ -766,7 +766,7 @@ html {
   left: -14px;
 }
 .account_div{
-  left:2px;
+  left:3px;
 }
 @media(max-width:1300px){
   .cartSidebar-products{
@@ -979,7 +979,7 @@ html {
     left: -16px;
   }
   .account_div{
-    left:5px;
+    left:6px;
   }
 }
 @media(max-width:520px){
