@@ -205,7 +205,6 @@ const tokenExpiry = localStorage.getItem('tokenExpiry');
                     flexDirection: "column",
                     border: "1px solid #ccc",
                     minHeight:"fit-content",
-                    minHeight:"600px",
                     maxHeight:"1000px",
                     gap: "20px",
                   }}

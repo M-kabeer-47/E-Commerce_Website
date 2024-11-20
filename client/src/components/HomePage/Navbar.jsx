@@ -78,6 +78,7 @@ export default function Navbar({page,isWideScreen}) {
 else{
   setIsCartOpen(true);
     dispatch(openCart());
+    document.body.style.overflow = "hidden";
 }
     
 
