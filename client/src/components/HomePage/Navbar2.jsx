@@ -74,6 +74,7 @@ export default function Navbar2({ isWideScreen }) {
       return;
     }
     setIsSidebarOpen(false);
+    document.body.style.overflow = "auto";
   };
 
   async function getUser() {

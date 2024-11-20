@@ -139,6 +139,7 @@ export default function CartSidebar(props) {
               onClick={() => {
                 props.setIsCartOpen(false);
                 dispatch(closeCart());
+                document.body.style.overflow = "auto";
               }}
             >
               <h4 style={{ color: "white" }}>Close</h4>
@@ -335,7 +336,9 @@ export default function CartSidebar(props) {
                   }}
                   onClick={() => {
                     dispatch(closeCart());
+                    document.body.style.overflow = "auto";
                     navigate("/cart");
+
                   }}
                 >
                   View cart
@@ -346,6 +349,7 @@ export default function CartSidebar(props) {
                   onClick={() => {
                     dispatch(closeCart());
                     navigate("/shipping");
+                    document.body.style.overflow = "auto";
                   }}
                   
                 >
