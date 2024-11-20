@@ -755,15 +755,18 @@ html {
 .wishlist_p{
   font-size: 1.1rem;
   position: relative;
-  left: 75px;
+  left: 76px;
 }
 .login_sidebar{
   position: relative;
-  left: -21px;
+  left: -20px;
 }
 .contact_sidebar{
   position: relative;
-  left: -15px;
+  left: -14px;
+}
+.account_div{
+  left:2px;
 }
 @media(max-width:1300px){
   .cartSidebar-products{
@@ -969,11 +972,14 @@ html {
   
   .login_sidebar{
     position: relative;
-    left: -22px;
+    left: -23px;
   }
   .contact_sidebar{
     position: relative;
-    left: -15px;
+    left: -16px;
+  }
+  .account_div{
+    left:5px;
   }
 }
 @media(max-width:520px){

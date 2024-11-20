@@ -170,7 +170,7 @@ const handleButtonClick = (e) => {
         {user ? (
           <li>
             <button type="button" onClick={handleButtonClick}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%", position: "relative", left: "6px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%", position: "relative" }} className="account_div">
                 <p>Account</p>
                 <div style={{ borderRadius: "50%", backgroundColor: "#007bff", display: "flex", alignItems: "center", justifyContent: "center", padding: "10px", color: "white", paddingInline: "7px", position: "relative", left: "-29px" }}>
                   {props.shortName}
