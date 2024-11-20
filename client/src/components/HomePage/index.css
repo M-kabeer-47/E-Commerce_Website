@@ -918,7 +918,7 @@ html {
   
   .lowerSidebar{
     padding: 0px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -965,7 +965,7 @@ html {
     
   }
   .cart-footer{
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
   .cartPage{
     padding-inline: 20px;
