@@ -288,7 +288,7 @@ button:focus-visible {
 .Loader {
   position: relative;
   top:300px;
-  left: 50%;
+  left: 46%;
 
   width: 45px;
   aspect-ratio: 1;
@@ -752,6 +752,19 @@ html {
   height: 100px;
   
 }
+.wishlist_p{
+  font-size: 1.1rem;
+  position: relative;
+  left: 75px;
+}
+.login_sidebar{
+  position: relative;
+  left: -21px;
+}
+.contact_sidebar{
+  position: relative;
+  left: -15px;
+}
 @media(max-width:1300px){
   .cartSidebar-products{
     max-height: 600px;
@@ -932,16 +945,13 @@ html {
     left: -28px;
     gap:10px;
   }
-  .iconText p{
-    color: white;
-    font-family: Poppins;
-      font-size: 16px;
-      font-weight: 400;
-  }
+  
+
   .login{
     position: relative;
     left: -18px
   }
+  
 }
 @media(max-width:600px){
   .cardsTitle{
@@ -950,6 +960,20 @@ html {
   
   .checkout-button{
     max-width:100%
+  }
+  .wishlist_p{
+    font-size: 1rem;
+    position: relative;
+    left: 79px;
+  }
+  
+  .login_sidebar{
+    position: relative;
+    left: -22px;
+  }
+  .contact_sidebar{
+    position: relative;
+    left: -15px;
   }
 }
 @media(max-width:520px){

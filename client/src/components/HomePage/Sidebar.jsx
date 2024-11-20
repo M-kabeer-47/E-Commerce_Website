@@ -153,8 +153,8 @@ const handleButtonClick = (e) => {
             return;
           }
         }} style={{ width: "100%" }}>
-          <div className="iconText" style={{ display: "flex", justifyContent: "space-between" }}>
-            <p style={{ position: "relative", left: "75px",fontSize:"1.1rem" }}>Wishlist</p>
+          <div className="iconText" style={{ display: "flex", justifyContent: "space-between",position:"relative",top:"4px" }}>
+            <p style={{ position: "relative" }} className="wishlist_p">Wishlist</p>
             <div className="icon-container">
               <FontAwesomeIcon
                 icon={faHeart}
@@ -209,13 +209,13 @@ const handleButtonClick = (e) => {
             </div>
           </li>
         ) : (
-          <p className="loginOption" onClick={() => {
+          <p className="loginOption login_sidebar" onClick={() => {
             localStorage.removeItem("uid");
             localStorage.removeItem("tokenExpiry");
-            navigate("/login")}} style={{ position: "relative", left: "-21px" }}>Login/Sign Up</p>
+            navigate("/login")}} style={{ position: "relative" }}>Login/Sign Up</p>
         )}
         <Link className="login" to={"/contact-us"}>
-          <p style={{ position: "relative", left: "-15px" }}>Contact Us</p>
+          <p style={{ position: "relative" }} className="contact_sidebar">Contact Us</p>
         </Link>
       </div>
     </aside>
