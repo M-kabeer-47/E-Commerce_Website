@@ -13,6 +13,11 @@ import { CircularProgress } from "@mui/material";
 const OrderCard = ({ order, index }) => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
+  function convertPrice(price) {
+    const formattedTotal = new Intl.NumberFormat('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(Price);
+    return formattedTotal;
+  }
+
   useEffect(() => {
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
@@ -118,14 +123,14 @@ const OrderCard = ({ order, index }) => {
                   <div className="span-row">
                     <span className={"itemLabel"}>Subtotal:</span>
                     <span className="span-subtotal">
-                      {parseFloat(item.price.replace(/[^0-9.-]+/g, "")) *
-                        item.quantity.toFixed(0)}
+                      {convertPrice(parseFloat(item.price.replace(/[^0-9.-]+/g, "")) *
+                        item.quantityInCart.toFixed(0))}
                     </span>
                   </div>
                 ) : (
                   <span className="span-subtotal">
-                    {parseFloat(item.price.replace(/[^0-9.-]+/g, "")) *
-                      item.quantityInCart.toFixed(0)}
+                    {convertPrice(parseFloat(item.price.replace(/[^0-9.-]+/g, "")) *
+                      item.quantityInCart.toFixed(0))}
                   </span>
                 )}
               </li>
@@ -198,6 +203,7 @@ const OrderHistoryPage = () => {
       dataLength={orders.length}
       next={getOrders}
       hasMore={hasMore}
+      scrollableTarget={".orderList"}
       // loader={<h4 style={{position:"relative",left:"50%",width:"100px"}}>Loading...</h4>}
       
 
