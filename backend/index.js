@@ -89,7 +89,7 @@ async function fetchProduct(id) {
 const app = express();
 app.use(
   cors({
-    origin:"https://e-commerce-website-cck4.vercel.app",  
+    origin:"https://e-commerce-website-cck4.vercel.app",   //
     credentials: true, 
     allowedHeaders: ["Content-Type", "Authorization"],
     methods: ["GET", "POST", "PUT", "DELETE"],
@@ -888,14 +888,16 @@ catch(err){
 app.post('/uploadImages', upload.array('images', 10), async (req, res) => {
   try {
     console.log("API Key: " + process.env.CLOUD_API_KEY);
-    console.log("Files: " + JSON.stringify(req.files));
+    
 
     let urls = [];
 
     // Loop over the uploaded files and upload them directly to Cloudinary
     for (const file of req.files) {
-      let url = await upload_on_cloudinary(file);  // Upload file directly to Cloudinary
+      let url = await upload_on_cloudinary(file);
+      
       if (url) {
+        console.log(url+"URL")  // Upload file directly to Cloudinary
         urls.push(url);
       }
     }
@@ -913,32 +915,31 @@ const upload_on_cloudinary = async (file) => {
   if (!file) {
     return null;
   } else {
-    try {
-      // Cloudinary upload with buffer
-      const response = await cloudinary.uploader.upload_stream(
+    return new Promise((resolve, reject) => {
+      // Create a buffer stream to pass the file buffer to Cloudinary
+      const bufferStream = new stream.PassThrough();
+      bufferStream.end(file.buffer); // End the stream with file data in the buffer
+
+      // Use Cloudinary's upload_stream method and handle the callback properly
+      const uploadStream = cloudinary.uploader.upload_stream(
         {
-          resource_type: 'auto',  // Automatically detect file type
+          resource_type: 'auto',  // Automatically detect the file type (image, video, etc.)
         },
         (error, result) => {
           if (error) {
             console.error("Cloudinary upload error:", error);
-            throw error;
+            reject(error);  // Reject the promise if an error occurs
           }
-          return result.secure_url;  // Get the URL after successful upload
+          if (result) {
+            console.log("Cloudinary upload success:", result);
+            resolve(result.secure_url);  // Resolve the promise with the secure URL
+          }
         }
       );
 
-      // Create a buffer stream to pass to Cloudinary
-      const bufferStream = new stream.PassThrough();
-      bufferStream.end(file.buffer);  // End the stream with file data in the buffer
-
       // Pipe the buffer stream to Cloudinary's upload function
-      bufferStream.pipe(response);
-
-    } catch (err) {
-      console.error("Error uploading to Cloudinary", err);
-      return null;
-    }
+      bufferStream.pipe(uploadStream);
+    });
   }
 };
 app.get("/api/products/search", async (req, res) => {

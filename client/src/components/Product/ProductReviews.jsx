@@ -31,7 +31,7 @@ const ProductReviews = ({ productId, backendUrl, reviews,fetchReviews }) => {
         rating: newReview.rating,
         review: newReview.text,
         images: newReview.images,
-        user: user.firstName + ' ' + user.lastName,
+        user: "Muhammad Kamran",
         productId: productId
       };
     
@@ -45,19 +45,7 @@ const ProductReviews = ({ productId, backendUrl, reviews,fetchReviews }) => {
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${localStorage.getItem("uid")}`
         }
-      }).then(res=>{
-        toast.error("Response: "+JSON.stringify(res.data),{
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-          transition: Bounce,
-        })
-      })
+      });
       urls = urls.data.urls;
       review.images = urls;
 
@@ -106,7 +94,7 @@ const ProductReviews = ({ productId, backendUrl, reviews,fetchReviews }) => {
     
     <div className="reviews-section">
       {reviews.length === 0 ? <p className="reviews-title">No reviews yet.</p> :<h3 className="reviews-title">Customer Reviews</h3>}
-      {user && (
+      {!user && (
         <>
       <button 
         className="leave-review-btn"
