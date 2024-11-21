@@ -105,9 +105,7 @@ const ProductReviews = ({ productId, backendUrl, reviews,fetchReviews }) => {
     
     
     <div className="reviews-section">
-      {reviews.length === 0 ? <p className="no-reviews">No reviews yet.</p> :
-      <>
-      <h3 className="reviews-title">Customer Reviews</h3>
+      {reviews.length === 0 ? <p className="reviews-title">No reviews yet.</p> :<h3 className="reviews-title">Customer Reviews</h3>}
       {user && (
         <>
       <button 
@@ -148,8 +146,8 @@ const ProductReviews = ({ productId, backendUrl, reviews,fetchReviews }) => {
           <button type="submit" className="submit-review-btn">Submit Review</button>
         </form>
       )}
-    </>
-    )}
+      
+    
 
       <div className="reviews-list">
         {reviews.map((review, index) => (
@@ -186,7 +184,7 @@ const ProductReviews = ({ productId, backendUrl, reviews,fetchReviews }) => {
         </div>
       )}
       </>
-      }
+      )}
     
     </div>
 
