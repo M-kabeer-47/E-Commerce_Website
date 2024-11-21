@@ -94,7 +94,7 @@ const ProductReviews = ({ productId, backendUrl, reviews,fetchReviews }) => {
     
     <div className="reviews-section">
       {reviews.length === 0 ? <p className="reviews-title">No reviews yet.</p> :<h3 className="reviews-title">Customer Reviews</h3>}
-      {user && (
+      {!user && (
         <>
       <button 
         className="leave-review-btn"
