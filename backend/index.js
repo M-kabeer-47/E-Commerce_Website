@@ -7,7 +7,8 @@ import jwt from 'jsonwebtoken';
 import Stripe from "stripe";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
-import fs from "fs";
+
+import stream from "stream";
 dotenv.config();
 import {v2 as cloudinary} from 'cloudinary';
 
@@ -884,49 +885,62 @@ catch(err){
 }
 )
 
-app.post("/uploadImages", upload.array("images", 10), async (req, res) => {
+app.post('/uploadImages', upload.array('images', 10), async (req, res) => {
   try {
-    console.log("API:" + process.env.CLOUD_API_KEY);
+    console.log("API Key: " + process.env.CLOUD_API_KEY);
     console.log("Files: " + JSON.stringify(req.files));
 
     let urls = [];
-    for (const file of req.files) {
-      // Upload file to cloudinary (or another service)
-      let url = await upload_on_cloudinary(`images/${file.filename}`);
-      urls.push(url);
 
-      // Remove file from server after upload
-      fs.unlink(`images/${file.filename}`, (err) => {
-        if (err) {
-          console.log(err);
-        }
-      });
+    // Loop over the uploaded files and upload them directly to Cloudinary
+    for (const file of req.files) {
+      let url = await upload_on_cloudinary(file);  // Upload file directly to Cloudinary
+      if (url) {
+        urls.push(url);
+      }
     }
 
     console.log("URLs:", urls);
     res.status(200).json({ urls: urls });
+
   } catch (err) {
     console.log(err);
-    res.status(400).json(err.message);
+    res.status(400).json({ error: err.message });
   }
 });
 
-const upload_on_cloudinary = async (file_path)=>{
-if(!file_path){
-  return null
-}
-else{
-  try{
-      let response = await cloudinary.uploader.upload(file_path)
-      
-      console.log("Response: "+JSON.stringify(response));
-      return response.secure_url;
+const upload_on_cloudinary = async (file) => {
+  if (!file) {
+    return null;
+  } else {
+    try {
+      // Cloudinary upload with buffer
+      const response = await cloudinary.uploader.upload_stream(
+        {
+          resource_type: 'auto',  // Automatically detect file type
+        },
+        (error, result) => {
+          if (error) {
+            console.error("Cloudinary upload error:", error);
+            throw error;
+          }
+          return result.secure_url;  // Get the URL after successful upload
+        }
+      );
+
+      // Create a buffer stream to pass to Cloudinary
+      const bufferStream = new stream.PassThrough();
+      bufferStream.end(file.buffer);  // End the stream with file data in the buffer
+
+      // Pipe the buffer stream to Cloudinary's upload function
+      bufferStream.pipe(response);
+
+    } catch (err) {
+      console.error("Error uploading to Cloudinary", err);
+      return null;
+    }
   }
-  catch(err){
-      console.log(err)
-  }
-}
-}
+};
 app.get("/api/products/search", async (req, res) => {
   let { query } = req.query;
   console.log("Query: "+query);
