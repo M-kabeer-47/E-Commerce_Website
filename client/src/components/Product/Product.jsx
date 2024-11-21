@@ -22,7 +22,7 @@ export default function Product() {
   const backendUrl = useSelector((state) => state.user.backendUrl);
   const [isWideScreen, setIsWideScreen] = useState(window.innerWidth >= 1050);
   const [product, updateProduct] = useState(null);
-  const [isLoading, updateLoading] = useState(true);
+  const [isLoading, updateLoading] = useState(false);
   const [animationClass, setAnimationClass] = useState(""); // State for animation class
   const location = useLocation();
   const [reviews, setReviews] = useState([]);
@@ -49,6 +49,7 @@ export default function Product() {
   // Fetch product data
   async function fetchProduct() {
     try {
+      updateLoading(true);
       let product = await axios.get(`${backendUrl}/product/${id}`);
       updateProduct(product.data);
       setReviews(product.data.reviews);
@@ -90,14 +91,14 @@ export default function Product() {
   return (
     <>
       
-      {!isLoading && (
+      
         <div className="homePage">
           {isWideScreen ? <Navbar /> : <Navbar2 />}
           <div className="productPageDiv">
             <div className={`productImageDiv fade-in ${animationClass}`}>
               <img src={product.imageUrl} alt={product.name} style={{objectFit:"contain",height:"400px"}}/>
             </div>
-
+            {isLoading ? <div className="Loader"></div> : (
             <div className={`productDetailsDiv fade-in ${animationClass}`}>
               <h2 className="productTitle">{product.name}</h2>
               <p className="productCategory">{product.category}</p>
@@ -313,13 +314,15 @@ export default function Product() {
                 />
               </div>
             </div>
+            )}
           </div>
+          
           <ProductReviews productId={id} backendUrl={backendUrl} reviews={reviews} fetchReviews={fetchReviews} />
           <SimilarProducts category={product.category} currentProductId={id} backendUrl={backendUrl} />
           <Footer />
         </div>
         
-      )}
+      
     </>
   );
 }
