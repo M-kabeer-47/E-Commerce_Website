@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { set } from "mongoose";
 
 export default function RegisterUser() {
   const [submiting, setSubmitting] = useState(false);
@@ -117,7 +118,8 @@ export default function RegisterUser() {
       setError("email", { type: "manual", message: "Email already exists" });
       return;
     }
-    sendData(data);
+    setSubmitting(true);
+    await sendData(data);
     toast.success("User Registered Successfully", {
       position: "bottom-right",
       autoClose: 3000,
@@ -143,7 +145,7 @@ export default function RegisterUser() {
       email: email,
       password: user.password,
     };
-    setSubmitting(true);
+    
     await axios
       .post(`${backendUrl}/register`, {
         User,
