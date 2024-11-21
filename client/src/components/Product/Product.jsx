@@ -44,6 +44,18 @@ export default function Product() {
         behavior: "smooth",
       });
     }, 100);
+    window.addEventListener("resize", handleResize);
+    fetchProduct();
+
+    
+    const timer = setTimeout(() => {
+      setAnimationClass("visible");
+    }, 100); 
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      clearTimeout(timer); 
+    };
   }, []); // Empty dependency array ensures this only runs on mount
 
   // Fetch product data
