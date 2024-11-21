@@ -31,7 +31,7 @@ const ProductReviews = ({ productId, backendUrl, reviews,fetchReviews }) => {
         rating: newReview.rating,
         review: newReview.text,
         images: newReview.images,
-        user: "Muhammad Kamran",
+        user: user.firstName + ' ' + user.lastName,
         productId: productId
       };
     
