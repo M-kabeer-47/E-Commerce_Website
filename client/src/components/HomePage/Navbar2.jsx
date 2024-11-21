@@ -47,6 +47,7 @@ export default function Navbar2({ isWideScreen }) {
 
   const handleHamburgerClick = () => {
     setIsSidebarOpen(true);
+    document.body.style.overflow = "hidden";
     
   };
   const handleCartClick = () => {
@@ -75,6 +76,7 @@ export default function Navbar2({ isWideScreen }) {
       return;
     }
     setIsSidebarOpen(false);
+    document.body.style.overflow = "auto";
     
   };
 

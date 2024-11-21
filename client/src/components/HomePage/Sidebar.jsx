@@ -56,11 +56,13 @@ const handleButtonClick = (e) => {
   if (isActive) {
     subMenu.style.height = "0px";
     button.classList.remove("active");
+    document.body.style.overflow = "auto";
     
   } else {
     // Close all other sub-menus
     document.querySelectorAll(".sub-menu").forEach((menu) => {
       menu.style.height = "0px";
+      document.body.style.overflow = "hidden"
     });
     document.querySelectorAll(".sidebar ul button").forEach((btn) => {
       btn.classList.remove("active");
