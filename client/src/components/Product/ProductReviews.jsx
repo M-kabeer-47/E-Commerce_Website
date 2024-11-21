@@ -45,7 +45,7 @@ const ProductReviews = ({ productId, backendUrl, reviews,fetchReviews }) => {
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${localStorage.getItem("uid")}`
         }
-      });
+      })
       urls = urls.data.urls;
       review.images = urls;
 
@@ -72,7 +72,21 @@ const ProductReviews = ({ productId, backendUrl, reviews,fetchReviews }) => {
       setShowReviewForm(false);
     } catch (error) {
       console.error('Error submitting review:', error);
-      toast.error('Failed to submit review. Please try again.');
+      const errorMessage =
+        error.response && error.response.data
+          ? error.response.data
+          : 'An unexpected error occurred';
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
+      });
     }
   };
 
