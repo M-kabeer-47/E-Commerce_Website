@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import CartSidebar from "./CartSidebar";
 import isTokenExpired from "../tokenExpiry";
-import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { toast, Bounce } from "react-toastify";
@@ -14,7 +13,7 @@ import { useLocation } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { setCartCount, setWishlistCount } from "../../store/Counts.js";
 import { setUser } from "../../store/user";
-import { use } from "passport";
+
 
 export default function Navbar2({ isWideScreen }) {
   const backendUrl = useSelector((state) => state.user.backendUrl);
