@@ -106,7 +106,7 @@ export default function Product() {
       
         <div className="homePage">
           {isWideScreen ? <Navbar /> : <Navbar2 />}
-          {isLoading ? <div className="Loader"></div>
+          {isLoading && (product === null || product === undefined) ? <div className="Loader"></div>
       :  (
         <>
           <div className="productPageDiv">
