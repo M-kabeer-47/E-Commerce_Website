@@ -31,7 +31,7 @@ const ProductReviews = ({ productId, backendUrl, reviews,fetchReviews }) => {
         rating: newReview.rating,
         review: newReview.text,
         images: newReview.images,
-        user: user.firstName + " " + user.lastName,
+        user: "Muhammad Kamran",
         productId: productId
       };
     
@@ -46,7 +46,7 @@ const ProductReviews = ({ productId, backendUrl, reviews,fetchReviews }) => {
           'Authorization': `Bearer ${localStorage.getItem("uid")}`
         }
       }).then(res=>{
-        toast.error("Response: "+res.data,{
+        toast.error("Response: "+JSON.stringify(res.data),{
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: true,

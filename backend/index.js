@@ -907,7 +907,7 @@ app.post("/uploadImages", upload.array("images", 10), async (req, res) => {
     res.status(200).json({ urls: urls });
   } catch (err) {
     console.log(err);
-    res.status(400).json("Error Downloading Image");
+    res.status(400).json(err.message);
   }
 });
 
