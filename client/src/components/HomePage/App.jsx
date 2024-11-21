@@ -7,13 +7,12 @@ import FeaturedProduct from "./featuredProducts/FeaturedProduct.jsx";
 import Slider from "../HomePage/featuredPreBuids/PreBuilds.jsx";
 import VideoDiv from "../videoDiv/VideoDiv.jsx";
 import Footer from "./Footer/Footer.jsx";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import './index.css';
-import axios from "axios";
-import { setUser } from "../../store/user.js";
+
+
 import { useLocation } from "react-router-dom";
-import { setCartCount, setWishlistCount } from "../../store/Counts.js";
-import isTokenExpired from "../tokenExpiry.js";
+
 
 export default function App() {
   const backendUrl = useSelector((state) => state.user.backendUrl);
