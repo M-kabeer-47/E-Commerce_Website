@@ -22,7 +22,7 @@ export default function Login() {
   
 const [isEmailFocused, setIsEmailFocused] = useState(false);
 const [isPasswordFocused, setIsPasswordFocused] = useState(false);  
-
+const [submitting,setSubmitting] = useState(false);
 const [platform,setPlatform] = useState("");
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -58,20 +58,20 @@ const {register,handleSubmit,formState: {errors},setError} = useForm({
     
     try{
 
-    
+    setSubmitting(true);
     let response = await axios.post(`${backendUrl}/login`,{ email: Email, password: password })
     
    
   if(response.data.data === "Google"){
     
-    
+setSubmitting(false);
     setPlatform("google");
   return;
 }
    
     else if(response.data.data === "Success"){
       
-      
+      setSubmitting(false);
       localStorage.setItem("uid",response.data.token);
       localStorage.setItem("tokenExpiry",response.data.maxAge);
       window.location.href = "https://e-commerce-website-cck4.vercel.app"; 
@@ -80,7 +80,7 @@ const {register,handleSubmit,formState: {errors},setError} = useForm({
 }
 catch(error){
   if(error.response.data === "User Does Not Exist"){
-    
+    setSubmitting(false);
     
     setError("email",{type:"manual",message: "User doesn't exist"})
     
@@ -88,7 +88,7 @@ catch(error){
 }
  else if(error.response.data === "Incorrect Password"){
     
-    
+    setSubmitting(false);
     setError("password",{type:"manual",message:"Incorrect Password"})
     return
 } 
@@ -157,7 +157,7 @@ const navigate = useNavigate();
           
           navigate('/register');
         }}>Sign up</span></p>
-        <button type="submit" className='login-button'>Login</button>
+        <button type="submit" className='login-button'>{submitting ? "Logging in..." : "Login"}</button>
         <h4 style={{color:"white",fontWeight:"normal"}}>or</h4>
         <button  className='login-button google-button' onClick={()=>{
           event.preventDefault();

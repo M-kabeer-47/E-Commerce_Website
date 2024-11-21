@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function RegisterUser() {
-  const [submit, updateSubmit] = useState(false);
+  const [submiting, setSubmitting] = useState(false);
   const backendUrl = useSelector((state) => state.user.backendUrl);
   const navigate = useNavigate();
   
@@ -104,7 +104,7 @@ export default function RegisterUser() {
     let response = await axios.post(`${backendUrl}/checkEmail`, {
       email:Email,
     });
-    alert(response.data)
+    
     if (response.data.data === "Google") {
       setPlatform("google");
       return true;
@@ -129,6 +129,7 @@ export default function RegisterUser() {
       theme: "colored",
       transition: Bounce,
     });
+    setSubmitting(false);
     setTimeout(() => {
       navigate("/login");
     }, 3000);
@@ -142,15 +143,18 @@ export default function RegisterUser() {
       email: email,
       password: user.password,
     };
+    setSubmitting(true);
     await axios
       .post(`${backendUrl}/register`, {
         User,
       })
       .then((response) => {
         console.log(response.data);
+
         return response.data;
       })
       .catch((err) => {
+        setSubmitting(false);
         console.log(err);
         return false;
       });
@@ -482,7 +486,7 @@ export default function RegisterUser() {
             </div>
           </div>
           <button type="submit" className="login-button">
-            Register
+            {submiting ? "Registering..." : "Register"}
           </button>
         </form>
       </div>
