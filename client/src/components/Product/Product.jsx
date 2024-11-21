@@ -109,7 +109,7 @@ export default function Product() {
           {isWideScreen ? <Navbar /> : <Navbar2 />}
 
           <div className="productPageDiv">
-          {isLoading || !product ? <div className="Loader"></div>
+          {isLoading || !product ? <div className="Loader" style={{position:"absolute",left:"47%",top:"200px"}}></div>
       :  (
         <>
             <div className={`productImageDiv fade-in ${animationClass}`}>
