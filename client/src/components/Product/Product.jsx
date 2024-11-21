@@ -94,11 +94,13 @@ export default function Product() {
       
         <div className="homePage">
           {isWideScreen ? <Navbar /> : <Navbar2 />}
+          {isLoading ? <div className="Loader"></div> : (
+            <>
           <div className="productPageDiv">
             <div className={`productImageDiv fade-in ${animationClass}`}>
               <img src={product.imageUrl} alt={product.name} style={{objectFit:"contain",height:"400px"}}/>
             </div>
-            {isLoading ? <div className="Loader"></div> : (
+            
             <div className={`productDetailsDiv fade-in ${animationClass}`}>
               <h2 className="productTitle">{product.name}</h2>
               <p className="productCategory">{product.category}</p>
@@ -313,9 +315,14 @@ export default function Product() {
                   }}
                 />
               </div>
+
+              
             </div>
-            )}
+            
+            
           </div>
+          </>
+          )}
           
           <ProductReviews productId={id} backendUrl={backendUrl} reviews={reviews} fetchReviews={fetchReviews} />
           <SimilarProducts category={product.category} currentProductId={id} backendUrl={backendUrl} />
