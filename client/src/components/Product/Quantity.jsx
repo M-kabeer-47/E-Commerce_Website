@@ -98,7 +98,7 @@ const IncrementDecrementBtn = ({ count, maxValue, cart, product,requestBackend,s
       if(type==="page"){
         
         dispatch(decrementQuantity())
-        setIncrementButtonClicked(false); // Reset state
+        setDecrementButtonClicked(false); // Reset state
         
       }
       else{
@@ -113,14 +113,14 @@ const IncrementDecrementBtn = ({ count, maxValue, cart, product,requestBackend,s
   },[decrementButtonClicked,decrementClicks]);
   const handleIncrementCounter = () => {
     if(type==="page"){
-      if(quantity < maxValue -1){
-        setIncrementClicks((prevState)=>prevState+1);
-      setQuantity((prevState) => prevState + 1)
+      if(ProductPageQuantity < maxValue -1){
+        // setIncrementClicks((prevState)=>prevState+1);
+      // setQuantity((prevState) => prevState + 1)
         setIncrementButtonClicked(true);
       }
     }
     else{
-    if (quantity < maxValue) {
+    if (quantity < maxValue-1) {
       setIncrementClicks((prevState)=>prevState+1);
       setQuantity((prevState) => prevState + 1)
         setIncrementButtonClicked(true);  
@@ -129,13 +129,23 @@ const IncrementDecrementBtn = ({ count, maxValue, cart, product,requestBackend,s
   };
 
   const handleDecrementCounter = () => {
-    if (quantity > 1) {
+    if(type==="page"){
+      if(ProductPageQuantity > 1){
+        // setDecrementClicks((prevState)=>prevState+1);
+        // setQuantity((prevState) => prevState - 1)
+        setDecrementButtonClicked(true);
+      }
+    }
+    else{
+      
+      if (quantity > 1) {
       setQuantity((prevState) => prevState - 1);
       setDecrementClicks((prevState)=>prevState+1);
       setDecrementButtonClicked(true);
       
       // Handle decrement logic if needed
     }
+  }
   };
 
   return (
