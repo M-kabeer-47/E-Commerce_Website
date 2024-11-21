@@ -31,7 +31,7 @@ const ProductReviews = ({ productId, backendUrl, reviews,fetchReviews }) => {
         rating: newReview.rating,
         review: newReview.text,
         images: newReview.images,
-        user: "Muhammad Kamran",
+        user: user.firstName + ' ' + user.lastName,
         productId: productId
       };
     
@@ -105,7 +105,11 @@ const ProductReviews = ({ productId, backendUrl, reviews,fetchReviews }) => {
     
     
     <div className="reviews-section">
+      {reviews.length === 0 ? <p className="no-reviews">No reviews yet.</p> :
+      <>
       <h3 className="reviews-title">Customer Reviews</h3>
+      {user && (
+        <>
       <button 
         className="leave-review-btn"
         onClick={() => setShowReviewForm(!showReviewForm)}
@@ -144,6 +148,8 @@ const ProductReviews = ({ productId, backendUrl, reviews,fetchReviews }) => {
           <button type="submit" className="submit-review-btn">Submit Review</button>
         </form>
       )}
+    </>
+    )}
 
       <div className="reviews-list">
         {reviews.map((review, index) => (
@@ -167,7 +173,9 @@ const ProductReviews = ({ productId, backendUrl, reviews,fetchReviews }) => {
             </div>
           </div>
         ))}
+      
       </div>
+
 
       {selectedImage && (
         <div className="image-modal" onClick={() => setSelectedImage(null)}>
@@ -177,7 +185,11 @@ const ProductReviews = ({ productId, backendUrl, reviews,fetchReviews }) => {
           </div>
         </div>
       )}
+      </>
+      }
+    
     </div>
+
     </>
   );
 
