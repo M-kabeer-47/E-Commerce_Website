@@ -15,8 +15,12 @@ const Slider = () => {
       timeout = setTimeout(async()=>{
         let response = (await axios.get(`${backendUrl}/products/value-deals?page=1`))
         console.log(response.data);
-        
-        setFeaturedProducts(response.data)
+        const sortedPreBuilds = response.data.sort((a, b) => {
+          const numA = parseInt(a.name.split(" ")[1]); // Extract the number from 'Value X'
+          const numB = parseInt(b.name.split(" ")[1]); // Extract the number from 'Value X'
+          return numA - numB; // Compare the numbers
+        });
+        setFeaturedProducts(sortedPreBuilds)
 
       },100)
 

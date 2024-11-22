@@ -121,8 +121,8 @@ export default function AboutUs() {
         {isWideScreen ? <Navbar /> : <Navbar2 />}
         <section className="about-us-section">
           <header className="about-us-titles" style={{paddingInline:"20px"}}>
-            <h2>Leading the Way in Gaming PC Innovation</h2>
-            <p>
+            <h2 style={{textAlign:"center"}} className="pic-h2">Leading the Way in Gaming PC Innovation</h2>
+            <p className="pic_p">
               Your Gaming PC Store - Delivering Top-Quality Performance Systems
               Worldwide.
             </p>
@@ -176,8 +176,8 @@ export default function AboutUs() {
             that cater to every need. Together, let's keep pushing the
             boundaries of what's possible in gaming and technology.
           </p>
-          <p className="company-details">Happy gaming!</p>
-        </div>
+          
+        
         <h2 className="company-title">Our Mission</h2>
         <p className="company-details">
           At the core of our company lies a mission that has guided us from the
@@ -216,9 +216,11 @@ export default function AboutUs() {
           and we make that happen. With fast shipping options and easy returns,
           shopping with us is hassle-free.
         </p>
+        
+      </div>
       </div>
       <h2
-        className="company-title"
+        className="company-title carousel-title"
         style={{ textAlign: "center", marginTop: "50px" }}
       >
         Powered by the Best
@@ -239,6 +241,7 @@ export default function AboutUs() {
           ))}
         </div>
       </div>
+      
 
       <Footer />
     </div>
