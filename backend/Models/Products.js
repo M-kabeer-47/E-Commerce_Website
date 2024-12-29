@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const ProductSchema = new mongoose.Schema({
     name: {
@@ -33,11 +33,12 @@ const ProductSchema = new mongoose.Schema({
         longDescription: {
             type:Array,
             required: true,
-            
+
     },
     reviews:{
         type:Array,
-        default:[]
+        default:[],
+        
     },
     quantity: {
         type: Number,

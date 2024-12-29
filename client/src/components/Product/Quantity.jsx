@@ -33,7 +33,7 @@ const IncrementDecrementBtn = ({ count, maxValue, cart, product,requestBackend,s
         },600);
         
 
-        setIncrementClicks(0); // Reset quantity after successful increment
+        setIncrementClicks(0); 
       } catch (err) {
         console.error(err);
       }

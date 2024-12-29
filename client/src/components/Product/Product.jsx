@@ -56,9 +56,9 @@ export default function Product() {
       window.removeEventListener("resize", handleResize);
       clearTimeout(timer); 
     };
-  }, []); // Empty dependency array ensures this only runs on mount
+  }, []); 
 
-  // Fetch product data
+  
   async function fetchProduct() {
     try {
       updateLoading(true);
