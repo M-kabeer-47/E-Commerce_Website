@@ -248,7 +248,7 @@ export default function Product() {
                         console.log("Please Login");
 
                         toast.info("Please Login", {
-                          position: "top-right",
+                          position: "bottom-right",
                           autoClose: 3000,
                           hideProgressBar: true,
                           closeOnClick: true,
@@ -286,7 +286,7 @@ export default function Product() {
       
                           dispatch(incrementWishlistCount());
       
-                          toast.info("Successfully added to wishlist!", {
+                          toast.success("Successfully added to wishlist!", {
                             position: "bottom-right",
                             autoClose: 3000,
                             hideProgressBar: true,
@@ -316,7 +316,7 @@ export default function Product() {
                       }
                     } else {
                       toast.info("Please Login", {
-                        position: "top-right",
+                        position: "bottom-right",
                         autoClose: 3000,
                         hideProgressBar: true,
                         closeOnClick: true,

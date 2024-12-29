@@ -157,8 +157,8 @@ const Product = ({ product, index }) => {
               }
               } 
               else {
-                toast.alert("Please Login", {
-                  position: "top-right",
+                toast.info("Please Login", {
+                  position: "bottom-right",
                   autoClose: 3000,
                   hideProgressBar: true,
                   closeOnClick: true,
@@ -195,7 +195,7 @@ const Product = ({ product, index }) => {
 
                     dispatch(incrementWishlistCount());
 
-                    toast.info("Successfully added to wishlist!", {
+                    toast.success("Successfully added to wishlist!", {
                       position: "bottom-right",
                       autoClose: 3000,
                       hideProgressBar: true,
@@ -228,7 +228,7 @@ const Product = ({ product, index }) => {
                 
 
                 toast.info("Please Login", {
-                  position: "top-right",
+                  position: "bottom-right",
                   autoClose: 3000,
                   hideProgressBar: true,
                   closeOnClick: true,
