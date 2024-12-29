@@ -157,7 +157,7 @@ const Product = ({ product, index }) => {
               }
               } 
               else {
-                toast.info("Please Login", {
+                toast.alert("Please Login", {
                   position: "top-right",
                   autoClose: 3000,
                   hideProgressBar: true,
