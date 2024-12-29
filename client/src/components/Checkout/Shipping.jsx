@@ -516,7 +516,7 @@ export default function Shipping() {
                 Shipping Details
               </h3>
               <div className="shipping-inputs">
-                {["Name", "City", "Province", "Zip", "Address", "Phone"].map(
+                {["Name", "City", "State", "Zip", "Address", "Phone"].map(
                   (input) => (
                     <div className="shipping-input" key={input}>
                       <label htmlFor={input} style={{ color: "#6f94bc" }}>
