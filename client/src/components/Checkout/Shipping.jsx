@@ -40,7 +40,7 @@ export default function Shipping() {
     
     name: "",
     city: "",
-    province: "",
+    state: "",
     zip: "",
     address: "",
     phone: "",
@@ -188,7 +188,7 @@ export default function Shipping() {
     if (
       details.name === "" ||
       details.city === "" ||
-      details.province === "" ||
+      details.state === "" ||
       details.zip === "" ||
       details.address === "" ||
       details.phone === "" ||
