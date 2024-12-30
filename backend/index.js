@@ -89,7 +89,7 @@ async function fetchProduct(id) {
 const app = express();
 app.use(
   cors({
-    origin:"https://e-commerce-website-cck4.vercel.app",   //
+    origin:"https://e-commerce-website-cck4.vercel.app",
     credentials: true, 
     allowedHeaders: ["Content-Type", "Authorization"],
     methods: ["GET", "POST", "PUT", "DELETE"],
@@ -98,7 +98,7 @@ app.use(
 
 
 app.use(express.json());
-app.use(cookieParser()); 
+ 
 
 
 app.use(passport.initialize());
@@ -118,7 +118,7 @@ app.post("/create-payment-intent",authenticateUser, async (req, res) => {
     
     const paymentIntent = await stripe.paymentIntents.create({
       amount: 500,
-      currency: "usd",  // Use supported currency
+      currency: "usd",  
       payment_method_types: ["card"],
     });
     res.send({ clientSecret: paymentIntent.client_secret });
@@ -154,7 +154,6 @@ app.get("/products/:category", async (req, res) => {
 
   const categoryObject = await fetchCategory(category,page);
   
-  
   if (categoryObject === false) {
     res.json({ error: "Category not found." });
   } else {
@@ -167,16 +166,12 @@ catch(err){
 }
 }
 );
-app.get("/check",async(req,res)=>{
-  res.send("Server is runninng");
-}
-)
+
 
 app.get("/search/:text", async (req, res) => {
   const { text } = req.params;
   const { page } = req.query;
   console.log("inside search: " +page);
-  
   try {
     const results = await products.find({
       $or: [
@@ -477,7 +472,6 @@ app.post("/admin_order",authenticateUser,async(req,res)=>{
       res.status(400).json({message:"Fatal error"})
     }
 }
-
 )
 app.put("/increment/:id",authenticateUser,async(req,res)=>{
   

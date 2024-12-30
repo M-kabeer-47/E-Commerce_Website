@@ -10,22 +10,31 @@ import FilterDiv from '../Products/FilterDiv.jsx';
 
 import {updateSearch} from '../../store/search.js';
 import SearchResulsDisplay from '../Products/SearchResultsDisplay.jsx';
-import { set } from 'mongoose';
+
 export default function SearchResult() {
-  const backendUrl = useSelector((state) => state.user.backendUrl);
+  
   const [title, updateTitle] = useState("");
   const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
+  const [isWideScreen, setIsWideScreen] = useState(window.innerWidth >= 1050);
 
-  const searchResults = useSelector((state) => state.search.searchResult);
-const navigate =useNavigate()
-const queryParams = new URLSearchParams(useLocation().search);
-const query = queryParams.get('text');
-const renderPagination = () => {  
-  const showNextButton = !loading && (searchResults.length >= 9 || hasMore);
 
+  const queryParams = new URLSearchParams(location.search);
+  const query = queryParams.get('text');
+
+
+  
+  const backendUrl = useSelector((state) => state.user.backendUrl);
+
+
+  const navigate =useNavigate()
+  const location = useLocation();
+  const dispatch = useDispatch();
+
+  
+  const renderPagination = () => {  
+  const showNextButton = !loading && (hasMore);
   return (
     <div className="pagination" style={{position: "relative",left:"30%",width:"70%",top:"50px"}}>
       <button
@@ -92,6 +101,7 @@ const renderPagination = () => {
       }
       else if(results.data.length === 0){
         setHasMore(false);
+        return;
       }
       else{
         
@@ -106,10 +116,7 @@ const renderPagination = () => {
        
         updateTitle(query);
         dispatch(updateSearch([...results]));
-        
-        
-    
-        
+              
       }     
       }
     catch (error) {
@@ -117,41 +124,13 @@ const renderPagination = () => {
       setLoading(false);
     }
   }
-  const initialFetch = async () => {
-    try {
-      setLoading(true);
-      let results = await axios.get(`${backendUrl}/search/${query}?page=${1}`);
-      if(results.data === false ){
-        
-        navigate("/notfound");
-      }
-      else if(results.data.length === 0){
-        setHasMore(false);
-      }
-      else{
-        results = results.data;
-        
-        updateTitle(query);
-        dispatch(updateSearch([...results]));
-        setPage(2);
-        setTimeout(()=>{
-          setLoading(false);
-        },1000)
-        
-        
-      }     
-      }
-    catch (error) {
-      console.error(error);
-      setLoading(false);
-    }
-  }
+  
 
-  const location = useLocation();
+
 useEffect(()=>{
   setLoading(true);
 },[location.pathname])
-  const [isWideScreen, setIsWideScreen] = useState(window.innerWidth >= 1050);
+  
   
   
   const handleResize = () => {
@@ -160,24 +139,17 @@ useEffect(()=>{
 
   useEffect(() => {
     setLoading(true);
-    window.scrollTo({
+     window.scrollTo({
       top: 0,
       behavior: 'smooth' 
     });
-    
-  window.addEventListener("resize", handleResize);
-  
-    
-    const query = queryParams.get('text');
+    handleResize();
+    // window.addEventListener("resize", handleResize);
     requestBackend(query)
     
-    
-  
-  return () => {
-    window.removeEventListener("resize", handleResize);
-    
-  };
-
+  //   return () => {
+  //   window.removeEventListener("resize", handleResize);
+  // };
   }, [location.search,query,page]);
 
   
@@ -194,10 +166,10 @@ useEffect(()=>{
           />
           <SearchResulsDisplay
             title={title}
-            requestBackend={requestBackend}
+            
             page={page}
-            hasMore={hasMore}
-            query={queryParams.get('text')}
+            
+            
             loading={loading}
             renderPagination={renderPagination}
           

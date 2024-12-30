@@ -12,10 +12,8 @@ const ProductDisplay = () => {
   const [loading, setLoading] = useState(true);
   const [title, updateTitle] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [error, setError] = useState(null);
-  
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -46,7 +44,7 @@ const ProductDisplay = () => {
 
     try {
       setLoading(true);
-      setError(null);
+      
       
       const response = await axios.get(`${backendUrl}/products/${category}`, {
         params: {
@@ -72,23 +70,16 @@ const ProductDisplay = () => {
           navigate("/notfound");
         } else {
           setHasMore(false);
-          setTotalPages(Math.max(1, pageNumber - 1));
         }
         setLoading(false);
         return;
       }
-
-      
       updateTitle(categoryObject[0].category);
       dispatch(updateCategory(categoryObject));
       
-      
+    
       setHasMore(categoryObject.length >= 9);
-      if (categoryObject.length >= 9) {
-        setTotalPages(prev => Math.max(prev, pageNumber + 1));
-      } else {
-        setTotalPages(pageNumber);
-      }
+      
       
       setLoading(false);
     } catch (error) {
@@ -130,7 +121,7 @@ const ProductDisplay = () => {
   };
 
   const renderPagination = () => {
-    const showNextButton = !loading && (CATEGORY.length >= 9 || hasMore);
+    const showNextButton = !loading && (hasMore);
 
     return (
       <div className="pagination">

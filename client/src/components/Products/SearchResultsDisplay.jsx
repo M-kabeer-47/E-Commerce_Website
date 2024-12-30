@@ -10,7 +10,7 @@ import {useEffect, useState } from "react";
 
 
 
-export default function SearchResultsDisplay({title,requestBackend,hasMore,query,loading,renderPagination}) {
+export default function SearchResultsDisplay({title,loading,renderPagination}) {
 
   const isFiltered = useSelector((state) => state.search.isFiltered);
   let searchResults;

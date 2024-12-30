@@ -14,7 +14,7 @@ import RegisterUser from '../Forms/RegisterUser.jsx';
 import OrderHistory from '../OrderHistory/OrderHistory.jsx';
 import CartPage from '../Cart&Wishlist/CartPage.jsx';
 import Wishlist from '../Cart&Wishlist/Wishlist.jsx';
-import ReactNotification from 'react-notifications-component';
+
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Shipping from '../Checkout/Shipping.jsx';
@@ -123,7 +123,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
       <RouterProvider router={router}>
-        <ReactNotification />
         <ToastContainer />
       </RouterProvider>
     </Provider>

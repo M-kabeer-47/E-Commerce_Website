@@ -24,9 +24,12 @@ axios.defaults.withCredentials = true;
 export default function CartSidebar(props) {
   const backendUrl = useSelector((state) => state.user.backendUrl);
   const dispatch = useDispatch();
-  const token = localStorage.getItem("uid");
-  const [cart, setCart] = useState([]);
   const navigate = useNavigate();
+
+  
+  const token = localStorage.getItem("uid");
+
+  const [cart, setCart] = useState([]);
   const [EmptyCart, setEmptyCart] = useState(false);
   const [style, setStyle] = useState(false);
  
@@ -57,9 +60,6 @@ export default function CartSidebar(props) {
   }
   useEffect(() => {
     if (EmptyCart) {
-      
-      
-
       if (token) {
         try {
           axios.post(
@@ -138,7 +138,7 @@ export default function CartSidebar(props) {
               }}
               onClick={() => {
                 props.setIsCartOpen(false);
-                dispatch(closeCart());
+                // dispatch(closeCart());
                 document.body.style.overflow = "auto";
               }}
             >
@@ -335,7 +335,8 @@ export default function CartSidebar(props) {
 
                   }}
                   onClick={() => {
-                    dispatch(closeCart());
+                    // dispatch(closeCart());
+                    setIsCartOpen(false);
                     document.body.style.overflow = "auto";
                     navigate("/cart");
 
@@ -347,7 +348,7 @@ export default function CartSidebar(props) {
                   className="checkout-button cart-checkout"
                   style={{maxWidth:"100%"}}
                   onClick={() => {
-                    dispatch(closeCart());
+                    // dispatch(closeCart());
                     navigate("/shipping");
                     document.body.style.overflow = "auto";
                   }}

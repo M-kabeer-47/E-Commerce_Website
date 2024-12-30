@@ -22,7 +22,6 @@ export default function Navbar2({ isWideScreen }) {
   const [hoveredIcon, setHoveredIcon] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [userLoading, setUserLoading] = useState(false);
   const [shortName, setShortName] = useState("");
 
   const token = localStorage.getItem("uid");
@@ -90,14 +89,14 @@ export default function Navbar2({ isWideScreen }) {
           localStorage.setItem("tokenExpiry", query.get("maxAge"));
         }
 
-        setUserLoading(true);
+        
         User = await axios.get(`${backendUrl}/user`, {
           headers: {
             Authorization: `Bearer ${token || Token}`,
           },
         });
 
-        setUserLoading(false);
+        
         dispatch(setUser(User.data));
         dispatch(setCartCount(User.data.cart.length));
         dispatch(setWishlistCount(User.data.wishlist.length));
@@ -118,19 +117,19 @@ export default function Navbar2({ isWideScreen }) {
       dispatch(setUser(null));
     }
   }
-  useEffect(() => {
-    if (user != undefined || user != null) {
-      if (!Object.hasOwn(user, "lastName")) {
-        setShortName(
-          user.firstName[0].toUpperCase() + user.firstName[1].toUpperCase()
-        );
-      } else {
-        setShortName(
-          user.firstName[0].toUpperCase() + user.lastName[0].toUpperCase()
-        );
-      }
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user != undefined || user != null) {
+  //     if (!Object.hasOwn(user, "lastName")) {
+  //       setShortName(
+  //         user.firstName[0].toUpperCase() + user.firstName[1].toUpperCase()
+  //       );
+  //     } else {
+  //       setShortName(
+  //         user.firstName[0].toUpperCase() + user.lastName[0].toUpperCase()
+  //       );
+  //     }
+  //   }
+  // }, [user]);
 
   useEffect(() => {
     getUser();

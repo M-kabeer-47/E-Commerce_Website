@@ -14,7 +14,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {openCart,} from "../../store/sidebars.js";
 import { useNavigate } from "react-router-dom";
 import { setUser } from "../../store/user.js";
-
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { toast,Bounce } from 'react-toastify';
@@ -25,34 +24,31 @@ import UserDropdown from "./userDropdown/UserDropdown.jsx";
 import isTokenExpired from "../tokenExpiry.js";
 export default function Navbar({page,isWideScreen}) {
   
-  const backendUrl = useSelector((state) => state.user.backendUrl);
+ 
   const [hoveredIcon, setHoveredIcon] = useState(null);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isSmallDropdownVisible, setIsSmallDropdownVisible] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+ 
+  const [userLoading,setUserLoading] = useState(false);
+  const [shortName, setShortName] = useState("");
+
   const dropdownRef = useRef(null);
   const productsRef = useRef(null); 
   const dealsRef = useRef(null); 
-  const [isCartOpen, setIsCartOpen] = useState(false);
+
   const dispatch = useDispatch();
-  const [userLoading,setUserLoading] = useState(false);
-  const token = localStorage.getItem("uid");
-  const query = new URLSearchParams(useLocation().search)
-  
-
-  
-  
-  
-  
-
-  const [shortName, setShortName] = useState("");
   const cartCount = useSelector((state) => state.Counts.cartCount);
   const wishlistCount = useSelector((state) => state.Counts.wishlistCount);
-  
+  const backendUrl = useSelector((state) => state.user.backendUrl);
+  const user = useSelector((state) => state.user.user);
+  const query = new URLSearchParams(useLocation().search)
+  const token = localStorage.getItem("uid"); 
 
   const handleMouseEnter = (iconName) => {
     setHoveredIcon(iconName);
   };
-  const user = useSelector((state) => state.user.user);
+  
   const handleMouseLeave = () => {
     setHoveredIcon(null);
   };
@@ -76,7 +72,7 @@ export default function Navbar({page,isWideScreen}) {
         });
     }
 else{
-  setIsCartOpen(true);
+    setIsCartOpen(true);
     dispatch(openCart());
     document.body.style.overflow = "hidden";
 }
@@ -89,8 +85,8 @@ else{
     let Token = query.get("token");
     
     if ((token && !isTokenExpired()) || Token) {
-
-      if (user === null && token || Token) {
+      
+      if (user === null) {
         if(Token){
           localStorage.setItem("uid",Token);
           localStorage.setItem("tokenExpiry",query.get("maxAge"));
@@ -132,19 +128,19 @@ else{
   useEffect(() => {
     getUser();
   }, []);
-useEffect(()=>{
-  if(user!=undefined || user!=null){
-    if (!Object.hasOwn(user, "lastName")) {
-      setShortName(
-        user.firstName[0].toUpperCase() + user.firstName[1].toUpperCase()
-      );
-    } else {
-      setShortName(
-        user.firstName[0].toUpperCase() + user.lastName[0].toUpperCase()
-      );
-    }
-  }
-},[user])
+// useEffect(()=>{
+//   if(user!=undefined || user!=null){
+//     if (!Object.hasOwn(user, "lastName")) {
+//       setShortName(
+//         user.firstName[0].toUpperCase() + user.firstName[1].toUpperCase()
+//       );
+//     } else {
+//       setShortName(
+//         user.firstName[0].toUpperCase() + user.lastName[0].toUpperCase()
+//       );
+//     }
+//   }
+// },[user])
   
   
   const iconStyle = (iconName) => ({
@@ -254,13 +250,13 @@ useEffect(()=>{
   {(() => {
     if ((token || query.get("token")) && userLoading && !isTokenExpired()) {
       
-      // Display loading skeleton when token exists, user is loading, and token is valid
+      
       return <div className="user-skeleton"></div>;
     } else if ((token || query.get("token")) && !userLoading && !isTokenExpired()) {
-      // Display user dropdown when token exists, user is not loading, and token is valid
+      
       return <UserDropdown shortName={shortName} />;
     } else {
-      // Display login/signup option if token is missing, expired, or query token is missing
+      
       return (
         <p
           className="loginOption"
