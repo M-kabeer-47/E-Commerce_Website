@@ -1,4 +1,4 @@
-import { faMagnifyingGlass, faHeart, faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,9 +9,25 @@ import { IoMdLogOut } from "react-icons/io";
 import { MdWorkHistory } from "react-icons/md";
 
 const Sidebar = (props) => {
+    // Hardware, Accessories, Console, Deals arrays
+    const hardware = ["Processors", "Power supply", "Cases", "Graphic Cards", "Motherboards", "RAMS", "HDDs", "SSDs", "Monitors"];
+    const accessories = ["Keyboards", "Mouse", "Headphones", "Cables", "Microphones", "Webcams", "Speakers"];
+    const console = ["Playstation", "Xbox", "Nintendo","PS Games", "X-Box Games", "Gift cards", "PS Games", "X-Box Games", "Gift cards"];
+    const allOptions = [...hardware, ...accessories, ...console];
+    const deals = ["Value deals", "Smash deals", "Rapid deals", "Xtreme deals"];
+  
+    // Account options
+    const user_options = [
+      { option: "Profile", element: <FaUser className="user-dropdown-icon" /> },
+      { option: "Order History", element: <MdWorkHistory className="user-dropdown-icon" style={{fontSize:"20px" }} /> },
+      { option: "Logout", element: <IoMdLogOut className="user-dropdown-icon" /> }
+    ];
+    
   const user = useSelector((state) => state.user.user);
   const wishlistCount = useSelector((state) => state.Counts.wishlistCount);
+
   const [hoveredIcon, setHoveredIcon] = useState(null);
+  
   const navigate = useNavigate();
 
   // Icon hover state logic
@@ -30,19 +46,7 @@ const Sidebar = (props) => {
     cursor: "pointer",
   });
 
-  // Hardware, Accessories, Console, Deals arrays
-  const hardware = ["Processors", "Power supply", "Cases", "Graphic Cards", "Motherboards", "RAMS", "HDDs", "SSDs", "Monitors"];
-  const accessories = ["Keyboards", "Mouse", "Headphones", "Cables", "Microphones", "Webcams", "Speakers"];
-  const console = ["Playstation", "Xbox", "Nintendo","PS Games", "X-Box Games", "Gift cards", "PS Games", "X-Box Games", "Gift cards"];
-  const allOptions = [...hardware, ...accessories, ...console];
-  const deals = ["Value deals", "Smash deals", "Rapid deals", "Xtreme deals"];
 
-  // Account options
-  const user_options = [
-    { option: "Profile", element: <FaUser className="user-dropdown-icon" /> },
-    { option: "Order History", element: <MdWorkHistory className="user-dropdown-icon" style={{fontSize:"20px" }} /> },
-    { option: "Logout", element: <IoMdLogOut className="user-dropdown-icon" /> }
-  ];
 
   // Handle button clicks for dropdowns
   // Handle button clicks for dropdowns

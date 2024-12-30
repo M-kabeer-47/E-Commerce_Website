@@ -2,10 +2,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { IoCloseOutline } from "react-icons/io5";
 import IncrementDecrementBtn from "../Product/Quantity";
-import {
-  closeCart,
+// import {
+//   closeCart,
   
-} from "../../store/sidebars.js";
+// } from "../../store/sidebars.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCartShopping,
@@ -33,8 +33,8 @@ export default function CartSidebar(props) {
   const [EmptyCart, setEmptyCart] = useState(false);
   const [style, setStyle] = useState(false);
  
-  const [loading, setLoading] = useState(true);
- const loader = useSelector((state)=>state.loader.cartUpdate) 
+  const [loading, setLoading] = useState(false);
+//  const loader = useSelector((state)=>state.loader.cartUpdate) 
   function convertPrice(price, quantity) {
     let Price =
       parseFloat(price.replace("PKR", "").replace(",", "")) * quantity;
@@ -115,7 +115,7 @@ export default function CartSidebar(props) {
   useEffect(() => {});
   return (
     <aside className={` cartSidebar ${props.isOpen ? "active" : ""}`}>
-      {(loading || loader) ? (
+      {(loading ) ? (
         <div className="Loader"></div>
       ) : (
         <>
