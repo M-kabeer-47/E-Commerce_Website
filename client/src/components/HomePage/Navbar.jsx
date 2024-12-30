@@ -117,7 +117,7 @@ else{
         
 
       }
-      else if(!user!=undefined || user!=null){
+      else if(user!=undefined || user!=null){
         if (!Object.hasOwn(user, "lastName")) {
                 setShortName(
                   user.firstName[0].toUpperCase() + user.firstName[1].toUpperCase()
