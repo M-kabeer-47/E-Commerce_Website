@@ -83,7 +83,7 @@ export default function Navbar2({ isWideScreen }) {
     let Token = query.get("token");
 
     if ((token && !isTokenExpired()) || Token) {
-      if ((user === null && token) || Token) {
+      if (user === null) {
         if (Token) {
           localStorage.setItem("uid", Token);
           localStorage.setItem("tokenExpiry", query.get("maxAge"));
@@ -112,6 +112,17 @@ export default function Navbar2({ isWideScreen }) {
               User.data.lastName[0].toUpperCase()
           );
         }
+      }
+      else if(!user!=undefined || user!=null){
+        if (!Object.hasOwn(user, "lastName")) {
+                setShortName(
+                  user.firstName[0].toUpperCase() + user.firstName[1].toUpperCase()
+                );
+              } else {
+                setShortName(
+                  user.firstName[0].toUpperCase() + user.lastName[0].toUpperCase()
+                );
+              }
       }
     } else {
       dispatch(setUser(null));
