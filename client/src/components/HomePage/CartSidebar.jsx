@@ -336,8 +336,8 @@ export default function CartSidebar(props) {
                   }}
                   onClick={() => {
                     // dispatch(closeCart());
-                    setIsCartOpen(false);
-                    document.body.style.overflow = "auto";
+                    props.setIsCartOpen(false);
+                    document.body.style.overflow ="auto";
                     navigate("/cart");
 
                   }}
