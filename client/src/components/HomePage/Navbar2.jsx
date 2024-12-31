@@ -15,7 +15,7 @@ import { setCartCount, setWishlistCount } from "../../store/Counts.js";
 import { setUser } from "../../store/user";
 
 
-export default function Navbar2({ isWideScreen }) {
+export default function Navbar2() {
   const backendUrl = useSelector((state) => state.user.backendUrl);
   const cartCount = useSelector((state) => state.Counts.cartCount);
   const wishlistCount = useSelector((state) => state.Counts.wishlistCount);
@@ -171,7 +171,7 @@ export default function Navbar2({ isWideScreen }) {
             setIsSidebarOpen={setIsSidebarOpen}
             shortName={shortName}
             wishlistCount={wishlistCount}
-            isWideScreen={isWideScreen}
+            
           />
           <div className="logo">
             <Link to={"/"}>

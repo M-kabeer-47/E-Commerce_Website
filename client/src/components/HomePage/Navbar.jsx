@@ -11,7 +11,7 @@ import SearchBar from "./SearchBar";
 import CartSidebar from "./CartSidebar.jsx";
 import "./index.css"; 
 import { useDispatch, useSelector } from "react-redux";
-import {openCart,} from "../../store/sidebars.js";
+import {openCart,} from "../../../waste/sidebars.js";
 import { useNavigate } from "react-router-dom";
 import { setUser } from "../../store/user.js";
 import { useLocation } from "react-router-dom";
@@ -22,7 +22,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { setCartCount, setWishlistCount } from "../../store/Counts.js";
 import UserDropdown from "./userDropdown/UserDropdown.jsx";
 import isTokenExpired from "../tokenExpiry.js";
-export default function Navbar({page,isWideScreen}) {
+export default function Navbar({page}) {
   
  
   const [hoveredIcon, setHoveredIcon] = useState(null);
@@ -252,7 +252,7 @@ else{
               <SmallDropdown isVisible={isSmallDropdownVisible} />
             </div>
           </div>
-          <SearchBar expanded={true} isWideScreen={isWideScreen} /> {/* Use the SearchBar component */}
+          <SearchBar expanded={true} /> {/* Use the SearchBar component */}
           <div className="lastOptions">
           
   {(() => {

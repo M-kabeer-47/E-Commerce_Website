@@ -22,7 +22,7 @@ const Sidebar = (props) => {
       { option: "Order History", element: <MdWorkHistory className="user-dropdown-icon" style={{fontSize:"20px" }} /> },
       { option: "Logout", element: <IoMdLogOut className="user-dropdown-icon" /> }
     ];
-    
+
   const user = useSelector((state) => state.user.user);
   const wishlistCount = useSelector((state) => state.Counts.wishlistCount);
 
@@ -96,7 +96,7 @@ const handleButtonClick = (e) => {
     <aside className={`sidebar ${props.isOpen ? 'active' : ''}`}>
       <div className="upperSidebar">
         <header>
-          <SearchBar expanded={false} isWideScreen={props.isWideScreen} />
+          <SearchBar expanded={false} />
         </header>
         <ul>
           <li>

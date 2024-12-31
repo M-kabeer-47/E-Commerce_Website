@@ -1,7 +1,7 @@
 import category from "./category";
 
 import { configureStore } from "@reduxjs/toolkit";
-import sidebars from "./sidebars";
+// import sidebars from "./sidebars";
 import user from "./user";
 import product from "./product";
 import Counts from "./Counts";
@@ -10,7 +10,7 @@ import loader from "./loader";
 export const store = configureStore({
     reducer:{
         category: category,
-        sidebars: sidebars,
+        // sidebars: sidebars,
         user: user,
         product : product,
         Counts: Counts,

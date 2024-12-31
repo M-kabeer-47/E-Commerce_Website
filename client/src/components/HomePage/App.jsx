@@ -7,41 +7,29 @@ import FeaturedProduct from "./featuredProducts/FeaturedProduct.jsx";
 import Slider from "../HomePage/featuredPreBuids/PreBuilds.jsx";
 import VideoDiv from "../videoDiv/VideoDiv.jsx";
 import Footer from "./Footer/Footer.jsx";
-import { useSelector } from "react-redux";
+
 import './index.css';
 
 
-import { useLocation } from "react-router-dom";
+
 
 
 export default function App() {
-  const backendUrl = useSelector((state) => state.user.backendUrl);
-  
   const [isWideScreen, setIsWideScreen] = useState(window.innerWidth >= 1050);
-  
   const popularRef = useRef(null);
   
   
-  const query = new URLSearchParams(useLocation().search)
   
   
 
-  useEffect(() => {
-      
-    setTimeout(() => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    }, 200);
-  }, []); 
+  
 
 
   
 
-  const handleResize = () => {
-    setIsWideScreen(window.innerWidth >= 1050);
-  };
+  // const handleResize = () => {
+  //   setIsWideScreen(window.innerWidth >= 1050);
+  // };
 
   const handleScroll = () => {
     if (popularRef.current) {
@@ -53,13 +41,18 @@ export default function App() {
   };
 
   useEffect(() => {
-    window.addEventListener("resize", handleResize);
+    // window.addEventListener("resize", handleResize);
     window.addEventListener("scroll", handleScroll);
-   
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }, 200);
 
     
     return () => {
-      window.removeEventListener("resize", handleResize);
+      // window.removeEventListener("resize", handleResize);
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
@@ -69,7 +62,7 @@ export default function App() {
   
   return (
     <>
-      {isWideScreen ? <Navbar isWideScreen={isWideScreen} /> : <Navbar2 isWideScreen={isWideScreen} />}
+      {isWideScreen ? <Navbar  /> : <Navbar2 />}
       
       
       

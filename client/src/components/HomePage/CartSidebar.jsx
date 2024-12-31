@@ -15,7 +15,7 @@ import { useDispatch } from "react-redux";
 import { MdOutlineDelete } from "react-icons/md";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
+
 
 import { setCartCount } from "../../store/Counts.js";
 
