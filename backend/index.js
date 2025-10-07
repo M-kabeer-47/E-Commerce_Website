@@ -89,7 +89,7 @@ async function fetchProduct(id) {
 const app = express();
 app.use(
   cors({
-    origin:"https://e-commerce-website-cck4.vercel.app",
+    origin:"*",
     credentials: true, 
     allowedHeaders: ["Content-Type", "Authorization"],
     methods: ["GET", "POST", "PUT", "DELETE"],
@@ -166,6 +166,7 @@ catch(err){
 }
 }
 );
+
 
 
 app.get("/search/:text", async (req, res) => {
@@ -481,7 +482,7 @@ app.put("/increment/:id",authenticateUser,async(req,res)=>{
   
   const {quantity} = req.body;
   
-  
+
   const product = await products.findById(req.params.id);
   const index = findProductIndex(req.user.cart,product.imageUrl);
   const cart = req.user.cart;
