@@ -80,7 +80,7 @@ app.use(
       "http://localhost:5173",
       "http://localhost:4173",
       "https://e-commerce-website-cck4.vercel.app",
-      "http://ec2-13.202.101.155.ap-south-1.compute.amazonaws.com:4173",
+      "http://ec2-13-202-101-155.ap-south-1.compute.amazonaws.com:4173",
       "http://13.202.101.155:4173"
 
     ],
