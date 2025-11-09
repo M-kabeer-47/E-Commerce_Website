@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
 
 const ProductSchema = new mongoose.Schema({
     name: {
@@ -28,12 +28,11 @@ const ProductSchema = new mongoose.Schema({
     rating: {
         type: Number,
         default: 0,
+        
     },
-    
         longDescription: {
             type:Array,
             required: true,
-
     },
     reviews:{
         type:Array,

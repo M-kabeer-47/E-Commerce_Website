@@ -81,9 +81,8 @@ app.use(
       "http://localhost:4173",
       "http://localhost:3000",
       "https://e-commerce-website-cck4.vercel.app",
-      "http://glitchware-env-2.eba-smqcffuz.ap-south-1.elasticbeanstalk.com",
-      "http://ec2-13-202-43-219.ap-south-1.compute.amazonaws.com:4173",
-      "http://13.202.101.155:4173"
+     "http://ec2-52-66-165-44.ap-south-1.compute.amazonaws.com:4173/",
+     "http://ec2-52-66-165-44.ap-south-1.compute.amazonaws.com:3001/"
 
     ],
     credentials: true,
