@@ -218,7 +218,7 @@ export default function Shipping() {
         customer_name: details.name,
         customer_address: details.address,
         customer_phone: details.phone,
-        payment_method: payment,
+        payment_method: paymentMethod,
         status: "Processing",
         date: formattedDate,  
       };
@@ -238,7 +238,6 @@ export default function Shipping() {
           },
         });
       } else {
-        
         try{
 
         
@@ -266,7 +265,6 @@ export default function Shipping() {
             },
           }
         );
-
 
         await axios.put(
           `${backendUrl}/updateStocks`,
@@ -688,16 +686,8 @@ export default function Shipping() {
                     Pay with stripe
                   </button>
                 )}
-                <button
-                onClick={() => {
-                  setPaymentMethod("pay later")
-                  handleSubmit(event, "Pay Later");
-                }}
-                className="p-5 bg-black">
-                  Pay Later
-                </button>
 
-                {paymentMethod === "cash" || paymentMethod === "pay later" && (
+                {paymentMethod === "cash" && (
                   <button
                     className="shipping-button"
                     style={{

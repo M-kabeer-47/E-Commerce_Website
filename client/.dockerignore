@@ -1,0 +1,12 @@
+node_modules
+.env
+.git
+.vscode
+dist
+build
+*.log
+coverage
+.cache
+.DS_Store
+Thumbs.db
+README.md

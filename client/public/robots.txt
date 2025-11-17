@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://glitchware.netlify.app/sitemap.xml
