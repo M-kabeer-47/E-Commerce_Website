@@ -81,8 +81,7 @@ app.use(
       "http://localhost:4173",
       "http://localhost:3000",
       "https://e-commerce-website-cck4.vercel.app",
-      "http://ec2-65-0-61-90.ap-south-1.compute.amazonaws.com:4173",
-      "http://65.0.61.90:3001",
+      "https://glitchware.netlify.app"
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
