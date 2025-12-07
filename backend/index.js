@@ -80,6 +80,7 @@ app.use(
       "http://localhost:5173",
       "http://localhost:4173",
       "http://localhost:3000",
+      "http://localhost:3001",
       "https://e-commerce-website-cck4.vercel.app",
       "https://glitchware.netlify.app"
     ],
