@@ -81,6 +81,8 @@ app.use(
       "http://localhost:4173",
       "http://localhost:3000",
       "http://localhost:3001",
+      "http://3.110.124.116:3001",
+      "http://ec2-3-110-124-116.ap-south-1.compute.amazonaws.com:3001",
       "https://e-commerce-website-cck4.vercel.app",
       "https://glitchware.netlify.app"
     ],
