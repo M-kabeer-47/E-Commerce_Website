@@ -77,11 +77,7 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "http://localhost:5173",
-      "http://localhost:4173",
-      "http://localhost:3000",
-      "http://localhost:3001",
-      "http://13.232.61.56:3001",
+      "https://goat-manchester-customize-freedom.trycloudflare.com",
       "http://ec2-13-232-61-56.ap-south-1.compute.amazonaws.com:3001",
       "https://e-commerce-website-cck4.vercel.app",
       "https://glitchware.netlify.app"
